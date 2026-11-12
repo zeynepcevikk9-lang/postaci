@@ -62,7 +62,8 @@ node araclar/postaci-marka.mjs
 - [ ] Ajans logolu aylık PDF rapor
 - [x] Müşteri onayı, 1. adım: önizleme sayfasında "Onayla / Değişiklik iste", karar geçmişi,
       ajansa bildirim, "WhatsApp'ta paylaş" düğmesi (ajansın kendi WhatsApp'ından, wa.me ile)
-- [ ] Müşteri onayı, 2. adım: aylık planın tek bağlantıyla toplu onayı
+- [x] Müşteri onayı, 2. adım: aylık planın tek bağlantıyla toplu onayı (takvimde "Onaya gönder";
+      müşteri sayfası `/p/plan/<anahtar>`; aynı içeriğin bütün kanalları tek kalem; "Tümünü onayla")
 - [ ] Müşteri onayı, 3. adım: takvimde onay durumu rozeti; onaylanmadan yayımlamama seçeneği
 - [ ] Müşteri onayı, 4. adım: WhatsApp Business API ile otomatik gönderim (başvuru gerekir)
 - [ ] Ajans markalı panel (logo ve alan adı)
