@@ -60,7 +60,8 @@ node araclar/postaci-marka.mjs
 - [ ] Kalan Postiz izleri: faturalandırma ekranındaki tanıtım metinleri, tarayıcı eklentisi uyarısı, açık/koyu tema kararı
 - [x] Türkiye özel gün takvimi ve hazır taslak (takvimin üstünde "Özel günler" şeridi; veri
       `special-days/tr.special.days.ts`; dini günler yıl yıl elle girilir, 2026 ve 2027 girildi)
-- [ ] Ajans logolu aylık PDF rapor
+- [x] Aylık rapor: takvimde "Aylık rapor" ile oluşturulur, müşteri sayfası `/p/report/<anahtar>`,
+      rakamlar oluşturulduğu anda sabitlenir, "PDF olarak kaydet" tarayıcının yazdırma penceresini açar
 - [x] Müşteri onayı, 1. adım: önizleme sayfasında "Onayla / Değişiklik iste", karar geçmişi,
       ajansa bildirim, "WhatsApp'ta paylaş" düğmesi (ajansın kendi WhatsApp'ından, wa.me ile)
 - [x] Müşteri onayı, 2. adım: aylık planın tek bağlantıyla toplu onayı (takvimde "Onaya gönder";
@@ -68,7 +69,9 @@ node araclar/postaci-marka.mjs
 - [x] Müşteri onayı, 3. adım: takvimde onay rozeti; planda "onaylanınca taslak zamanlansın" seçeneği
       (onaylanan taslak zamanlanır, değişiklik istenen zamanlanmış gönderi taslağa döner)
 - [ ] Müşteri onayı, 4. adım: WhatsApp Business API ile otomatik gönderim (başvuru gerekir)
-- [ ] Ajans markalı panel (logo ve alan adı)
+- [x] Ajans markası, 1. adım: Ayarlar > Ajans Markası (ad, logo, renk); müşterinin gördüğü
+      sayfalarda (önizleme, onay planı, rapor) Postacı yerine ajans görünür
+- [ ] Ajans markası, 2. adım: ajansın kendi alan adı ve panelin kendisinde ajans logosu
 - [ ] E-ticaret bağlantısı (ikas, Ticimax, Trendyol)
 - [ ] TL ile abonelik tahsilatı
 - [ ] Tanıtım sitesi (ürün ana sayfası `site/` içinde; eksik: deneme kaydı formunun bağlanması, fiyatların kesinleşmesi, yayına alma)
