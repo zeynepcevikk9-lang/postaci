@@ -1088,5 +1088,19 @@
   "admin_enter_account": "Open account",
   "iyzico_blocked": "There is already an active subscription on another account with this email address",
   "add_announcement": "Add Announcement",
-  "import_debug_post": "Import Debug Post"
+  "import_debug_post": "Import Debug Post",
+  "admin_edit_plan": "Edit plan",
+  "admin_plan_saved": "The plan was updated",
+  "admin_plan_failed": "The plan could not be updated",
+  "admin_remove_card_confirm": "The card subscription is cancelled at iyzico right away and the account loses its plan. No refund is made.",
+  "admin_remove_confirm": "The account loses its plan right away and its channels are disabled.",
+  "admin_remove_yes": "Yes, remove",
+  "admin_remove_title": "Remove the subscription?",
+  "admin_card_subscription_note": "This account pays by card. To give a plan manually, remove the card subscription first.",
+  "admin_manual_plan_note": "For accounts that pay by bank transfer. With an end date the plan closes by itself on that day; without one it stays until you remove it.",
+  "admin_plan_until": "End date",
+  "admin_plan_save": "Save plan",
+  "admin_remove_subscription": "Remove subscription",
+  "admin_status_manual": "Manual",
+  "admin_status_manual_until": "Manual, until {{date}}"
 }
