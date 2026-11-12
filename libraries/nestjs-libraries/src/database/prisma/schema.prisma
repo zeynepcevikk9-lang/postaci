@@ -1866,3 +1866,20 @@ enum PostApprovalStatus {
   APPROVED
   CHANGES_REQUESTED
 }
+
+// Postacı: toplu onay planı. Ajansın müşterisine gönderdiği tek bağlantı; kimliği
+// bağlantıdaki gizli anahtardır. Bir müşterinin (ya da tüm kanalların) belirli bir
+// tarih aralığındaki taslak ve zamanlanmış gönderilerini kapsar.
+model ApprovalPlan {
+  id             String    @id @default(uuid())
+  organizationId String
+  customerId     String?
+  customerName   String?
+  from           DateTime
+  to             DateTime
+  createdAt      DateTime  @default(now())
+  deletedAt      DateTime?
+
+  @@index([organizationId])
+  @@index([createdAt])
+}
