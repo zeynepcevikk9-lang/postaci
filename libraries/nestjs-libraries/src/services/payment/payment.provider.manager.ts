@@ -32,11 +32,15 @@ export class PaymentProviderManager {
     }));
   }
 
-  // First registered provider of a platform is the one new subscriptions use
+  // First registered provider of a platform is the one new subscriptions use,
+  // unless PAYMENT_PROVIDER_WEB / PAYMENT_PROVIDER_MOBILE names another one
   getDefaultProvider(platform: PaymentPlatform) {
-    const found = this.getProviders().find(
+    const preferred = process.env[`PAYMENT_PROVIDER_${platform.toUpperCase()}`];
+    const providers = this.getProviders().filter(
       (p) => p.provider.platform === platform
     );
+    const found =
+      providers.find((p) => p.name === preferred) || providers[0];
 
     if (!found) {
       throw new Error(`No payment provider registered for ${platform}`);
