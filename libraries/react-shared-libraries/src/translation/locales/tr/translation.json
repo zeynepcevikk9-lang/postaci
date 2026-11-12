@@ -1086,5 +1086,19 @@
   "admin_enter_account": "Hesaba gir",
   "iyzico_blocked": "Bu e-posta adresiyle başka bir hesapta etkin bir abonelik var",
   "add_announcement": "Duyuru ekle",
-  "import_debug_post": "Hata ayıklama gönderisi içe aktar"
+  "import_debug_post": "Hata ayıklama gönderisi içe aktar",
+  "admin_edit_plan": "Planı düzenle",
+  "admin_plan_saved": "Plan güncellendi",
+  "admin_plan_failed": "Plan güncellenemedi",
+  "admin_remove_card_confirm": "Kartlı abonelik iyzico'da hemen iptal edilir ve hesap planını kaybeder. İade yapılmaz.",
+  "admin_remove_confirm": "Hesap planını hemen kaybeder ve kanalları devre dışı kalır.",
+  "admin_remove_yes": "Evet, kaldır",
+  "admin_remove_title": "Abonelik kaldırılsın mı?",
+  "admin_card_subscription_note": "Bu hesap kartla ödüyor. Elle plan vermek için önce kartlı aboneliği kaldırın.",
+  "admin_manual_plan_note": "Havale ile ödeyen hesaplar için. Bitiş tarihi yazarsanız plan o gün kendiliğinden kapanır; yazmazsanız siz kaldırana kadar sürer.",
+  "admin_plan_until": "Bitiş tarihi",
+  "admin_plan_save": "Planı kaydet",
+  "admin_remove_subscription": "Aboneliği kaldır",
+  "admin_status_manual": "Elle verildi",
+  "admin_status_manual_until": "Elle verildi, {{date}} tarihine kadar"
 }
