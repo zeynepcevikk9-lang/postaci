@@ -56,6 +56,7 @@ import { useT } from '@gitroom/react/translation/get.transation.service.client';
 import i18next from 'i18next';
 import { AddEditModal } from '@gitroom/frontend/components/new-launch/add.edit.modal';
 import { CreationMethodBadge } from '@gitroom/frontend/components/launches/creation.method.badge';
+import { ApprovalBadge } from '@gitroom/frontend/components/launches/approval.badge';
 import { deleteDialog } from '@gitroom/react/helpers/delete.dialog';
 import { useVariables } from '@gitroom/react/helpers/variable.context';
 import copy from 'copy-to-clipboard';
@@ -1300,6 +1301,7 @@ const CalendarItem: FC<{
           ✓
         </div>
       )}
+      {state !== 'PUBLISHED' && <ApprovalBadge postId={post.id} />}
       {showCreationMethodBadge && (
         <div className="absolute -bottom-[4px] -right-[4px] z-10">
           <CreationMethodBadge
