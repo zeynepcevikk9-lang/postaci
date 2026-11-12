@@ -64,6 +64,7 @@ const PlanShareModal: FC<{ defaultCustomer?: string | null }> = ({
 
   const [customerId, setCustomerId] = useState(defaultCustomer || '');
   const [month, setMonth] = useState(months[0].value);
+  const [autoSchedule, setAutoSchedule] = useState(false);
   const [loading, setLoading] = useState(false);
   const [link, setLink] = useState('');
 
@@ -77,6 +78,7 @@ const PlanShareModal: FC<{ defaultCustomer?: string | null }> = ({
           ...(customerId ? { customerId } : {}),
           from: selected.from.toISOString(),
           to: selected.to.toISOString(),
+          autoSchedule,
         }),
       });
       if (!response.ok) {
@@ -92,7 +94,7 @@ const PlanShareModal: FC<{ defaultCustomer?: string | null }> = ({
     } finally {
       setLoading(false);
     }
-  }, [customerId, month]);
+  }, [customerId, month, autoSchedule]);
 
   const copyLink = useCallback(() => {
     copy(link);
@@ -167,6 +169,30 @@ const PlanShareModal: FC<{ defaultCustomer?: string | null }> = ({
           ))}
         </select>
       </div>
+
+      <label className="flex items-start gap-[10px] text-[14px] cursor-pointer">
+        <input
+          type="checkbox"
+          className="mt-[3px] w-[16px] h-[16px]"
+          checked={autoSchedule}
+          onChange={(e) => {
+            setAutoSchedule(e.target.checked);
+            setLink('');
+          }}
+        />
+        <span>
+          {t(
+            'approval_plan_auto_schedule',
+            'Schedule drafts automatically when the client approves'
+          )}
+          <span className="block text-[13px] text-textItemBlur">
+            {t(
+              'approval_plan_auto_schedule_hint',
+              'Save the posts as drafts: nothing is published before approval. If the client requests a change, a scheduled post goes back to draft.'
+            )}
+          </span>
+        </span>
+      </label>
 
       {!link ? (
         <Button className="rounded-[8px]" loading={loading} onClick={create}>
