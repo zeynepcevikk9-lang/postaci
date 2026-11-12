@@ -708,7 +708,12 @@ export class IyzicoProvider
         'Aboneliğiniz iptal edildi',
         `Aboneliğiniz yenilenmeyecek. ${new Date(until).toLocaleDateString(
           'tr-TR',
-          { day: 'numeric', month: 'long', year: 'numeric' }
+          {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+            timeZone: 'Europe/Istanbul',
+          }
         )} tarihine kadar planınızı kullanmaya devam edebilirsiniz; bu tarihten sonra yeniden abone olabilirsiniz.`,
         true
       );
