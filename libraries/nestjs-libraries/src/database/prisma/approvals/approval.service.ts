@@ -141,8 +141,62 @@ export class ApprovalService {
       organizationId,
       from,
       to,
-      customer
+      customer,
+      !!body.autoSchedule
     );
+  }
+
+  // Takvim rozetleri: her gönderinin en son kararı. Kararı olmayan gönderi
+  // sonuçta yer almaz (onay bekliyor ya da onaya hiç gönderilmemiş).
+  async getStatuses(organizationId: string, postIds: string[]) {
+    if (!postIds.length) {
+      return {};
+    }
+    const approvals = await this._approvalRepository.getApprovalsForOrgPosts(
+      organizationId,
+      postIds
+    );
+    const statuses: Record<string, ApprovalDecision> = {};
+    for (const approval of approvals) {
+      if (!statuses[approval.postId]) {
+        statuses[approval.postId] = approval.status;
+      }
+    }
+    return statuses;
+  }
+
+  // Planında "otomatik zamanla" açıksa karar gönderinin durumuna yansır:
+  // onaylanan taslak zamanlanır, değişiklik istenen zamanlanmış gönderi taslağa
+  // döner. Tarihi geçmiş taslak zamanlanmaz; zamanlanırsa hemen yayımlanırdı.
+  private async applyDecisionToPosts(
+    organizationId: string,
+    posts: { id: string; state: string; publishDate: Date }[],
+    status: ApprovalDecision
+  ) {
+    for (const post of posts) {
+      try {
+        if (
+          status === 'APPROVED' &&
+          post.state === 'DRAFT' &&
+          post.publishDate.getTime() > Date.now()
+        ) {
+          await this._postsService.changePostStatus(
+            organizationId,
+            post.id,
+            'schedule'
+          );
+        }
+        if (status === 'CHANGES_REQUESTED' && post.state === 'QUEUE') {
+          await this._postsService.changePostStatus(
+            organizationId,
+            post.id,
+            'draft'
+          );
+        }
+      } catch (err) {
+        console.error('Onay sonrası gönderi durumu değiştirilemedi', post.id, err);
+      }
+    }
   }
 
   // Plan ve kalemleri. Aynı içeriğin birden çok kanala giden kopyaları (aynı
@@ -207,6 +261,11 @@ export class ApprovalService {
       return {
         group,
         postIds: groupPosts.map((p) => p.id),
+        posts: groupPosts.map((p) => ({
+          id: p.id,
+          state: p.state,
+          publishDate: p.publishDate,
+        })),
         previewId: groupPosts[0].id,
         publishDate: groupPosts[0].publishDate,
         text: postContentPlainText(groupPosts[0].content),
@@ -243,8 +302,8 @@ export class ApprovalService {
       customerName: plan.customerName,
       from: plan.from,
       to: plan.to,
-      // postIds yalnızca sunucu içinde kullanılır
-      items: items.map(({ postIds, ...item }) => item),
+      // postIds ve posts yalnızca sunucu içinde kullanılır
+      items: items.map(({ postIds, posts, ...item }) => item),
     };
   }
 
@@ -263,6 +322,14 @@ export class ApprovalService {
       reviewerName,
       note
     );
+
+    if (plan.autoSchedule) {
+      await this.applyDecisionToPosts(
+        plan.organizationId,
+        item.posts,
+        body.status
+      );
+    }
 
     const approved = body.status === 'APPROVED';
     await this.notify(
@@ -299,6 +366,14 @@ export class ApprovalService {
       'APPROVED',
       reviewerName
     );
+
+    if (plan.autoSchedule) {
+      await this.applyDecisionToPosts(
+        plan.organizationId,
+        pending.flatMap((i) => i.posts),
+        'APPROVED'
+      );
+    }
 
     await this.notify(
       plan.organizationId,
