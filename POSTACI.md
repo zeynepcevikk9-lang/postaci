@@ -71,12 +71,15 @@ node araclar/postaci-marka.mjs
 - [ ] Müşteri onayı, 4. adım: WhatsApp Business API ile otomatik gönderim (başvuru gerekir)
 - [x] Ajans markası, 1. adım: Ayarlar > Ajans Markası (ad, logo, renk); müşterinin gördüğü
       sayfalarda (önizleme, onay planı, rapor) Postacı yerine ajans görünür
-- [ ] Ajans markası, 2. adım: ajansın kendi alan adı ve panelin kendisinde ajans logosu
+- [x] Ajans markası, 2. adım: ajans logo seçtiyse panelin sol üstünde Postacı simgesi yerine o görünür
+- [ ] Ajans markası, 3. adım: ajansın kendi alan adı
 - [x] E-ticaret bağlantısı, 1. adım: takvimde "Mağaza" düğmesi; mağazanın ürün XML adresi eklenir
       (ikas, Ticimax, T-Soft, IdeaSoft, Google Merchant), sonradan giren ürünler taslak önerisi olur.
       Adres yalnızca herkese açık https olabilir; iç ağ adresleri reddedilir.
-- [ ] E-ticaret bağlantısı, 2. adım: ürün görselini taslağa ekleme, indirim/fiyat değişikliği,
-      Trendyol satıcı API bağlantısı, arka planda kendiliğinden kontrol (şu an pencere açılınca kontrol edilir)
+- [x] E-ticaret bağlantısı, 2. adım: "Taslak oluştur" ürün görselini medya kütüphanesine alıp taslağa
+      ekler; mağazalar arka planda saatte bir kontrol edilir (altı saattir okunmamış olanlar) ve
+      yeni ürün gelince hesaba bildirim düşer
+- [ ] E-ticaret bağlantısı, 3. adım: indirim/fiyat değişikliği, Trendyol satıcı API bağlantısı
 - [x] TL ile abonelik tahsilatı, 1. adım: iyzico sağlayıcısı (plan seçme ekranı, iyzico ödeme formu,
       deneme süresi, yenileme ve başarısız ödeme bildirimi, dönem sonuna kadar kullanımla iptal,
       ödeme geçmişi). Yalnızca depodaki sahte iyzico sunucusuyla denendi.
