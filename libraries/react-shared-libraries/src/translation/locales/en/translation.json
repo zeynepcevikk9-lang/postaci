@@ -943,5 +943,22 @@
   "approval_saved_changes": "Thank you, your request is sent",
   "approval_failed": "Your answer could not be saved, please try again",
   "approval_share_whatsapp": "Share on WhatsApp",
-  "approval_whatsapp_message": "Your post is ready for approval. You can review and approve it here:"
+  "approval_whatsapp_message": "Your post is ready for approval. You can review and approve it here:",
+  "approval_plan_not_found": "This approval link is not valid",
+  "approval_plan_title": "Content plan",
+  "approval_plan_posts": "posts",
+  "approval_plan_approved": "approved",
+  "approval_plan_changes": "to be changed",
+  "approval_plan_pending": "waiting",
+  "approval_plan_approve_all": "Approve all",
+  "approval_plan_empty": "There are no posts waiting in this period yet.",
+  "approval_plan_video": "Video",
+  "approval_plan_details": "Open full preview",
+  "approval_plan_button": "Send for approval",
+  "approval_plan_modal_title": "Send monthly plan for approval",
+  "approval_plan_modal_description": "Your client sees all draft and scheduled posts of the selected month on one page and approves them without logging in.",
+  "approval_plan_all_channels": "All channels",
+  "approval_plan_create": "Create approval link",
+  "approval_plan_create_failed": "The approval link could not be created",
+  "approval_plan_whatsapp_message": "Your content plan is ready for approval. You can review and approve it here:"
 }
