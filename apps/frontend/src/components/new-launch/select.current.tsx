@@ -119,7 +119,7 @@ export const SelectCurrent: FC = () => {
                 'cursor-pointer flex gap-[8px] rounded-[8px] w-[40px] h-[40px] mobile:w-[44px] mobile:h-[44px] mobile:shrink-0 justify-center items-center bg-newBgLineColor mobile:bg-newSettings',
                 current !== 'global'
                   ? 'text-[#A3A3A3]'
-                  : 'border mobile:border-[1.5px] border-[#FC69FF] text-[#FC69FF]',
+                  : 'border mobile:border-[1.5px] border-[#FF6B4A] text-[#FF6B4A]',
                 locked && 'opacity-50'
               )}
             >
@@ -145,7 +145,7 @@ export const SelectCurrent: FC = () => {
                   : 'w-[40px] mobile:w-[44px]',
                 !isBrandMark(integration.identifier) && locked && 'opacity-50',
                 current === integration.id
-                  ? 'border-[#FC69FF] text-[#FC69FF]'
+                  ? 'border-[#FF6B4A] text-[#FF6B4A]'
                   : 'border-transparent'
               )}
             >
@@ -229,7 +229,7 @@ export const IsGlobal: FC<{ id: string }> = ({ id }) => {
         'no_longer_global_mode',
         'No longer in global mode'
       )}
-      className="w-[8px] h-[8px] bg-[#FC69FF] -top-[1px] -end-[3px] absolute rounded-full"
+      className="w-[8px] h-[8px] bg-[#FF6B4A] -top-[1px] -end-[3px] absolute rounded-full"
     />
   );
 };
