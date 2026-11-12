@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import {
   AdminCustomersRepository,
   CustomersParams,
@@ -6,14 +6,92 @@ import {
 import {
   IYZICO_PROVIDER,
   IyzicoProvider,
+  MANUAL_PLAN_PREFIX,
 } from '@gitroom/nestjs-libraries/services/payment/providers/iyzico.provider';
+import { AdminSetPlanDto } from '@gitroom/nestjs-libraries/dtos/admin/admin.set.plan.dto';
+import { SubscriptionService } from '@gitroom/nestjs-libraries/database/prisma/subscriptions/subscription.service';
+import { NotificationService } from '@gitroom/nestjs-libraries/database/prisma/notifications/notification.service';
 
 @Injectable()
 export class AdminCustomersService {
   constructor(
     private _adminCustomersRepository: AdminCustomersRepository,
-    private _iyzicoProvider: IyzicoProvider
+    private _iyzicoProvider: IyzicoProvider,
+    private _subscriptionService: SubscriptionService,
+    private _notificationService: NotificationService
   ) {}
+
+  // Hesaba elle plan verir ya da aboneliğini kaldırır. Kaldırmada kartla süren
+  // abonelik varsa iyzico'da da hemen iptal edilir (iade yapılmaz).
+  async setPlan(organizationId: string, body: AdminSetPlanDto) {
+    if (!(await this._adminCustomersRepository.getOrganization(organizationId))) {
+      throw new BadRequestException('Account not found');
+    }
+
+    if (body.plan === 'FREE') {
+      const current =
+        await this._subscriptionService.getSubscriptionByOrganizationId(
+          organizationId
+        );
+      if (!current) {
+        return { success: true };
+      }
+      if (current.provider !== IYZICO_PROVIDER || current.isLifetime) {
+        throw new BadRequestException(
+          'This subscription is managed by another provider'
+        );
+      }
+      await this._iyzicoProvider.cancelSubscription(organizationId);
+      await this.notify(
+        organizationId,
+        'Aboneliğiniz sona erdi',
+        'Aboneliğiniz sona erdi. Yeniden abone olmak için Faturalandırma sayfasını kullanabilirsiniz.'
+      );
+      return { success: true };
+    }
+
+    const until = body.until ? new Date(body.until) : null;
+    if (until) {
+      // Seçilen günün sonuna kadar geçerli olsun (Türkiye saati, UTC+3)
+      until.setUTCHours(20, 59, 59, 0);
+      if (until.getTime() < Date.now()) {
+        throw new BadRequestException('The end date must be in the future');
+      }
+    }
+
+    await this._iyzicoProvider.grantManualPlan(
+      organizationId,
+      body.plan,
+      body.period || 'MONTHLY',
+      until
+    );
+    await this.notify(
+      organizationId,
+      'Planınız tanımlandı',
+      until
+        ? `Planınız tanımlandı ve ${until.toLocaleDateString('tr-TR', {
+            timeZone: 'Europe/Istanbul',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+          })} tarihine kadar geçerli.`
+        : 'Planınız tanımlandı.'
+    );
+    return { success: true };
+  }
+
+  private async notify(organizationId: string, subject: string, message: string) {
+    try {
+      await this._notificationService.inAppNotification(
+        organizationId,
+        subject,
+        message,
+        true
+      );
+    } catch (err) {
+      // bildirim gönderilemese de işlem geçerlidir
+    }
+  }
 
   async list(params: CustomersParams) {
     const { total, rows } = await this._adminCustomersRepository.list(params);
@@ -40,6 +118,8 @@ export class AdminCustomersService {
           plan: row.subscription?.subscriptionTier || 'FREE',
           period: row.subscription?.period || null,
           provider: row.subscription?.provider || null,
+          // Elle verilmiş plan mı (kartla abonelik değil)
+          manual: !!row.subscription?.identifier?.startsWith(MANUAL_PLAN_PREFIX),
           subscribedAt: row.subscription?.createdAt || null,
           cancelAt: row.subscription?.cancelAt || null,
           isLifetime: !!row.subscription?.isLifetime,
@@ -63,7 +143,8 @@ export class AdminCustomersService {
       const { enabled, plans } = await this._iyzicoProvider.getPlans();
       if (enabled && plans.length) {
         const paying = await this._adminCustomersRepository.payingByPlan(
-          IYZICO_PROVIDER
+          IYZICO_PROVIDER,
+          MANUAL_PLAN_PREFIX
         );
         monthlyRevenue = 0;
         currency = plans[0].currency;
