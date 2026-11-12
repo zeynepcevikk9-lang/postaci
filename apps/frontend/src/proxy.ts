@@ -5,6 +5,7 @@ import { internalFetch } from '@gitroom/helpers/utils/internal.fetch';
 import acceptLanguage from 'accept-language';
 import {
   cookieName,
+  fallbackLng,
   headerName,
   languages,
 } from '@gitroom/react/translation/i18n.config';
@@ -17,12 +18,11 @@ export async function proxy(request: NextRequest) {
     request.cookies.get('auth') ||
     request.headers.get('auth') ||
     nextUrl.searchParams.get('loggedAuth');
+  // Postacı: dil seçilmemişse tarayıcı diline bakmadan Türkçe açılır;
+  // kullanıcı dil menüsünden başka bir dil seçerse çerezdeki dil geçerli olur.
   const lng = request.cookies.has(cookieName)
     ? acceptLanguage.get(request.cookies.get(cookieName).value)
-    : acceptLanguage.get(
-        request.headers.get('Accept-Language') ||
-          request.headers.get('accept-language')
-      );
+    : fallbackLng;
 
   const requestHeaders = new Headers(request.headers);
   if (lng) {
