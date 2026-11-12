@@ -165,6 +165,33 @@ const ProductFeedsModal: FC<{
 
   const createDraft = useCallback(
     (item: NewItem) => async () => {
+      // Ürün görseli medya kütüphanesine alınır ve taslağa eklenir; alınamazsa
+      // taslak görselsiz açılır.
+      let image: { id: string; path: string }[] = [];
+      if (item.image) {
+        setBusy('draft-' + item.id);
+        try {
+          const response = await fetch(
+            `/product-feeds/items/${item.id}/image`,
+            { method: 'POST' }
+          );
+          if (response.ok) {
+            image = [await response.json()];
+          } else {
+            toast.show(
+              t(
+                'feeds_image_failed',
+                'The product image could not be added; you can add it yourself.'
+              ),
+              'warning'
+            );
+          }
+        } catch (err) {
+          // görselsiz devam edilir
+        } finally {
+          setBusy(null);
+        }
+      }
       await dismiss(item.id);
       modal.closeAll();
       modal.openModal({
@@ -183,7 +210,7 @@ const ProductFeedsModal: FC<{
             allIntegrations={integrations.map((p) => ({ ...p }))}
             integrations={integrations.slice(0).map((p) => ({ ...p }))}
             mutate={reloadCalendarView}
-            onlyValues={[{ content: draftText(item) }]}
+            onlyValues={[{ content: draftText(item), image }]}
             date={newDayjs().add(1, 'day').hour(10).minute(0)}
             reopenModal={() => ({})}
           />
@@ -235,7 +262,11 @@ const ProductFeedsModal: FC<{
                 {[item.price, item.feedName].filter(Boolean).join(' · ')}
               </div>
             </div>
-            <Button className="rounded-[8px]" onClick={createDraft(item)}>
+            <Button
+              className="rounded-[8px]"
+              loading={busy === 'draft-' + item.id}
+              onClick={createDraft(item)}
+            >
               {t('feeds_create_draft', 'Create draft')}
             </Button>
             <button
