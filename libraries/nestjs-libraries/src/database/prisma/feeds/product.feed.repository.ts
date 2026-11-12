@@ -66,6 +66,41 @@ export class ProductFeedRepository {
     });
   }
 
+  // Uzun süredir okunmamış mağazalar (bütün hesaplar), en eskisi önce.
+  getStaleFeeds(before: Date, take: number) {
+    return this._feeds.model.productFeed.findMany({
+      where: {
+        deletedAt: null,
+        OR: [{ lastCheckedAt: null }, { lastCheckedAt: { lt: before } }],
+      },
+      orderBy: { lastCheckedAt: 'asc' },
+      take,
+      select: {
+        id: true,
+        organizationId: true,
+        name: true,
+        lastCheckedAt: true,
+      },
+    });
+  }
+
+  // Arka plan kontrolü birden çok süreçte çalışabilir; mağazayı ilk sahiplenen
+  // okur (okuma zamanı yalnızca hâlâ eski değerdeyse güncellenir).
+  async claimFeed(id: string, lastCheckedAt: Date | null) {
+    const { count } = await this._feeds.model.productFeed.updateMany({
+      where: { id, deletedAt: null, lastCheckedAt },
+      data: { lastCheckedAt: new Date() },
+    });
+    return count === 1;
+  }
+
+  getItem(organizationId: string, id: string) {
+    return this._items.model.productFeedItem.findFirst({
+      where: { id, organizationId },
+      select: { id: true, image: true },
+    });
+  }
+
   markChecked(id: string) {
     return this._feeds.model.productFeed.update({
       where: { id },
