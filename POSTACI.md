@@ -93,7 +93,7 @@ node araclar/postaci-marka.mjs
       verilmez. Elle verilen planı kullanıcı kendisi iptal edemez.
 - [ ] Yönetim paneli, 3. adım: iade (şimdilik iyzico panelinden), hesap ayrıntı sayfası
       (ödeme geçmişi, notlar), bitişi yaklaşan elle planlar için hatırlatma
-- [ ] Tanıtım sitesi (ürün ana sayfası `site/` içinde; eksik: deneme kaydı formunun bağlanması, fiyatların kesinleşmesi, yayına alma)
+- [ ] Tanıtım sitesi (ürün ana sayfası `site/` içinde; eksik: deneme kaydı formunun bağlanması, yayına alma; fiyatlar ve plan içerikleri kesinleşti)
 
 Kodun dışında, başvurusu erken yapılması gerekenler: Meta, TikTok ve LinkedIn uygulama
 onayları ile WhatsApp Business API.
@@ -146,7 +146,12 @@ node site/serve.mjs   # http://localhost:4300
 
 Deneme kaydı formu, `index.html` içindeki `data-endpoint` özelliği doldurulana kadar kayıt
 göndermez ve ziyaretçiye kaydın şu an alınamadığını söyler. Sayfa ürünü yayındaki haliyle
-anlatır; anlatılan özellikler hazır olmadan yayına alınmamalıdır. Fiyatlar taslaktır.
+anlatır; anlatılan özellikler hazır olmadan yayına alınmamalıdır.
+
+Planlar (13 Kas 2026 kararı): Başlangıç, Ajans, Büyük Ajans; sınır bağlı sosyal medya hesabı
+sayısıdır (10 / 30 / 100, `pricing.ts` içindeki STANDARD / TEAM / PRO kademeleri), müşteri sayısı
+sınırsızdır. Kalıcı ücretsiz plan yoktur; 7 gün kartla ücretsiz deneme vardır. Fiyatlar sitede ve
+iyzico panelindeki planlarda durur; sitedeki fiyat değişirse iyzico'daki plan da değiştirilmelidir.
 
 ## iyzico ile TL abonelik
 
