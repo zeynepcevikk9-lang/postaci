@@ -924,5 +924,7 @@
   "billing_subscription_not_cancelled": "Your subscription was not cancelled",
   "billing_cancel_failed": "We could not cancel your subscription. Please try again or contact support.",
   "no_analytics_to_show_for_this_channel": "No analytics to show for this channel. If you expected to see data, try reconnecting the channel.",
-  "no_ai_credits_ask_admin": "You have no AI credits left. Please ask an admin of your organization."
+  "no_ai_credits_ask_admin": "You have no AI credits left. Please ask an admin of your organization.",
+  "auth_side_line_1": "Run your agency’s social media",
+  "auth_side_line_2": "from a single panel"
 }
