@@ -1,7 +1,37 @@
 'use client';
 
-// Postacı simgesi (zarf ve bildirim noktası).
+import { useCallback } from 'react';
+import useSWR from 'swr';
+import { useFetch } from '@gitroom/helpers/utils/custom.fetch';
+
+// Ajans, Ayarlar > Ajans Markası'nda logo seçtiyse panelde o gösterilir.
+const useBrandLogo = () => {
+  const fetch = useFetch();
+  const load = useCallback(async () => {
+    const response = await fetch('/brand');
+    return response.ok ? response.json() : null;
+  }, []);
+  return useSWR<{ name: string | null; logo: string | null } | null>(
+    '/brand',
+    load,
+    { revalidateOnFocus: false }
+  );
+};
+
+// Postacı simgesi (zarf ve bildirim noktası) ya da ajansın kendi logosu.
 export const Logo = () => {
+  const { data: brand } = useBrandLogo();
+
+  if (brand?.logo) {
+    return (
+      <img
+        className="mt-[8px] w-[60px] h-[60px] min-w-[60px] object-contain p-[6px]"
+        src={brand.logo}
+        alt={brand.name || ''}
+      />
+    );
+  }
+
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
