@@ -38,6 +38,15 @@ export class ApprovalRepository {
     });
   }
 
+  // Takvim rozetleri için: yalnızca bu kuruluşun kararları döner.
+  getApprovalsForOrgPosts(organizationId: string, postIds: string[]) {
+    return this._approvals.model.postApproval.findMany({
+      where: { organizationId, postId: { in: postIds } },
+      orderBy: { createdAt: 'desc' },
+      select: { postId: true, status: true },
+    });
+  }
+
   createApproval(
     organizationId: string,
     postId: string,
@@ -80,7 +89,8 @@ export class ApprovalRepository {
     organizationId: string,
     from: Date,
     to: Date,
-    customer?: { id: string; name: string }
+    customer?: { id: string; name: string },
+    autoSchedule = false
   ) {
     return this._plans.model.approvalPlan.create({
       data: {
@@ -89,6 +99,7 @@ export class ApprovalRepository {
         to,
         customerId: customer?.id,
         customerName: customer?.name,
+        autoSchedule,
       },
       select: { id: true },
     });
@@ -102,6 +113,7 @@ export class ApprovalRepository {
         organizationId: true,
         customerId: true,
         customerName: true,
+        autoSchedule: true,
         from: true,
         to: true,
       },
@@ -136,6 +148,7 @@ export class ApprovalRepository {
         content: true,
         image: true,
         publishDate: true,
+        state: true,
         integration: {
           select: {
             id: true,
