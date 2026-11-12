@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import dayjs from 'dayjs';
 import { useCallback, useState } from 'react';
 import { SelectCustomer } from '@gitroom/frontend/components/launches/select.customer';
+import { PlanShareButton } from '@gitroom/frontend/components/launches/plan.share.component';
 import { SelectChannels } from '@gitroom/frontend/components/launches/select.channels';
 import { useT } from '@gitroom/react/translation/get.transation.service.client';
 import i18next from 'i18next';
@@ -447,6 +448,7 @@ export const Filters = () => {
           integrations={calendar.integrations}
         />
         <SelectChannels />
+        <PlanShareButton />
       </div>
       {calendar.integrations.length > 1 && (
         <div
