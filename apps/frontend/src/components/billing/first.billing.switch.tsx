@@ -41,7 +41,7 @@ export const FirstBillingSwitch: FC = () => {
         <p className="text-[14px] text-textItemBlur mt-[6px]">
           {t(
             'iyzico_choose_plan_note',
-            'Prices are in Turkish lira. You can cancel at any time.'
+            'Prices are in Turkish lira and include VAT. You can cancel at any time.'
           )}
         </p>
       </div>
