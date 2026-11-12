@@ -960,5 +960,11 @@
   "approval_plan_all_channels": "All channels",
   "approval_plan_create": "Create approval link",
   "approval_plan_create_failed": "The approval link could not be created",
-  "approval_plan_whatsapp_message": "Your content plan is ready for approval. You can review and approve it here:"
+  "approval_plan_whatsapp_message": "Your content plan is ready for approval. You can review and approve it here:",
+  "approval_badge_approved": "Approved by the client",
+  "approval_badge_changes": "The client requested a change",
+  "approval_plan_auto_schedule": "Schedule drafts automatically when the client approves",
+  "approval_plan_auto_schedule_hint": "Save the posts as drafts: nothing is published before approval. If the client requests a change, a scheduled post goes back to draft.",
+  "special_days_title": "Special days",
+  "special_days_create_draft": "Create a draft post for this day"
 }
