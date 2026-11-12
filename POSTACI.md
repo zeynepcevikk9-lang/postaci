@@ -44,7 +44,7 @@ node araclar/postaci-marka.mjs
 | Müşteri bazlı çalışma | `Customer` modeli; kanallar müşteriye göre gruplanıyor | Müşteriye logo, iletişim bilgisi |
 | Aylık rapor | Analitik ekranı ve verisi | PDF çıktı, ajans logosu, zamanlama |
 | Özel gün takvimi | Takvim ekranı, taslak gönderi (`DRAFT`) | Türkiye özel gün verisi, taslak üretimi |
-| TL tahsilat | Ödeme sağlayıcı soyutlaması (`payment.providers.ts`), Stripe | iyzico veya PayTR sağlayıcısı |
+| TL tahsilat | Ödeme sağlayıcı soyutlaması (`payment.providers.ts`), Stripe | iyzico sağlayıcısı (yazıldı, aşağıya bakın) |
 | Ajans markalı panel | Yok | Logo, renk, alan adı |
 | E-ticaret bağlantısı | Yok | ikas, Ticimax, Trendyol |
 
@@ -57,7 +57,7 @@ node araclar/postaci-marka.mjs
 - [x] Türkçe çeviriyi elden geçir, çevirideki marka adını Postacı yap
 - [x] Sekme başlıkları ve "Agent" menüsü Türkçe ve Postacı adıyla
 - [x] Logo, site simgesi ve ana renkler Postacı'ya çevrildi (`araclar/postaci-marka.mjs`)
-- [ ] Kalan Postiz izleri: faturalandırma ekranındaki tanıtım metinleri, tarayıcı eklentisi uyarısı, açık/koyu tema kararı
+- [ ] Kalan Postiz izleri: faturalandırma ekranındaki tanıtım metinleri (iyzico açıkken görünmez), abonelik iptal e-postası (İngilizce), tarayıcı eklentisi uyarısı
 - [x] Türkiye özel gün takvimi ve hazır taslak (takvimin üstünde "Özel günler" şeridi; veri
       `special-days/tr.special.days.ts`; dini günler yıl yıl elle girilir, 2026 ve 2027 girildi)
 - [x] Aylık rapor: takvimde "Aylık rapor" ile oluşturulur, müşteri sayfası `/p/report/<anahtar>`,
@@ -77,7 +77,18 @@ node araclar/postaci-marka.mjs
       Adres yalnızca herkese açık https olabilir; iç ağ adresleri reddedilir.
 - [ ] E-ticaret bağlantısı, 2. adım: ürün görselini taslağa ekleme, indirim/fiyat değişikliği,
       Trendyol satıcı API bağlantısı, arka planda kendiliğinden kontrol (şu an pencere açılınca kontrol edilir)
-- [ ] TL ile abonelik tahsilatı
+- [x] TL ile abonelik tahsilatı, 1. adım: iyzico sağlayıcısı (plan seçme ekranı, iyzico ödeme formu,
+      deneme süresi, yenileme ve başarısız ödeme bildirimi, dönem sonuna kadar kullanımla iptal,
+      ödeme geçmişi). Yalnızca depodaki sahte iyzico sunucusuyla denendi.
+- [ ] TL ile abonelik tahsilatı, 2. adım: iyzico'nun deneme ortamıyla sınama (hesap gerekir),
+      plan değiştirme, kart güncelleme, iptal e-postasının Türkçesi, fatura (e-arşiv) akışı
+- [x] Yönetim paneli, 1. adım: `/admin/customers` (yalnızca süper yönetici). Bütün hesaplar plan,
+      abonelik durumu, kanal/gönderi/müşteri sayısı ve son girişle listelenir; özet kutuları ve
+      tahmini aylık gelir; "Hesaba gir" ile hesap sahibinin gözünden açılır. Postiz'den gelen
+      `/admin/stats` ve `/admin/errors` sayfaları da duruyor. Süper yönetici, veritabanında
+      `User.isSuperAdmin` alanı açılarak tanımlanır.
+- [ ] Yönetim paneli, 2. adım: hesaba elle plan verme/kaldırma (havale ile ödeyenler), iade,
+      hesap dondurma
 - [ ] Tanıtım sitesi (ürün ana sayfası `site/` içinde; eksik: deneme kaydı formunun bağlanması, fiyatların kesinleşmesi, yayına alma)
 
 Kodun dışında, başvurusu erken yapılması gerekenler: Meta, TikTok ve LinkedIn uygulama
@@ -132,6 +143,59 @@ node site/serve.mjs   # http://localhost:4300
 Deneme kaydı formu, `index.html` içindeki `data-endpoint` özelliği doldurulana kadar kayıt
 göndermez ve ziyaretçiye kaydın şu an alınamadığını söyler. Sayfa ürünü yayındaki haliyle
 anlatır; anlatılan özellikler hazır olmadan yayına alınmamalıdır. Fiyatlar taslaktır.
+
+## iyzico ile TL abonelik
+
+Kod: `services/payment/providers/iyzico.provider.ts` (sağlayıcı), `database/prisma/iyzico/`
+(ödeme formu kayıtları), `api/routes/iyzico.controller.ts`, ön yüzde
+`components/billing/iyzico.billing.component.tsx`.
+
+Nasıl çalışır:
+
+- Planlar iyzico panelinde tanımlanır (Abonelik > Ürün ve ödeme planı). Her planın referans kodu
+  `.env` içine yazılır: `IYZICO_PLAN_<STANDARD|TEAM|PRO|ULTIMATE>_<MONTHLY|YEARLY>`. Plan adı,
+  fiyatı ve deneme süresi iyzico'dan okunur; depoda fiyat yoktur. Kanal sayısı gibi sınırlar
+  Postiz'in `pricing.ts` dosyasındaki kademeden gelir.
+- Kullanıcı planı seçer, fatura bilgilerini yazar; kart bilgisi iyzico'nun formuna girilir, bize
+  ulaşmaz. Ödeme bitince iyzico tarayıcıyı `/public/iyzico/callback` adresine gönderir.
+- iyzico doğrunun kaynağıdır: ödeme dönüşü ve webhook yalnızca "şu aboneliği yeniden oku" der,
+  durum her seferinde iyzico API'sinden alınır.
+- Ödeme alınamazsa kullanıcıya bildirim gider ve 3 gün süre tanınır. İptal edilen abonelik,
+  ödemesi alınmış dönemin sonuna kadar kullanılır. Süresi biten abonelikleri arka uç açılışta
+  ve saatte bir kapatır (kanallar devre dışı kalır).
+- Ödeme yapılıp tarayıcı bize dönmezse (sekme kapanır, bağlantı kopar) abonelik yine tanınır:
+  ilk webhook'ta ve saatlik kontrolde bekleyen formlar iyzico'ya sorulur.
+- Abonelik yalnızca iyzico açıkça "iptal edildi" ya da "süresi doldu" derse kaldırılır; okunamayan
+  ya da tanınmayan bir durumda hiçbir şeye dokunulmaz.
+- Deneme süreli bir planın denemesiz eşi `IYZICO_PLAN_..._NO_TRIAL` ile verilir; daha önce abone
+  olmuş hesap onunla başlar. Verilmezse eski aboneler yeniden deneme alabilir.
+- Webhook imzası iyzico'da açtırılana kadar webhook adresi imzasız istek kabul eder. Bu isteklerin
+  içeriğine güvenilmez, yalnızca aboneliğin iyzico'dan yeniden okunmasını tetikler.
+- Bilinen sınırlar: plan değiştirme ve kart güncelleme yok; iptal geri alınamaz (dönem bitince
+  yeniden abone olunur); iyzico panelinden elle "yükseltme" yapılırsa abonelik düşer.
+
+Canlıya almak için gerekenler:
+
+1. iyzico üye işyeri hesabı ve hesapta abonelik ürününün açılması.
+2. `.env`: `IYZICO_API_KEY`, `IYZICO_SECRET_KEY`, `IYZICO_BASE_URL` (yazılmazsa deneme ortamı),
+   plan kodları, `PAYMENT_PROVIDER_WEB="iyzico"`. Ücretli kip Postiz'in bayrağıyla açılır:
+   `STRIPE_PUBLISHABLE_KEY` ve `STRIPE_SECRET_KEY` boş olmayan bir değer olmalıdır.
+3. iyzico panelinde abonelik bildirim adresi: `<arka uç adresi>/payment/iyzico`. Webhook imzası
+   iyzico'dan e-postayla açtırılır; açılınca `IYZICO_MERCHANT_ID` yazılır ve imzasız istekler
+   reddedilir.
+4. iyzico'nun deneme ortamında (sandbox) uçtan uca deneme. Yanıt biçimleri belgelere göre yazıldı,
+   gerçek iyzico ile henüz denenmedi.
+
+Hesap olmadan yerelde denemek için sahte bir iyzico sunucusu vardır (gerçek ödeme yoktur):
+
+```bash
+node araclar/iyzico-sahte.mjs   # http://localhost:4400
+```
+
+`.env` içine `IYZICO_BASE_URL="http://localhost:4400"`, `IYZICO_API_KEY="sahte-api-key"`,
+`IYZICO_SECRET_KEY="sahte-secret-key"` ve dosyanın başında yazan plan kodları yazılır. Yenileme
+ve başarısız ödeme şöyle denenir:
+`curl -X POST "http://localhost:4400/sahte/olay?ref=<abonelik kodu>&tur=failure"`
 
 ## Kod yapısı (kısa)
 
