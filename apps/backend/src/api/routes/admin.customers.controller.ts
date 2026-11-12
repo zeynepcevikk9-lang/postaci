@@ -1,8 +1,17 @@
-import { Controller, Get, HttpException, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  Param,
+  Post,
+  Query,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { User } from '@prisma/client';
 import { GetUserFromRequest } from '@gitroom/nestjs-libraries/user/user.from.request';
 import { AdminCustomersService } from '@gitroom/nestjs-libraries/database/prisma/admin-customers/admin-customers.service';
+import { AdminSetPlanDto } from '@gitroom/nestjs-libraries/dtos/admin/admin.set.plan.dto';
 
 // Postacı: yönetim paneli, müşteri (hesap) listesi. Yalnızca süper yönetici.
 @ApiTags('Admin')
@@ -31,6 +40,22 @@ export class AdminCustomersController {
       search: search ? String(search).slice(0, 100) : undefined,
       plan: plan || undefined,
     });
+  }
+
+  @Post('/:id/plan')
+  async setPlan(
+    @GetUserFromRequest() user: User,
+    @Param('id') id: string,
+    @Body() body: AdminSetPlanDto
+  ) {
+    this.assertSuperAdmin(user);
+    console.log('admin_set_plan', {
+      admin_id: user.id,
+      organization_id: id,
+      plan: body.plan,
+      until: body.until || null,
+    });
+    return this._adminCustomersService.setPlan(id, body);
   }
 
   @Get('/summary')
