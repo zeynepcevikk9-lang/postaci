@@ -33,6 +33,12 @@ export class ApprovalsPublicController {
     return this._approvalService.getPlan(planId);
   }
 
+  // Aylık rapor: oluşturulduğu andaki veriler.
+  @Get('/reports/:id')
+  async getReport(@Param('id') reportId: string) {
+    return this._approvalService.getReport(reportId);
+  }
+
   @Post('/plans/:id/decision')
   async decidePlanItem(
     @Param('id') planId: string,
