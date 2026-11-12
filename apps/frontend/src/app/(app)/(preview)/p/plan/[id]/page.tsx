@@ -4,7 +4,7 @@ import { internalFetch } from '@gitroom/helpers/utils/internal.fetch';
 export const dynamic = 'force-dynamic';
 import { Metadata } from 'next';
 import { getT } from '@gitroom/react/translation/get.translation.service.backend';
-import { LogoTextComponent } from '@gitroom/frontend/components/ui/logo-text.component';
+import { BrandHeader } from '@gitroom/frontend/components/preview/brand.header';
 import { PlanApprovalClient } from '@gitroom/frontend/components/preview/plan.approval.client';
 
 export const metadata: Metadata = {
@@ -34,7 +34,7 @@ export default async function Plan(props: {
   return (
     <div className="mx-auto w-full max-w-[920px] p-[12px] flex flex-col gap-[8px] text-newTextColor">
       <div className="flex bg-newBgColorInner rounded-[12px] min-h-[80px] px-[20px] py-[12px] items-center gap-[20px] flex-wrap">
-        <LogoTextComponent />
+        <BrandHeader brand={plan.brand} />
       </div>
       <PlanApprovalClient planId={id} initial={plan} />
     </div>

@@ -16,7 +16,7 @@ import { ApprovalClient } from '@gitroom/frontend/components/preview/approval.cl
 import { WhatsappShareClient } from '@gitroom/frontend/components/preview/whatsapp.share.client';
 import { getT } from '@gitroom/react/translation/get.translation.service.backend';
 import { RenderPreviewDateClient } from '@gitroom/frontend/components/preview/render.preview.date.client';
-import { LogoTextComponent } from '@gitroom/frontend/components/ui/logo-text.component';
+import { BrandHeader } from '@gitroom/frontend/components/preview/brand.header';
 import { CreationMethodBadge } from '@gitroom/frontend/components/launches/creation.method.badge';
 
 dayjs.extend(utc);
@@ -50,6 +50,12 @@ export default async function Auth(
       </div>
     );
   }
+  // Postacı: ajans markası; alınamazsa Postacı logosu gösterilir.
+  const brand = await internalFetch(
+    `/public/brand/${post[0].organizationId}`
+  )
+    .then((r) => (r.ok ? r.json() : null))
+    .catch(() => null);
   return (
     <PreviewCommentsProvider
       previewId={id}
@@ -62,7 +68,7 @@ export default async function Auth(
             href="/"
             className="flex items-center gap-[10px] text-textColor"
           >
-            <LogoTextComponent />
+            <BrandHeader brand={brand} />
           </Link>
           <div className="flex-1" />
           <div className="flex items-center gap-[20px] text-[14px] text-textItemBlur">
