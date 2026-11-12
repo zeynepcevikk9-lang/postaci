@@ -20,7 +20,7 @@ export class ApprovalsController {
     @GetOrgFromRequest() org: Organization,
     @Body() body: CreateApprovalPlanDto
   ) {
-    return this._approvalService.createPlan(org.id, body);
+    return this._approvalService.createPlan(org, body);
   }
 
   // Takvimdeki rozetler için gönderilerin güncel onay durumları.
