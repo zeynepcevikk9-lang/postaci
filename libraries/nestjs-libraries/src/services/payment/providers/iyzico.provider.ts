@@ -12,8 +12,11 @@ import { NotificationService } from '@gitroom/nestjs-libraries/database/prisma/n
 import { IyzicoRepository } from '@gitroom/nestjs-libraries/database/prisma/iyzico/iyzico.repository';
 import { IyzicoCheckoutDto } from '@gitroom/nestjs-libraries/dtos/billing/iyzico.checkout.dto';
 import { pricing } from '@gitroom/nestjs-libraries/database/prisma/subscriptions/pricing';
+import { makeId } from '@gitroom/nestjs-libraries/services/make.is';
 
 export const IYZICO_PROVIDER = 'iyzico';
+// Yöneticinin elle verdiği planın (havale ile ödeme) abonelik kimliği bununla başlar.
+export const MANUAL_PLAN_PREFIX = 'manual-';
 
 type Tier = 'STANDARD' | 'TEAM' | 'PRO' | 'ULTIMATE';
 type Period = 'MONTHLY' | 'YEARLY';
@@ -100,7 +103,7 @@ export class IyzicoProvider
   // sonra saatte bir, bitiş tarihi geçen abonelikler kapatılır ve ödeme
   // dönüşü bize ulaşmamış formlar iyzico'ya sorulur.
   onModuleInit() {
-    if (!this.isConfigured() || sweepTimer) {
+    if (sweepTimer) {
       return;
     }
     this.sweep();
@@ -112,7 +115,9 @@ export class IyzicoProvider
 
   private async sweep() {
     await this.expireSubscriptions();
-    await this.reconcilePendingCheckouts(24 * HOUR, 5 * 60 * 1000);
+    if (this.isConfigured()) {
+      await this.reconcilePendingCheckouts(24 * HOUR, 5 * 60 * 1000);
+    }
   }
 
   isConfigured() {
@@ -447,7 +452,11 @@ export class IyzicoProvider
       await this._subscriptionService.getSubscriptionByOrganizationId(
         organizationId
       );
-    const owned = current?.provider === IYZICO_PROVIDER;
+    // Kayıt bu iyzico aboneliğine mi ait (elle verilmiş plan ya da başka bir
+    // abonelik değil mi)
+    const owned =
+      current?.provider === IYZICO_PROVIDER &&
+      current.identifier === checkout.subscriptionReferenceCode;
 
     if (subscription && status === 'ACTIVE') {
       const plan = this.findPlanByCode(
@@ -490,10 +499,12 @@ export class IyzicoProvider
         );
         return { active: true };
       }
-      await this._subscriptionService.deleteSubscriptionByOrgId(
-        organizationId,
-        IYZICO_PROVIDER
-      );
+      if (owned) {
+        await this._subscriptionService.deleteSubscriptionByOrgId(
+          organizationId,
+          IYZICO_PROVIDER
+        );
+      }
       return { active: false };
     }
 
@@ -668,7 +679,8 @@ export class IyzicoProvider
     );
     if (
       current?.provider !== IYZICO_PROVIDER ||
-      !checkout?.subscriptionReferenceCode
+      !checkout?.subscriptionReferenceCode ||
+      current.identifier !== checkout.subscriptionReferenceCode
     ) {
       throw new BadRequestException('No active subscription found');
     }
@@ -721,6 +733,56 @@ export class IyzicoProvider
     }
   }
 
+  // Yönetici: hesaba elle plan verir (havale ile ödeyenler için). Bitiş tarihi
+  // verilirse plan o tarihte kendiliğinden kapanır. Kartla süren bir abonelik
+  // varken verilmez; önce o kaldırılır (yoksa iyzico kartı çekmeye devam ederdi).
+  async grantManualPlan(
+    organizationId: string,
+    billing: Tier,
+    period: Period,
+    until: Date | null
+  ) {
+    const current =
+      await this._subscriptionService.getSubscriptionByOrganizationId(
+        organizationId
+      );
+    if (current && (current.provider !== IYZICO_PROVIDER || current.isLifetime)) {
+      throw new BadRequestException(
+        'This subscription is managed by another provider'
+      );
+    }
+    if (
+      current &&
+      !current.cancelAt &&
+      !current.identifier?.startsWith(MANUAL_PLAN_PREFIX)
+    ) {
+      throw new BadRequestException(
+        'Remove the card subscription before giving a plan manually'
+      );
+    }
+
+    const identifier = MANUAL_PLAN_PREFIX + makeId(10);
+    await this._subscriptionService.createOrUpdateSubscriptionByOrg(
+      false,
+      organizationId,
+      IYZICO_PROVIDER,
+      identifier,
+      pricing[billing].channel!,
+      billing,
+      period,
+      until ? Math.floor(until.getTime() / 1000) : null
+    );
+
+    const saved =
+      await this._subscriptionService.getSubscriptionByOrganizationId(
+        organizationId
+      );
+    if (saved?.identifier !== identifier) {
+      throw new BadRequestException('The plan could not be saved');
+    }
+    return { success: true };
+  }
+
   // Yönetici: hemen iptal et ve aboneliği kaldır.
   override async cancelSubscription(organizationId: string) {
     await this.cancelAllSubscriptions(organizationId);
@@ -735,7 +797,14 @@ export class IyzicoProvider
     const checkout = await this._iyzicoRepository.getLastCompletedCheckout(
       organizationId
     );
-    if (!checkout?.subscriptionReferenceCode) {
+    const current =
+      await this._subscriptionService.getSubscriptionByOrganizationId(
+        organizationId
+      );
+    if (
+      !checkout?.subscriptionReferenceCode ||
+      current?.identifier !== checkout.subscriptionReferenceCode
+    ) {
       return undefined;
     }
     return this.getSubscriptionDetail(checkout.subscriptionReferenceCode);
