@@ -41,7 +41,7 @@ import { InvoicesComponent } from '@gitroom/frontend/components/layout/invoices.
 import { StreakComponent } from '@gitroom/frontend/components/layout/streak.component';
 import { PreConditionComponent } from '@gitroom/frontend/components/layout/pre-condition.component';
 import { AttachToFeedbackIcon } from '@gitroom/frontend/components/new-layout/sentry.feedback.component';
-import { FirstBillingComponent } from '@gitroom/frontend/components/billing/first.billing.component';
+import { FirstBillingSwitch } from '@gitroom/frontend/components/billing/first.billing.switch';
 import { TrialTracker } from '@gitroom/frontend/components/layout/gtm.component';
 import { setSentryUser } from '@gitroom/react/sentry/initialize.sentry.client';
 import { setUserTimezone } from '@gitroom/frontend/components/layout/set.timezone';
@@ -107,7 +107,7 @@ export const LayoutComponent = ({ children }: { children: ReactNode }) => {
             >
               <div>{user?.admin ? <Impersonate /> : <div />}</div>
               {user.tier === 'FREE' && isGeneral && billingEnabled ? (
-                <FirstBillingComponent />
+                <FirstBillingSwitch />
               ) : (
                 <>
                   <AnnouncementBanner />
