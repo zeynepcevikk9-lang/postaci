@@ -1844,3 +1844,25 @@ model Announcement {
   color       AnnouncementColor @default(INFO)
   createdAt   DateTime          @default(now())
 }
+
+// Postacı: müşteri onayı. Her karar ayrı satırdır; bir gönderinin güncel durumu
+// en son satırdır, hiç satır yoksa onay bekliyordur. postId, önizleme
+// bağlantısındaki ana gönderinin kimliğidir.
+model PostApproval {
+  id             String             @id @default(uuid())
+  organizationId String
+  postId         String
+  status         PostApprovalStatus
+  reviewerName   String
+  note           String?
+  createdAt      DateTime           @default(now())
+
+  @@index([postId])
+  @@index([organizationId])
+  @@index([createdAt])
+}
+
+enum PostApprovalStatus {
+  APPROVED
+  CHANGES_REQUESTED
+}
