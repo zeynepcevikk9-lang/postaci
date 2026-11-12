@@ -1902,3 +1902,36 @@ model AgencyBrand {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
+
+// Postacı: e-ticaret bağlantısı. Mağazanın ürün XML adresi.
+model ProductFeed {
+  id             String    @id @default(uuid())
+  organizationId String
+  customerId     String?
+  name           String
+  url            String
+  lastCheckedAt  DateTime?
+  createdAt      DateTime  @default(now())
+  deletedAt      DateTime?
+
+  @@index([organizationId])
+}
+
+// Mağazada görülen ürünler. isNew: mağaza eklendikten sonra giren ürün (taslak
+// önerisi). dismissedAt: taslağa dönüştürüldü ya da yok sayıldı.
+model ProductFeedItem {
+  id             String    @id @default(uuid())
+  feedId         String
+  organizationId String
+  externalId     String
+  title          String
+  price          String?
+  image          String?
+  link           String?
+  isNew          Boolean   @default(false)
+  dismissedAt    DateTime?
+  createdAt      DateTime  @default(now())
+
+  @@unique([feedId, externalId])
+  @@index([organizationId, isNew, dismissedAt])
+}
