@@ -9,6 +9,7 @@ import { FC, useCallback, useEffect, useMemo, useState } from 'react';
 import { capitalize, groupBy, orderBy } from 'lodash';
 import { CalendarWeekProvider } from '@gitroom/frontend/components/launches/calendar.context';
 import { Filters } from '@gitroom/frontend/components/launches/filters';
+import { SpecialDaysStrip } from '@gitroom/frontend/components/launches/special-days/special.days.strip';
 import { useFetch } from '@gitroom/helpers/utils/custom.fetch';
 import { LoadingComponent } from '@gitroom/frontend/components/layout/loading';
 import clsx from 'clsx';
@@ -813,6 +814,7 @@ export const LaunchesComponent = () => {
             )}
           </div>
           <Filters />
+          <SpecialDaysStrip />
           <div className="flex-1 flex">
             <Calendar />
           </div>
