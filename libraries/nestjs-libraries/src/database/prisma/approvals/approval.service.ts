@@ -14,6 +14,9 @@ import {
   PlanDecisionDto,
 } from '@gitroom/nestjs-libraries/dtos/approvals/approval.dto';
 import { postContentPlainText } from '@gitroom/helpers/utils/sanitize.post.content';
+import { BrandService } from '@gitroom/nestjs-libraries/database/prisma/brand/brand.service';
+import { IntegrationService } from '@gitroom/nestjs-libraries/database/prisma/integrations/integration.service';
+import { Organization } from '@prisma/client';
 
 type ApprovalStatus = ApprovalDecision | 'PENDING';
 
@@ -25,7 +28,9 @@ export class ApprovalService {
   constructor(
     private _approvalRepository: ApprovalRepository,
     private _postsService: PostsService,
-    private _notificationService: NotificationService
+    private _notificationService: NotificationService,
+    private _brandService: BrandService,
+    private _integrationService: IntegrationService
   ) {}
 
   // Bildirim gönderilemese de müşterinin kararı kaydedilmiş olmalı.
@@ -85,6 +90,7 @@ export class ApprovalService {
       status: (history[0]?.status || 'PENDING') as ApprovalStatus,
       current: history[0] || null,
       history,
+      brand: await this._brandService.getBrand(root.organizationId),
     };
   }
 
@@ -117,7 +123,8 @@ export class ApprovalService {
 
   // ---- Toplu onay planı ----
 
-  async createPlan(organizationId: string, body: CreateApprovalPlanDto) {
+  async createPlan(org: Organization, body: CreateApprovalPlanDto) {
+    const organizationId = org.id;
     const from = new Date(body.from);
     const to = new Date(body.to);
     const days = (to.getTime() - from.getTime()) / 86_400_000;
@@ -137,6 +144,19 @@ export class ApprovalService {
       customer = found;
     }
 
+    if (body.kind === 'report') {
+      const snapshot = await this.buildReport(org, from, to, customer?.id);
+      return this._approvalRepository.createPlan(
+        organizationId,
+        from,
+        to,
+        customer,
+        false,
+        'report',
+        JSON.stringify(snapshot)
+      );
+    }
+
     return this._approvalRepository.createPlan(
       organizationId,
       from,
@@ -144,6 +164,118 @@ export class ApprovalService {
       customer,
       !!body.autoSchedule
     );
+  }
+
+  // ---- Aylık rapor ----
+
+  // Raporun oluşturulduğu andaki veriler. Kanal istatistikleri platformdan
+  // alınabildiği kadarıyla eklenir; alınamayan kanal raporu engellemez.
+  private async buildReport(
+    org: Organization,
+    from: Date,
+    to: Date,
+    customerId?: string
+  ) {
+    const posts = await this._approvalRepository.getPublishedPosts(
+      org.id,
+      from,
+      to,
+      customerId
+    );
+
+    const channelMap = new Map<
+      string,
+      {
+        id: string;
+        name: string;
+        picture: string | null;
+        providerIdentifier: string;
+        profile: string | null;
+        published: number;
+        metrics: { label: string; total: number }[];
+      }
+    >();
+    for (const post of posts) {
+      const channel = channelMap.get(post.integration.id) || {
+        ...post.integration,
+        published: 0,
+        metrics: [],
+      };
+      channel.published++;
+      channelMap.set(post.integration.id, channel);
+    }
+
+    for (const channel of channelMap.values()) {
+      try {
+        const analytics = await this._integrationService.checkAnalytics(
+          org,
+          channel.id,
+          '30'
+        );
+        channel.metrics = (analytics || []).slice(0, 6).map((metric) => ({
+          label: metric.label,
+          total: metric.data.reduce(
+            (sum, point) => sum + (Number(point.total) || 0),
+            0
+          ),
+        }));
+      } catch (err) {
+        channel.metrics = [];
+      }
+    }
+
+    const groups = new Map<string, typeof posts>();
+    for (const post of posts) {
+      groups.set(post.group, [...(groups.get(post.group) || []), post]);
+    }
+
+    const postIds = posts.map((p) => p.id);
+    const [approved, changes] = postIds.length
+      ? await Promise.all([
+          this._approvalRepository.countApprovals(org.id, postIds, 'APPROVED'),
+          this._approvalRepository.countApprovals(
+            org.id,
+            postIds,
+            'CHANGES_REQUESTED'
+          ),
+        ])
+      : [0, 0];
+
+    return {
+      generatedAt: new Date().toISOString(),
+      totals: {
+        posts: groups.size,
+        publications: posts.length,
+        channels: channelMap.size,
+        approved,
+        changes,
+      },
+      channels: [...channelMap.values()],
+      posts: [...groups.values()].map((groupPosts) => ({
+        publishDate: groupPosts[0].publishDate,
+        text: postContentPlainText(groupPosts[0].content).slice(0, 280),
+        channels: groupPosts.map((p) => ({
+          name: p.integration.name,
+          providerIdentifier: p.integration.providerIdentifier,
+          url: p.releaseURL,
+        })),
+      })),
+    };
+  }
+
+  async getReport(reportId: string) {
+    const plan = await this._approvalRepository.getPlan(reportId);
+    if (!plan || plan.kind !== 'report' || !plan.snapshot) {
+      throw new NotFoundException('Report not found');
+    }
+    return {
+      id: plan.id,
+      customerName: plan.customerName,
+      from: plan.from,
+      to: plan.to,
+      brand: await this._brandService.getBrand(plan.organizationId),
+      ...JSON.parse(plan.snapshot),
+    };
   }
 
   // Takvim rozetleri: her gönderinin en son kararı. Kararı olmayan gönderi
@@ -203,7 +335,7 @@ export class ApprovalService {
   // "group") müşteriye tek kalem olarak gösterilir.
   private async loadPlan(planId: string) {
     const plan = await this._approvalRepository.getPlan(planId);
-    if (!plan) {
+    if (!plan || plan.kind !== 'plan') {
       throw new NotFoundException('Plan not found');
     }
 
@@ -302,6 +434,7 @@ export class ApprovalService {
       customerName: plan.customerName,
       from: plan.from,
       to: plan.to,
+      brand: await this._brandService.getBrand(plan.organizationId),
       // postIds ve posts yalnızca sunucu içinde kullanılır
       items: items.map(({ postIds, posts, ...item }) => item),
     };
