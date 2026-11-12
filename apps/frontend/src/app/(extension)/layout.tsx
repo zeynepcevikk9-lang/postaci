@@ -16,7 +16,7 @@ export default async function AppLayout({ children }: { children: ReactNode }) {
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
       <body
-        className={clsx(jakartaSans.className, 'dark text-primary !bg-primary')}
+        className={clsx(jakartaSans.className, 'light text-primary !bg-primary')}
       >
         <VariableContextComponent
           language="en"
