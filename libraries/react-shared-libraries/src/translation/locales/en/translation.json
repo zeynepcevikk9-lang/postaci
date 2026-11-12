@@ -996,5 +996,22 @@
   "report_channel_published": "posts",
   "report_metrics_note": "Channel figures cover the 30 days before the report was created.",
   "report_posts": "Published posts",
-  "report_generated_at": "Report created on"
+  "report_generated_at": "Report created on",
+  "feeds_button": "Store",
+  "feeds_title": "Store products",
+  "feeds_new_products": "New products in your stores",
+  "feeds_no_new_products": "No new products yet. Products added to the store after it is connected appear here.",
+  "feeds_no_store": "Connect a store below to get draft posts for its new products.",
+  "feeds_create_draft": "Create draft",
+  "feeds_dismiss": "Skip",
+  "feeds_stores": "Connected stores",
+  "feeds_check_now": "Check now",
+  "feeds_help": "Paste the product XML address of the store (ikas, Ticimax, T-Soft, IdeaSoft and similar platforms provide one, as does a Google Merchant feed).",
+  "feeds_store_name": "Store name",
+  "feeds_add": "Connect store",
+  "feeds_fill_fields": "Enter a store name and the product XML address",
+  "feeds_added": "Store added, products found:",
+  "feeds_add_failed": "The address could not be read. It must be a public https address of a product XML.",
+  "feeds_synced": "Store checked, new products:",
+  "feeds_sync_failed": "The store could not be read"
 }
