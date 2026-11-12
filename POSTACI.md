@@ -72,7 +72,11 @@ node araclar/postaci-marka.mjs
 - [x] Ajans markası, 1. adım: Ayarlar > Ajans Markası (ad, logo, renk); müşterinin gördüğü
       sayfalarda (önizleme, onay planı, rapor) Postacı yerine ajans görünür
 - [ ] Ajans markası, 2. adım: ajansın kendi alan adı ve panelin kendisinde ajans logosu
-- [ ] E-ticaret bağlantısı (ikas, Ticimax, Trendyol)
+- [x] E-ticaret bağlantısı, 1. adım: takvimde "Mağaza" düğmesi; mağazanın ürün XML adresi eklenir
+      (ikas, Ticimax, T-Soft, IdeaSoft, Google Merchant), sonradan giren ürünler taslak önerisi olur.
+      Adres yalnızca herkese açık https olabilir; iç ağ adresleri reddedilir.
+- [ ] E-ticaret bağlantısı, 2. adım: ürün görselini taslağa ekleme, indirim/fiyat değişikliği,
+      Trendyol satıcı API bağlantısı, arka planda kendiliğinden kontrol (şu an pencere açılınca kontrol edilir)
 - [ ] TL ile abonelik tahsilatı
 - [ ] Tanıtım sitesi (ürün ana sayfası `site/` içinde; eksik: deneme kaydı formunun bağlanması, fiyatların kesinleşmesi, yayına alma)
 
