@@ -90,7 +90,9 @@ export class ApprovalRepository {
     from: Date,
     to: Date,
     customer?: { id: string; name: string },
-    autoSchedule = false
+    autoSchedule = false,
+    kind: 'plan' | 'report' = 'plan',
+    snapshot?: string
   ) {
     return this._plans.model.approvalPlan.create({
       data: {
@@ -100,6 +102,8 @@ export class ApprovalRepository {
         customerId: customer?.id,
         customerName: customer?.name,
         autoSchedule,
+        kind,
+        snapshot,
       },
       select: { id: true },
     });
@@ -114,9 +118,62 @@ export class ApprovalRepository {
         customerId: true,
         customerName: true,
         autoSchedule: true,
+        kind: true,
+        snapshot: true,
         from: true,
         to: true,
       },
+    });
+  }
+
+  // Rapor için: dönemde yayımlanmış ana gönderiler.
+  getPublishedPosts(
+    organizationId: string,
+    from: Date,
+    to: Date,
+    customerId?: string | null
+  ) {
+    return this._post.model.post.findMany({
+      where: {
+        organizationId,
+        deletedAt: null,
+        parentPostId: null,
+        state: 'PUBLISHED',
+        publishDate: { gte: from, lte: to },
+        integration: {
+          deletedAt: null,
+          ...(customerId ? { customerId } : {}),
+        },
+      },
+      orderBy: { publishDate: 'asc' },
+      take: 1000,
+      select: {
+        id: true,
+        group: true,
+        content: true,
+        publishDate: true,
+        releaseURL: true,
+        integration: {
+          select: {
+            id: true,
+            name: true,
+            picture: true,
+            providerIdentifier: true,
+            profile: true,
+          },
+        },
+      },
+    });
+  }
+
+  // Rapor için: dönemde verilen müşteri kararlarının sayısı.
+  countApprovals(
+    organizationId: string,
+    postIds: string[],
+    status: ApprovalDecision
+  ) {
+    return this._approvals.model.postApproval.count({
+      where: { organizationId, postId: { in: postIds }, status },
     });
   }
 
