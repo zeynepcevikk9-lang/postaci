@@ -1,6 +1,8 @@
-export const fallbackLng = 'en';
+// Postacı: varsayılan dil Türkçe (Postiz'de 'en').
+export const fallbackLng = 'tr';
 export const languages = [
   fallbackLng,
+  'en',
   'he',
   'ru',
   'zh',
@@ -12,7 +14,6 @@ export const languages = [
   'ja',
   'ko',
   'ar',
-  'tr',
   'vi',
 ];
 
