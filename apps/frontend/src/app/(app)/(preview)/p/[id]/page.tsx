@@ -12,6 +12,8 @@ import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { VideoOrImage } from '@gitroom/react/helpers/video.or.image';
 import { CopyClient } from '@gitroom/frontend/components/preview/copy.client';
+import { ApprovalClient } from '@gitroom/frontend/components/preview/approval.client';
+import { WhatsappShareClient } from '@gitroom/frontend/components/preview/whatsapp.share.client';
 import { getT } from '@gitroom/react/translation/get.translation.service.backend';
 import { RenderPreviewDateClient } from '@gitroom/frontend/components/preview/render.preview.date.client';
 import { LogoTextComponent } from '@gitroom/frontend/components/ui/logo-text.component';
@@ -74,10 +76,13 @@ export default async function Auth(
               <>
                 <div className="w-[1px] h-[20px] bg-blockSeparator" />
                 <CopyClient />
+                <WhatsappShareClient />
               </>
             )}
           </div>
         </div>
+
+        <ApprovalClient previewId={id} />
 
         <div className="flex flex-col lg:flex-row gap-[8px]">
           <div className="flex-1 flex flex-col gap-[8px]">
