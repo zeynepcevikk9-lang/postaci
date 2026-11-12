@@ -31,6 +31,10 @@ import { CopilotController } from '@gitroom/backend/api/routes/copilot.controlle
 import { PublicController } from '@gitroom/backend/api/routes/public.controller';
 import { ApprovalsPublicController } from '@gitroom/backend/api/routes/approvals.public.controller';
 import { ApprovalsController } from '@gitroom/backend/api/routes/approvals.controller';
+import {
+  BrandController,
+  BrandPublicController,
+} from '@gitroom/backend/api/routes/brand.controller';
 import { RootController } from '@gitroom/backend/api/routes/root.controller';
 import { TrackService } from '@gitroom/nestjs-libraries/track/track.service';
 import { ShortLinkService } from '@gitroom/nestjs-libraries/short-linking/short.link.service';
@@ -81,6 +85,7 @@ const authenticatedController = [
   AnnouncementsController,
   AdminController,
   ApprovalsController,
+  BrandController,
 ];
 @Module({
   imports: [UploadModule],
@@ -98,6 +103,7 @@ const authenticatedController = [
         AuthController,
         PublicController,
         ApprovalsPublicController,
+        BrandPublicController,
         MonitorController,
         EnterpriseController,
         NoAuthIntegrationsController,
