@@ -505,7 +505,10 @@ const IyzicoCurrent: FC<{ sub: any; plans: IyzicoPlan[] }> = ({
               : ''}
           </div>
         </div>
-        {!sub.cancelAt && !sub.isLifetime && (
+        {!sub.cancelAt &&
+          !sub.isLifetime &&
+          // elle tanımlanmış planı (havale) kullanıcı iptal edemez
+          !String(sub.identifier || '').startsWith('manual-') && (
           <Button
             secondary={true}
             className="rounded-[8px] border border-newTableBorder"
