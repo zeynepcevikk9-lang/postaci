@@ -31,6 +31,7 @@ import { Autopost } from '@gitroom/frontend/components/autopost/autopost';
 import { useT } from '@gitroom/react/translation/get.transation.service.client';
 import { SVGLine } from '@gitroom/frontend/components/launches/launches.component';
 import { GlobalSettings } from '@gitroom/frontend/components/settings/global.settings';
+import { BrandSettings } from '@gitroom/frontend/components/settings/brand.settings';
 import { AppsComponent } from '@gitroom/frontend/components/settings/apps.component';
 import { ThirdPartyComponent } from '@gitroom/frontend/components/third-parties/third-party.component';
 import { Plugs } from '@gitroom/frontend/components/plugs/plugs';
@@ -87,6 +88,7 @@ export const SettingsPopup: FC<{
   const list = useMemo(() => {
     const arr = [];
     arr.push({ tab: 'global_settings', label: t('global_settings', 'Global Settings') });
+    arr.push({ tab: 'brand', label: t('brand_title', 'Agency brand') });
     // Populate tabs based on user permissions
     if (user?.tier?.public_api && isGeneral && showLogout) {
       arr.push({ tab: 'agents', label: t('agents_dev', 'Agents / Dev') });
@@ -172,6 +174,11 @@ export const SettingsPopup: FC<{
               {tab === 'global_settings' && (
                 <div>
                   <GlobalSettings />
+                </div>
+              )}
+              {tab === 'brand' && (
+                <div>
+                  <BrandSettings />
                 </div>
               )}
               {tab === 'teams' &&
