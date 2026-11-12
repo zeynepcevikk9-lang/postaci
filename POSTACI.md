@@ -28,6 +28,13 @@ git merge upstream/main
 Birleştirmeyi kolay tutmak için Postiz'in dosyalarını olabildiğince az değiştiriyor,
 yeni özellikleri ayrı dosya ve modüllerde yazıyoruz.
 
+Renkler ve sekme başlıkları Postiz'in onlarca dosyasında sabit yazılıdır. Bunları elle
+değil betikle çeviriyoruz; güncelleme aldıktan sonra betik yeniden çalıştırılır:
+
+```bash
+node araclar/postaci-marka.mjs
+```
+
 ## İlk inceleme: hazır gelenler
 
 | Bizim işimiz | Postiz'de hazır olan | Eksik olan |
@@ -48,8 +55,9 @@ yeni özellikleri ayrı dosya ve modüllerde yazıyoruz.
 - [x] Yerelde çalıştır (Node 22.23.4, pnpm 10.6.1, Docker)
 - [x] Türkçeyi varsayılan dil yap (tarayıcı diline bakılmaz; kullanıcı dil menüsünden değiştirebilir)
 - [x] Türkçe çeviriyi elden geçir, çevirideki marka adını Postacı yap
-- [ ] Kodda sabit kalan İngilizce metinler (sekme başlıkları "Postiz ...", "Agent" menüsü)
-- [ ] Logo ve renkleri Postacı'ya çevir
+- [x] Sekme başlıkları ve "Agent" menüsü Türkçe ve Postacı adıyla
+- [x] Logo, site simgesi ve ana renkler Postacı'ya çevrildi (`araclar/postaci-marka.mjs`)
+- [ ] Kalan Postiz izleri: faturalandırma ekranındaki tanıtım metinleri, tarayıcı eklentisi uyarısı, açık/koyu tema kararı
 - [ ] Türkiye özel gün takvimi ve hazır taslak
 - [ ] Ajans logolu aylık PDF rapor
 - [ ] WhatsApp'tan müşteri onayı (tek gönderi ve aylık planın toplu onayı)
