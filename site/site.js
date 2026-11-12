@@ -1,4 +1,4 @@
-// Erken erişim formu. Kayıtların gideceği adres formdaki data-endpoint
+// Deneme kaydı formu. Kayıtların gideceği adres formdaki data-endpoint
 // özelliğinden okunur; boşsa form gönderilmez ve ziyaretçiye açıkça söylenir.
 (function () {
   var form = document.getElementById('join-form');
@@ -20,7 +20,7 @@
 
     var endpoint = form.getAttribute('data-endpoint');
     if (!endpoint) {
-      show('Kayıt formu henüz açılmadı. Kısa süre sonra tekrar deneyin.', 'err');
+      show('Deneme kaydı şu an alınamıyor. Kısa süre sonra tekrar deneyin.', 'err');
       return;
     }
 
@@ -36,7 +36,7 @@
       .then(function (res) {
         if (!res.ok) throw new Error('HTTP ' + res.status);
         form.reset();
-        show('Listeye eklendiniz. Hesabınız açıldığında e-postayla haber vereceğiz.', 'ok');
+        show('Kaydınızı aldık. Giriş bilgileriniz e-posta adresinize gönderilecek.', 'ok');
       })
       .catch(function () {
         show('Kayıt gönderilemedi. Bağlantınızı kontrol edip tekrar deneyin.', 'err');
