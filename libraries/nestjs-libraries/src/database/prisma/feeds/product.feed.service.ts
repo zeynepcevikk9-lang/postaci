@@ -1,9 +1,11 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, OnModuleInit } from '@nestjs/common';
 import { ProductFeedRepository } from '@gitroom/nestjs-libraries/database/prisma/feeds/product.feed.repository';
 import { parseProductFeed } from '@gitroom/nestjs-libraries/database/prisma/feeds/product.feed.parser';
 import { CreateProductFeedDto } from '@gitroom/nestjs-libraries/dtos/feeds/product.feed.dto';
 import { isSafePublicHttpsUrl } from '@gitroom/nestjs-libraries/dtos/webhooks/webhook.url.validator';
 import { getSsrfSafeDispatcher } from '@gitroom/nestjs-libraries/dtos/webhooks/ssrf.safe.dispatcher';
+import { MediaService } from '@gitroom/nestjs-libraries/database/prisma/media/media.service';
+import { NotificationService } from '@gitroom/nestjs-libraries/database/prisma/notifications/notification.service';
 
 const MAX_FEEDS = 20;
 const MAX_FEED_BYTES = 15 * 1024 * 1024;
@@ -11,10 +13,85 @@ const FETCH_TIMEOUT_MS = 20_000;
 // Liste istenirken bu süreden eski mağazalar yeniden okunur.
 const AUTO_SYNC_AFTER_MS = 60 * 60 * 1000;
 const AUTO_SYNC_PER_REQUEST = 3;
+// Arka plan kontrolü: saatte bir, altı saattir okunmamış mağazalar yeniden okunur.
+const BACKGROUND_EVERY_MS = 60 * 60 * 1000;
+const BACKGROUND_STALE_MS = 6 * 60 * 60 * 1000;
+const BACKGROUND_PER_RUN = 20;
+
+let backgroundTimer: NodeJS.Timeout | null = null;
 
 @Injectable()
-export class ProductFeedService {
-  constructor(private _feedRepository: ProductFeedRepository) {}
+export class ProductFeedService implements OnModuleInit {
+  constructor(
+    private _feedRepository: ProductFeedRepository,
+    private _mediaService: MediaService,
+    private _notificationService: NotificationService
+  ) {}
+
+  // Kullanıcı paneli açmasa da mağazalar kontrol edilir; yeni ürün gelince
+  // hesaba bildirim düşer.
+  onModuleInit() {
+    if (backgroundTimer) {
+      return;
+    }
+    this.checkStaleFeeds();
+    backgroundTimer = setInterval(() => {
+      this.checkStaleFeeds();
+    }, BACKGROUND_EVERY_MS);
+    backgroundTimer.unref();
+  }
+
+  async checkStaleFeeds() {
+    try {
+      const feeds = await this._feedRepository.getStaleFeeds(
+        new Date(Date.now() - BACKGROUND_STALE_MS),
+        BACKGROUND_PER_RUN
+      );
+      for (const feed of feeds) {
+        try {
+          if (
+            !(await this._feedRepository.claimFeed(feed.id, feed.lastCheckedAt))
+          ) {
+            continue;
+          }
+          const { added } = await this.syncFeed(feed.organizationId, feed.id);
+          if (added) {
+            await this._notificationService.inAppNotification(
+              feed.organizationId,
+              `${feed.name}: ${added} yeni ürün`,
+              `${feed.name} mağazasına ${added} yeni ürün eklendi. Takvimdeki "Mağaza" düğmesinden taslak gönderi oluşturabilirsiniz.`,
+              true,
+              true
+            );
+          }
+        } catch (err) {
+          // okunamayan mağaza diğerlerini engellemez; bir sonraki turda yeniden denenir
+        }
+      }
+    } catch (err) {
+      console.error('product feeds could not be checked', err);
+    }
+  }
+
+  // Ürün görselini hesabın medya kütüphanesine alır; taslak gönderiye eklenir.
+  // Görsel adresi mağazanın XML'inden gelir: yalnızca genel https adresi kabul
+  // edilir ve indirme, iç ağ adreslerini engelleyen aracıyla yapılır.
+  async importItemImage(organizationId: string, id: string) {
+    const item = await this._feedRepository.getItem(organizationId, id);
+    if (!item?.image) {
+      throw new BadRequestException('Product has no image');
+    }
+    const ssrfDisabled = process.env.DISABLE_SSRF_PROTECTION === 'true';
+    if (!ssrfDisabled && !(await isSafePublicHttpsUrl(item.image))) {
+      throw new BadRequestException('Image must be a public https address');
+    }
+
+    const media = await this._mediaService.uploadFromUrl(
+      organizationId,
+      item.image
+    );
+    return { id: media.id, path: media.path };
+  }
 
   // Adres dışarıdan gelir: yalnızca genel https adresleri okunur ve bağlantı,
   // iç ağ adreslerini engelleyen aracıyla kurulur (webhook'larla aynı kural).
