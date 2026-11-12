@@ -60,7 +60,11 @@ node araclar/postaci-marka.mjs
 - [ ] Kalan Postiz izleri: faturalandırma ekranındaki tanıtım metinleri, tarayıcı eklentisi uyarısı, açık/koyu tema kararı
 - [ ] Türkiye özel gün takvimi ve hazır taslak
 - [ ] Ajans logolu aylık PDF rapor
-- [ ] WhatsApp'tan müşteri onayı (tek gönderi ve aylık planın toplu onayı)
+- [x] Müşteri onayı, 1. adım: önizleme sayfasında "Onayla / Değişiklik iste", karar geçmişi,
+      ajansa bildirim, "WhatsApp'ta paylaş" düğmesi (ajansın kendi WhatsApp'ından, wa.me ile)
+- [ ] Müşteri onayı, 2. adım: aylık planın tek bağlantıyla toplu onayı
+- [ ] Müşteri onayı, 3. adım: takvimde onay durumu rozeti; onaylanmadan yayımlamama seçeneği
+- [ ] Müşteri onayı, 4. adım: WhatsApp Business API ile otomatik gönderim (başvuru gerekir)
 - [ ] Ajans markalı panel (logo ve alan adı)
 - [ ] E-ticaret bağlantısı (ikas, Ticimax, Trendyol)
 - [ ] TL ile abonelik tahsilatı
@@ -98,6 +102,11 @@ Notlar:
 
 - Arka ucun ilk derlemesi 4–5 dakika sürer. Depodaki herhangi bir dosya değişince yeniden
   derlenir ve yaklaşık bir dakika yanıt vermez.
+- Arka uç izleme kipinde (`run dev`) ön yüz çalışırken sürekli yeniden derlemeye girip hiç
+  açılmayabilir. O durumda bir kez derlenmiş hali doğrudan çalıştırın:
+  `cd apps/backend && pnpm exec dotenv -e ../../.env -- node dist/apps/backend/src/main`
+- Veritabanı şeması değişince arka ucu durdurup `pnpm run prisma-db-push` çalıştırın;
+  arka uç açıkken istemci dosyası kilitli olduğu için üretim adımı hata verir.
 - Bellek: arka uç, ön yüz, zamanlayıcı ve Docker birlikte 16 GB'lık makinede belleği
   doldurur; boş bellek bitince arka uç hata vermeden açılmadan bekler. Paneli görmek için
   zamanlayıcı (orchestrator) gerekmez, kapalı tutulabilir.
