@@ -1100,5 +1100,6 @@
   "admin_plan_save": "Planı kaydet",
   "admin_remove_subscription": "Aboneliği kaldır",
   "admin_status_manual": "Elle verildi",
-  "admin_status_manual_until": "Elle verildi, {{date}} tarihine kadar"
+  "admin_status_manual_until": "Elle verildi, {{date}} tarihine kadar",
+  "feeds_image_failed": "Ürün görseli eklenemedi; görseli kendiniz ekleyebilirsiniz."
 }
