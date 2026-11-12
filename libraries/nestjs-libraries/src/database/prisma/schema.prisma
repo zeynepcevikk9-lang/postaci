@@ -1935,3 +1935,21 @@ model ProductFeedItem {
   @@unique([feedId, externalId])
   @@index([organizationId, isNew, dismissedAt])
 }
+
+// Postacı: iyzico ile TL abonelik. Ödeme formu başlatılınca oluşur; abonelik
+// iyzico'da başlayınca abonelik ve müşteri referans kodları yazılır.
+model IyzicoCheckout {
+  id                        String    @id @default(uuid())
+  organizationId            String
+  userId                    String
+  token                     String    @unique
+  billing                   String
+  period                    String
+  subscriptionReferenceCode String?
+  customerReferenceCode     String?
+  completedAt               DateTime?
+  createdAt                 DateTime  @default(now())
+
+  @@index([organizationId])
+  @@index([subscriptionReferenceCode])
+}
