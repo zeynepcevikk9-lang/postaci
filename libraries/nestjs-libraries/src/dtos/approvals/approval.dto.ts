@@ -1,4 +1,7 @@
 import {
+  ArrayMaxSize,
+  IsArray,
+  IsBoolean,
   IsDateString,
   IsIn,
   IsOptional,
@@ -36,6 +39,18 @@ export class CreateApprovalPlanDto {
 
   @IsDateString()
   to: string;
+
+  @IsOptional()
+  @IsBoolean()
+  autoSchedule?: boolean;
+}
+
+// Takvimdeki rozetler: görünen gönderilerin onay durumları.
+export class ApprovalStatusesDto {
+  @IsArray()
+  @ArrayMaxSize(500)
+  @IsString({ each: true })
+  postIds: string[];
 }
 
 // Plan sayfasında tek bir gönderi (aynı içeriğin bütün kanalları) için karar.
