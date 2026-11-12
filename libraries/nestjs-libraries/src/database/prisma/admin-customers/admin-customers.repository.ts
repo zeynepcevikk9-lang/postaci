@@ -71,6 +71,7 @@ export class AdminCustomersRepository {
               subscriptionTier: true,
               period: true,
               provider: true,
+              identifier: true,
               cancelAt: true,
               isLifetime: true,
               createdAt: true,
@@ -98,6 +99,13 @@ export class AdminCustomersRepository {
     ]);
 
     return { total, rows };
+  }
+
+  getOrganization(id: string) {
+    return this._organization.model.organization.findFirst({
+      where: { id, deletedAt: null },
+      select: { id: true },
+    });
   }
 
   async summary() {
@@ -128,15 +136,16 @@ export class AdminCustomersRepository {
     return { accounts, byPlan, trialing, cancelling };
   }
 
-  // Ödeme alınan abonelikler (deneme ve bitecek olanlar hariç), kademe ve döneme göre.
-  payingByPlan(provider: string) {
+  // Ödeme alınan abonelikler (deneme ve iptal edilmiş olanlar hariç), kademe ve döneme göre.
+  payingByPlan(provider: string, manualPrefix: string) {
     return this._subscription.model.subscription.groupBy({
       by: ['subscriptionTier', 'period'],
       where: {
         provider,
         deletedAt: null,
         isLifetime: false,
-        cancelAt: null,
+        // Elle verilen planların (havale) bitiş tarihi olur; onlar da ödeme yapan hesaptır.
+        OR: [{ cancelAt: null }, { identifier: { startsWith: manualPrefix } }],
         organization: { deletedAt: null, isTrailing: false },
       },
       _count: { _all: true },
