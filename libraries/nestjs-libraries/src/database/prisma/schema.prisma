@@ -1878,6 +1878,10 @@ model ApprovalPlan {
   // Açıksa: müşteri onaylayınca taslak gönderi zamanlanır, değişiklik isteyince
   // zamanlanmış gönderi taslağa döner.
   autoSchedule   Boolean   @default(false)
+  // "plan": onay planı. "report": aylık rapor; oluşturulduğu andaki veriler
+  // snapshot alanında JSON olarak saklanır ve sonradan değişmez.
+  kind           String    @default("plan")
+  snapshot       String?
   from           DateTime
   to             DateTime
   createdAt      DateTime  @default(now())
@@ -1885,4 +1889,16 @@ model ApprovalPlan {
 
   @@index([organizationId])
   @@index([createdAt])
+}
+
+// Postacı: ajans markası. Müşterinin gördüğü sayfalarda (önizleme, onay planı,
+// rapor) Postacı yerine ajansın adı ve logosu gösterilir.
+model AgencyBrand {
+  id             String   @id @default(uuid())
+  organizationId String   @unique
+  name           String?
+  logo           String?
+  color          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 }
