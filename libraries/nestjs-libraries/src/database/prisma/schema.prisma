@@ -1875,6 +1875,9 @@ model ApprovalPlan {
   organizationId String
   customerId     String?
   customerName   String?
+  // Açıksa: müşteri onaylayınca taslak gönderi zamanlanır, değişiklik isteyince
+  // zamanlanmış gönderi taslağa döner.
+  autoSchedule   Boolean   @default(false)
   from           DateTime
   to             DateTime
   createdAt      DateTime  @default(now())
