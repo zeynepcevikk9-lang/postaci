@@ -45,19 +45,63 @@ yeni özellikleri ayrı dosya ve modüllerde yazıyoruz.
 
 - [x] Postiz'i al, depoya bağla
 - [x] Kod yapısını ve Türkçe çeviriyi incele
-- [ ] Yerelde çalıştır (Node 22.23.4, pnpm 10.6.1, Docker)
+- [x] Yerelde çalıştır (Node 22.23.4, pnpm 10.6.1, Docker)
 - [ ] Ad, logo ve renkleri Postacı'ya çevir; Türkçeyi varsayılan dil yap
 - [ ] Türkçe çeviriyi elden geçir
 - [ ] Türkiye özel gün takvimi ve hazır taslak
 - [ ] Ajans logolu aylık PDF rapor
-- [ ] WhatsApp'tan müşteri onayı
+- [ ] WhatsApp'tan müşteri onayı (tek gönderi ve aylık planın toplu onayı)
 - [ ] Ajans markalı panel (logo ve alan adı)
 - [ ] E-ticaret bağlantısı (ikas, Ticimax, Trendyol)
 - [ ] TL ile abonelik tahsilatı
-- [ ] Tanıtım sitesi
+- [ ] Tanıtım sitesi (ilk sürüm `site/` içinde; eksik: kayıt formunun bağlanması, fiyatlar, yayına alma)
 
 Kodun dışında, başvurusu erken yapılması gerekenler: Meta, TikTok ve LinkedIn uygulama
 onayları ile WhatsApp Business API.
+
+## Yerelde çalıştırma
+
+Gerekenler: Docker, pnpm 10.6.1 (`npm install -g pnpm@10.6.1`). Node 22.23.4'ü pnpm
+kendisi indirir; bunun için komutlardan önce `npm_config_use_node_version=22.23.4`
+ortam değişkeni verilir (sistemde kurulu Node'a dokunmaz).
+
+```bash
+# 1. Veritabanı, Redis ve Temporal
+docker compose -f docker-compose.dev.yaml up -d postiz-postgres postiz-redis temporal
+
+# 2. Ayar dosyası: .env.example'ı .env olarak kopyalayın, şunları değiştirin:
+#    DATABASE_URL  -> postgresql://postiz-local:postiz-local-pwd@localhost:5432/postiz-db-local
+#    JWT_SECRET    -> uzun rastgele bir değer
+#    UPLOAD_DIRECTORY ve NEXT_PUBLIC_UPLOAD_STATIC_DIRECTORY ("/uploads")
+
+# 3. Bağımlılıklar ve tablolar
+npm_config_use_node_version=22.23.4 pnpm install
+npm_config_use_node_version=22.23.4 pnpm run prisma-db-push
+
+# 4. Uygulama (her biri ayrı terminalde)
+npm_config_use_node_version=22.23.4 pnpm --filter ./apps/backend run dev        # :3000
+npm_config_use_node_version=22.23.4 pnpm --filter ./apps/frontend run dev       # :4200
+npm_config_use_node_version=22.23.4 pnpm --filter ./apps/orchestrator run dev   # gönderi yayımlamak için
+```
+
+Notlar:
+
+- Arka ucun ilk derlemesi 4–5 dakika sürer. Depodaki herhangi bir dosya değişince yeniden
+  derlenir ve yaklaşık bir dakika yanıt vermez.
+- Bellek: arka uç, ön yüz, zamanlayıcı ve Docker birlikte 16 GB'lık makinede belleği
+  doldurur; boş bellek bitince arka uç hata vermeden açılmadan bekler. Paneli görmek için
+  zamanlayıcı (orchestrator) gerekmez, kapalı tutulabilir.
+
+## Tanıtım sitesi
+
+`site/` klasöründe, derleme adımı olmayan düz HTML/CSS. pnpm çalışma alanının dışındadır.
+
+```bash
+node site/serve.mjs   # http://localhost:4300
+```
+
+Erken erişim formu, `index.html` içindeki `data-endpoint` özelliği doldurulana kadar kayıt
+göndermez ve ziyaretçiye formun henüz açılmadığını söyler.
 
 ## Kod yapısı (kısa)
 
