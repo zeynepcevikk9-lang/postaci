@@ -1055,7 +1055,7 @@
   "iyzico_payment_success": "Your subscription has started",
   "iyzico_payment_failed": "The payment could not be completed. No subscription was started.",
   "iyzico_choose_plan": "Choose your plan",
-  "iyzico_choose_plan_note": "Prices are in Turkish lira. You can cancel at any time.",
+  "iyzico_choose_plan_note": "Prices are in Turkish lira and include VAT. You can cancel at any time.",
   "search": "Search",
   "view_stats": "View Stats",
   "view_errors": "View Errors",
