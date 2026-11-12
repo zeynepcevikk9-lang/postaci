@@ -924,5 +924,22 @@
   "no_analytics_to_show_for_this_channel": "Bu kanal için gösterilecek analiz yok. Veri görmeyi bekliyorsanız, kanalı yeniden bağlamayı deneyin.",
   "no_ai_credits_ask_admin": "Yapay zeka krediniz kalmadı. Lütfen kurumunuzun yöneticisine başvurun.",
   "auth_side_line_1": "Ajansınızın sosyal medya işini",
-  "auth_side_line_2": "tek panelden yürütün"
+  "auth_side_line_2": "tek panelden yürütün",
+  "approval_status_pending": "Onay bekliyor",
+  "approval_status_approved": "Onaylandı",
+  "approval_status_changes": "Değişiklik istendi",
+  "approval_pending_hint": "Aşağıdaki gönderiyi inceleyin; onaylayın ya da değişiklik isteyin.",
+  "approval_approve": "Onayla",
+  "approval_request_changes": "Değişiklik iste",
+  "approval_confirm_approve": "Bu gönderiyi onaylayın",
+  "approval_confirm_changes": "Ne değişsin?",
+  "approval_note_placeholder": "Neyin değişmesini istediğinizi yazın...",
+  "approval_send_request": "İsteği gönder",
+  "approval_name_required": "Lütfen adınızı yazın",
+  "approval_note_required": "Lütfen istediğiniz değişikliği yazın",
+  "approval_saved_approved": "Teşekkürler, onayınız kaydedildi",
+  "approval_saved_changes": "Teşekkürler, isteğiniz iletildi",
+  "approval_failed": "Yanıtınız kaydedilemedi, lütfen tekrar deneyin",
+  "approval_share_whatsapp": "WhatsApp'ta paylaş",
+  "approval_whatsapp_message": "Gönderiniz onayınıza hazır. Buradan inceleyip onaylayabilirsiniz:"
 }
