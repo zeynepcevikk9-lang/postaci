@@ -41,6 +41,8 @@ const texts = [
   ['} Register`', '} Kayıt`'],
   ['} - Activate your account`', '} - Hesabınızı etkinleştirin`'],
   ["name: 'Agent',", "name: 'Asistan',"],
+  // Çıkış düğmesi: Türkçede yalnızca "Çıkış yap" yazar, marka adı eklenmez
+  ["isGeneral ? ' Postiz' : ' Gitroom'", "isGeneral ? '' : ' Gitroom'"],
   // Varsayılan tema: açık (kullanıcı sağ üstteki simgeyle koyuya geçebilir)
   ["useCookie('mode', 'dark')", "useCookie('mode', 'light')"],
   ["'dark text-primary !bg-primary'", "'light text-primary !bg-primary'"],
