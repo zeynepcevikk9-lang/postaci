@@ -35,6 +35,7 @@ import {
   BrandController,
   BrandPublicController,
 } from '@gitroom/backend/api/routes/brand.controller';
+import { ProductFeedsController } from '@gitroom/backend/api/routes/product.feeds.controller';
 import { RootController } from '@gitroom/backend/api/routes/root.controller';
 import { TrackService } from '@gitroom/nestjs-libraries/track/track.service';
 import { ShortLinkService } from '@gitroom/nestjs-libraries/short-linking/short.link.service';
@@ -86,6 +87,7 @@ const authenticatedController = [
   AdminController,
   ApprovalsController,
   BrandController,
+  ProductFeedsController,
 ];
 @Module({
   imports: [UploadModule],
