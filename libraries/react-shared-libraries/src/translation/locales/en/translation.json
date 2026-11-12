@@ -1102,5 +1102,6 @@
   "admin_plan_save": "Save plan",
   "admin_remove_subscription": "Remove subscription",
   "admin_status_manual": "Manual",
-  "admin_status_manual_until": "Manual, until {{date}}"
+  "admin_status_manual_until": "Manual, until {{date}}",
+  "feeds_image_failed": "The product image could not be added; you can add it yourself."
 }
