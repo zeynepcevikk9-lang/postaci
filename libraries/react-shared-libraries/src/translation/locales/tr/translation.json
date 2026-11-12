@@ -1053,7 +1053,7 @@
   "iyzico_payment_success": "Aboneliğiniz başladı",
   "iyzico_payment_failed": "Ödeme tamamlanamadı. Abonelik başlatılmadı.",
   "iyzico_choose_plan": "Planınızı seçin",
-  "iyzico_choose_plan_note": "Fiyatlar Türk lirasıdır. İstediğiniz zaman iptal edebilirsiniz.",
+  "iyzico_choose_plan_note": "Fiyatlar Türk lirasıdır ve KDV dahildir. İstediğiniz zaman iptal edebilirsiniz.",
   "search": "Ara",
   "view_stats": "İstatistikler",
   "view_errors": "Hatalar",
