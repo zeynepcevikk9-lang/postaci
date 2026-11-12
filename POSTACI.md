@@ -87,8 +87,12 @@ node araclar/postaci-marka.mjs
       tahmini aylık gelir; "Hesaba gir" ile hesap sahibinin gözünden açılır. Postiz'den gelen
       `/admin/stats` ve `/admin/errors` sayfaları da duruyor. Süper yönetici, veritabanında
       `User.isSuperAdmin` alanı açılarak tanımlanır.
-- [ ] Yönetim paneli, 2. adım: hesaba elle plan verme/kaldırma (havale ile ödeyenler), iade,
-      hesap dondurma
+- [x] Yönetim paneli, 2. adım: "Planı düzenle" ile hesaba elle plan verme (havale ile ödeyenler;
+      bitiş tarihi yazılırsa o gün kendiliğinden kapanır) ve aboneliği kaldırma (kartlı abonelik
+      iyzico'da da hemen iptal edilir, iade yapılmaz). Kartla süren abonelik varken elle plan
+      verilmez. Elle verilen planı kullanıcı kendisi iptal edemez.
+- [ ] Yönetim paneli, 3. adım: iade (şimdilik iyzico panelinden), hesap ayrıntı sayfası
+      (ödeme geçmişi, notlar), bitişi yaklaşan elle planlar için hatırlatma
 - [ ] Tanıtım sitesi (ürün ana sayfası `site/` içinde; eksik: deneme kaydı formunun bağlanması, fiyatların kesinleşmesi, yayına alma)
 
 Kodun dışında, başvurusu erken yapılması gerekenler: Meta, TikTok ve LinkedIn uygulama
