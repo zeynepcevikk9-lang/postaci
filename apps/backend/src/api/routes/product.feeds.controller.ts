@@ -35,6 +35,14 @@ export class ProductFeedsController {
     return this._feedService.dismissItem(org.id, id);
   }
 
+  @Post('/items/:id/image')
+  importItemImage(
+    @GetOrgFromRequest() org: Organization,
+    @Param('id') id: string
+  ) {
+    return this._feedService.importItemImage(org.id, id);
+  }
+
   @Post('/:id/sync')
   syncFeed(@GetOrgFromRequest() org: Organization, @Param('id') id: string) {
     return this._feedService.syncFeed(org.id, id);
