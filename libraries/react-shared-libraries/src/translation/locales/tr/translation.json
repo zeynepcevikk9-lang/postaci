@@ -941,5 +941,22 @@
   "approval_saved_changes": "Teşekkürler, isteğiniz iletildi",
   "approval_failed": "Yanıtınız kaydedilemedi, lütfen tekrar deneyin",
   "approval_share_whatsapp": "WhatsApp'ta paylaş",
-  "approval_whatsapp_message": "Gönderiniz onayınıza hazır. Buradan inceleyip onaylayabilirsiniz:"
+  "approval_whatsapp_message": "Gönderiniz onayınıza hazır. Buradan inceleyip onaylayabilirsiniz:",
+  "approval_plan_not_found": "Bu onay bağlantısı geçerli değil",
+  "approval_plan_title": "İçerik planı",
+  "approval_plan_posts": "gönderi",
+  "approval_plan_approved": "onaylandı",
+  "approval_plan_changes": "değişecek",
+  "approval_plan_pending": "bekliyor",
+  "approval_plan_approve_all": "Tümünü onayla",
+  "approval_plan_empty": "Bu dönemde onay bekleyen gönderi yok.",
+  "approval_plan_video": "Video",
+  "approval_plan_details": "Tam önizlemeyi aç",
+  "approval_plan_button": "Onaya gönder",
+  "approval_plan_modal_title": "Aylık planı onaya gönder",
+  "approval_plan_modal_description": "Müşteriniz, seçtiğiniz ayın taslak ve zamanlanmış bütün gönderilerini tek sayfada görür ve giriş yapmadan onaylar.",
+  "approval_plan_all_channels": "Tüm kanallar",
+  "approval_plan_create": "Onay bağlantısı oluştur",
+  "approval_plan_create_failed": "Onay bağlantısı oluşturulamadı",
+  "approval_plan_whatsapp_message": "İçerik planınız onayınıza hazır. Buradan inceleyip onaylayabilirsiniz:"
 }
