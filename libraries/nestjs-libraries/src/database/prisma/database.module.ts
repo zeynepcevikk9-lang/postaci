@@ -42,6 +42,10 @@ import { BrandRepository } from '@gitroom/nestjs-libraries/database/prisma/brand
 import { BrandService } from '@gitroom/nestjs-libraries/database/prisma/brand/brand.service';
 import { ProductFeedRepository } from '@gitroom/nestjs-libraries/database/prisma/feeds/product.feed.repository';
 import { ProductFeedService } from '@gitroom/nestjs-libraries/database/prisma/feeds/product.feed.service';
+import { IyzicoRepository } from '@gitroom/nestjs-libraries/database/prisma/iyzico/iyzico.repository';
+import { IyzicoProvider } from '@gitroom/nestjs-libraries/services/payment/providers/iyzico.provider';
+import { AdminCustomersRepository } from '@gitroom/nestjs-libraries/database/prisma/admin-customers/admin-customers.repository';
+import { AdminCustomersService } from '@gitroom/nestjs-libraries/database/prisma/admin-customers/admin-customers.service';
 import { AutopostRepository } from '@gitroom/nestjs-libraries/database/prisma/autopost/autopost.repository';
 import { AutopostService } from '@gitroom/nestjs-libraries/database/prisma/autopost/autopost.service';
 import { SetsService } from '@gitroom/nestjs-libraries/database/prisma/sets/sets.service';
@@ -99,6 +103,10 @@ import { AdminStatsService } from '@gitroom/nestjs-libraries/database/prisma/adm
     BrandService,
     ProductFeedRepository,
     ProductFeedService,
+    IyzicoRepository,
+    IyzicoProvider,
+    AdminCustomersRepository,
+    AdminCustomersService,
     MediaService,
     MediaRepository,
     AgenciesService,
