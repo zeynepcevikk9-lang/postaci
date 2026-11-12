@@ -958,5 +958,11 @@
   "approval_plan_all_channels": "Tüm kanallar",
   "approval_plan_create": "Onay bağlantısı oluştur",
   "approval_plan_create_failed": "Onay bağlantısı oluşturulamadı",
-  "approval_plan_whatsapp_message": "İçerik planınız onayınıza hazır. Buradan inceleyip onaylayabilirsiniz:"
+  "approval_plan_whatsapp_message": "İçerik planınız onayınıza hazır. Buradan inceleyip onaylayabilirsiniz:",
+  "approval_badge_approved": "Müşteri onayladı",
+  "approval_badge_changes": "Müşteri değişiklik istedi",
+  "approval_plan_auto_schedule": "Müşteri onaylayınca taslaklar kendiliğinden zamanlansın",
+  "approval_plan_auto_schedule_hint": "Gönderileri taslak olarak kaydedin: onaylanmadan hiçbir şey yayımlanmaz. Müşteri değişiklik isterse zamanlanmış gönderi taslağa döner.",
+  "special_days_title": "Özel günler",
+  "special_days_create_draft": "Bu gün için taslak gönderi oluştur"
 }
