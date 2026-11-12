@@ -46,15 +46,17 @@ yeni özellikleri ayrı dosya ve modüllerde yazıyoruz.
 - [x] Postiz'i al, depoya bağla
 - [x] Kod yapısını ve Türkçe çeviriyi incele
 - [x] Yerelde çalıştır (Node 22.23.4, pnpm 10.6.1, Docker)
-- [ ] Ad, logo ve renkleri Postacı'ya çevir; Türkçeyi varsayılan dil yap
-- [ ] Türkçe çeviriyi elden geçir
+- [x] Türkçeyi varsayılan dil yap (tarayıcı diline bakılmaz; kullanıcı dil menüsünden değiştirebilir)
+- [x] Türkçe çeviriyi elden geçir, çevirideki marka adını Postacı yap
+- [ ] Kodda sabit kalan İngilizce metinler (sekme başlıkları "Postiz ...", "Agent" menüsü)
+- [ ] Logo ve renkleri Postacı'ya çevir
 - [ ] Türkiye özel gün takvimi ve hazır taslak
 - [ ] Ajans logolu aylık PDF rapor
 - [ ] WhatsApp'tan müşteri onayı (tek gönderi ve aylık planın toplu onayı)
 - [ ] Ajans markalı panel (logo ve alan adı)
 - [ ] E-ticaret bağlantısı (ikas, Ticimax, Trendyol)
 - [ ] TL ile abonelik tahsilatı
-- [ ] Tanıtım sitesi (ilk sürüm `site/` içinde; eksik: kayıt formunun bağlanması, fiyatlar, yayına alma)
+- [ ] Tanıtım sitesi (ürün ana sayfası `site/` içinde; eksik: deneme kaydı formunun bağlanması, fiyatların kesinleşmesi, yayına alma)
 
 Kodun dışında, başvurusu erken yapılması gerekenler: Meta, TikTok ve LinkedIn uygulama
 onayları ile WhatsApp Business API.
@@ -100,8 +102,9 @@ Notlar:
 node site/serve.mjs   # http://localhost:4300
 ```
 
-Erken erişim formu, `index.html` içindeki `data-endpoint` özelliği doldurulana kadar kayıt
-göndermez ve ziyaretçiye formun henüz açılmadığını söyler.
+Deneme kaydı formu, `index.html` içindeki `data-endpoint` özelliği doldurulana kadar kayıt
+göndermez ve ziyaretçiye kaydın şu an alınamadığını söyler. Sayfa ürünü yayındaki haliyle
+anlatır; anlatılan özellikler hazır olmadan yayına alınmamalıdır. Fiyatlar taslaktır.
 
 ## Kod yapısı (kısa)
 
