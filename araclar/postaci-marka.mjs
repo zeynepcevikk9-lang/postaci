@@ -18,6 +18,9 @@ const colors = {
   '#612ad5': '#3d4fe0',
   '#5520cb': '#2f3ec2', // ana rengin üzerine gelince
   '#fc69ff': '#ff6b4a', // vurgu rengi
+  '#3900b2': '#2f3ec2', // açık tema: seçili öğe yazısı
+  '#ebe8ff': '#e8ebff', // açık tema: seçili öğe zemini
+  '#2d1b57': '#1b2457', // açık tema: pencere arkası
 };
 
 // Sekme başlıkları ve menüdeki sabit metinler
@@ -38,6 +41,10 @@ const texts = [
   ['} Register`', '} Kayıt`'],
   ['} - Activate your account`', '} - Hesabınızı etkinleştirin`'],
   ["name: 'Agent',", "name: 'Asistan',"],
+  // Varsayılan tema: açık (kullanıcı sağ üstteki simgeyle koyuya geçebilir)
+  ["useCookie('mode', 'dark')", "useCookie('mode', 'light')"],
+  ["'dark text-primary !bg-primary'", "'light text-primary !bg-primary'"],
+  ['Theme.DARK', 'Theme.LIGHT'],
 ];
 
 const colorExt = new Set(['.tsx', '.ts', '.scss', '.css']);
