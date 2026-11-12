@@ -994,5 +994,22 @@
   "report_channel_published": "gönderi",
   "report_metrics_note": "Kanal rakamları, raporun oluşturulmasından önceki 30 günü kapsar.",
   "report_posts": "Yayımlanan gönderiler",
-  "report_generated_at": "Rapor oluşturma tarihi:"
+  "report_generated_at": "Rapor oluşturma tarihi:",
+  "feeds_button": "Mağaza",
+  "feeds_title": "Mağaza ürünleri",
+  "feeds_new_products": "Mağazalarınızdaki yeni ürünler",
+  "feeds_no_new_products": "Henüz yeni ürün yok. Mağaza bağlandıktan sonra eklenen ürünler burada görünür.",
+  "feeds_no_store": "Yeni ürünler için taslak gönderi almak üzere aşağıdan bir mağaza bağlayın.",
+  "feeds_create_draft": "Taslak oluştur",
+  "feeds_dismiss": "Yok say",
+  "feeds_stores": "Bağlı mağazalar",
+  "feeds_check_now": "Şimdi kontrol et",
+  "feeds_help": "Mağazanın ürün XML adresini yapıştırın (ikas, Ticimax, T-Soft, IdeaSoft ve benzeri platformlar bu adresi verir; Google Merchant ürün listesi de olur).",
+  "feeds_store_name": "Mağaza adı",
+  "feeds_add": "Mağazayı bağla",
+  "feeds_fill_fields": "Mağaza adını ve ürün XML adresini yazın",
+  "feeds_added": "Mağaza bağlandı, bulunan ürün:",
+  "feeds_add_failed": "Adres okunamadı. Herkese açık, https ile başlayan bir ürün XML adresi olmalı.",
+  "feeds_synced": "Mağaza kontrol edildi, yeni ürün:",
+  "feeds_sync_failed": "Mağaza okunamadı"
 }
