@@ -43,6 +43,11 @@ export class CreateApprovalPlanDto {
   @IsOptional()
   @IsBoolean()
   autoSchedule?: boolean;
+
+  // "report": aylık rapor bağlantısı oluşturur.
+  @IsOptional()
+  @IsIn(['plan', 'report'])
+  kind?: 'plan' | 'report';
 }
 
 // Takvimdeki rozetler: görünen gönderilerin onay durumları.
