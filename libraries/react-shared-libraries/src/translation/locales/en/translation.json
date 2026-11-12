@@ -926,5 +926,22 @@
   "no_analytics_to_show_for_this_channel": "No analytics to show for this channel. If you expected to see data, try reconnecting the channel.",
   "no_ai_credits_ask_admin": "You have no AI credits left. Please ask an admin of your organization.",
   "auth_side_line_1": "Run your agency’s social media",
-  "auth_side_line_2": "from a single panel"
+  "auth_side_line_2": "from a single panel",
+  "approval_status_pending": "Waiting for approval",
+  "approval_status_approved": "Approved",
+  "approval_status_changes": "Changes requested",
+  "approval_pending_hint": "Review the post below, then approve it or request a change.",
+  "approval_approve": "Approve",
+  "approval_request_changes": "Request a change",
+  "approval_confirm_approve": "Approve this post",
+  "approval_confirm_changes": "What should be changed?",
+  "approval_note_placeholder": "Write what you would like to change...",
+  "approval_send_request": "Send request",
+  "approval_name_required": "Please enter your name",
+  "approval_note_required": "Please describe the change you want",
+  "approval_saved_approved": "Thank you, your approval is saved",
+  "approval_saved_changes": "Thank you, your request is sent",
+  "approval_failed": "Your answer could not be saved, please try again",
+  "approval_share_whatsapp": "Share on WhatsApp",
+  "approval_whatsapp_message": "Your post is ready for approval. You can review and approve it here:"
 }
