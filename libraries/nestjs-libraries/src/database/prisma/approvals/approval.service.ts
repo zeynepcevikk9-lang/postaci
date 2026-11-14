@@ -427,6 +427,33 @@ export class ApprovalService {
     return { plan, items };
   }
 
+  // Ajans için: müşterilerden gelen son onaylar ve notlar, hangi gönderiye ait
+  // olduklarıyla birlikte.
+  async getRecentActivity(organizationId: string) {
+    const approvals = await this._approvalRepository.getRecentApprovals(
+      organizationId,
+      10
+    );
+    if (!approvals.length) {
+      return [];
+    }
+    const posts = await this._approvalRepository.getPostsContent(
+      organizationId,
+      approvals.map((a) => a.postId)
+    );
+    return approvals.map((approval) => ({
+      id: approval.id,
+      postId: approval.postId,
+      status: approval.status,
+      reviewerName: approval.reviewerName,
+      note: approval.note,
+      createdAt: approval.createdAt,
+      text: postContentPlainText(
+        posts.find((p) => p.id === approval.postId)?.content || ''
+      ).slice(0, 140),
+    }));
+  }
+
   // Ajans için: gönderilen onay planları ve her birinin durumu (kaç gönderi
   // onaylandı, kaçı bekliyor, kaçında değişiklik istendi).
   async listPlans(organizationId: string) {
