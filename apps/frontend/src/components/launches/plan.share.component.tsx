@@ -19,6 +19,7 @@ import {
   SentPlans,
   useSentPlans,
 } from '@gitroom/frontend/components/launches/sent.plans';
+import { useAccountType } from '@gitroom/frontend/components/layout/account.type';
 
 type Kind = 'plan' | 'report';
 
@@ -68,6 +69,8 @@ const PlanShareModal: FC<{
   const fetch = useFetch();
   const toast = useToaster();
   const { data: customers } = useCustomers();
+  // İşletme kipinde müşteri seçimi yoktur
+  const business = useAccountType() === 'business';
   const { mutate } = useSWRConfig();
   const months = useMemo(
     () => monthOptions(i18next.resolvedLanguage || 'tr', kind),
@@ -157,6 +160,7 @@ const PlanShareModal: FC<{
             )}
       </p>
 
+      {!business && (
       <div className="flex flex-col gap-[6px]">
         <label htmlFor="plan-customer" className="text-[14px]">
           {t('customer', 'Customer:')}
@@ -180,6 +184,7 @@ const PlanShareModal: FC<{
           ))}
         </select>
       </div>
+      )}
 
       <div className="flex flex-col gap-[6px]">
         <label htmlFor="plan-month" className="text-[14px]">
@@ -281,6 +286,8 @@ export const PlanShareButton: FC = () => {
   // Müşteriden yanıt bekleyen plan sayısı düğmenin köşesinde gösterilir
   const { data: plans } = useSentPlans();
   const waiting = (plans || []).filter((plan) => plan.pending > 0).length;
+  // İşletme kipinde müşteriye onaya gönderme düğmesi gösterilmez
+  const business = useAccountType() === 'business';
 
   const open = useCallback(
     (kind: Kind) => () => {
@@ -305,6 +312,7 @@ export const PlanShareButton: FC = () => {
 
   return (
     <>
+      {!business && (
       <button type="button" onClick={open('plan')} className={toolbarButtonClass}>
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="m8.5 12.5 2.5 2.5 4.5-5" /></svg>
         {t('approval_plan_button', 'Send for approval')}
@@ -321,6 +329,7 @@ export const PlanShareButton: FC = () => {
           </span>
         )}
       </button>
+      )}
       <button
         type="button"
         onClick={open('report')}
