@@ -171,8 +171,9 @@ Notlar:
 node site/serve.mjs   # http://localhost:4300
 ```
 
-Tasarım (15 Kas 2026): posta kimliği. Lacivert zemin, kâğıt tonu, mavi ve mercan; uçak postası
-şeridi ve posta damgası tekrar eden motifler; başlıklarda Bricolage Grotesque. Bölümler: giriş
+Tasarım (15 Kas 2026): posta kimliği, panelle aynı palet. Mürekkep rengi (`#14172b`) zemin, kâğıt
+tonu ve mercan; mavi-mor ton yok; posta damgası tekrar eden motif; başlıklarda Bricolage Grotesque.
+Üst menü 1020px altında açılır menüye geçer. Bölümler: giriş
 (takvim kartı, WhatsApp balonu), kanallar, dört duraklı yolculuk, farklı boyda özellik kutuları,
 öncesi/sonrası, fiyatlar, sorular, zarf biçiminde çağrı.
 
