@@ -60,6 +60,11 @@ const texts = [
   ['src="/postiz.svg"', 'src="/favicon.svg"'],
   ['alt="Postiz"', 'alt="Postacı"'],
   ["title: 'Connect Channel',", "title: 'Kanal bağlama',"],
+  // Kanal ekleme penceresinin başlığı (davet kipinde ne seçildiği anlaşılsın)
+  [
+    "      title: 'Add Channel',",
+    "      title: invite ? 'Davet bağlantısı: kanal türünü seçin' : 'Kanal Ekle',",
+  ],
   // Gönderi önizlemesinde kanal seçilmemişken görünen ad
   ["current === 'global' ? 'Global Edit'", "current === 'global' ? 'Genel düzenleme'"],
   ["isGeneralServerSide() ? 'Postiz Calendar' : 'Gitroom Launches'", "isGeneralServerSide() ? 'Postacı Takvim' : 'Gitroom Launches'"],
@@ -323,6 +328,18 @@ const patches = [
     /(\r?\n)(\s*)\['type', 'disabled', 'identifier'\],\r?\n\s*\['desc', 'asc', 'asc'\]/,
     "$1$2[\n$2  (o: any) => o?.customer?.name || '',\n$2  (o: any) => o?.customer?.id || '',\n$2  'type',\n$2  'disabled',\n$2  'identifier',\n$2],\n$2['asc', 'asc', 'desc', 'asc', 'asc']",
     channelLists,
+  ],
+  // Davet bağlantısı: müşteriye sosyal ağın izin ekranı yerine, neye onay verildiğini
+  // anlatan sayfanın bağlantısı gider (bağlantıyla bağlanamayan türlerde eski yol)
+  [
+    /(\.join\('&'\);)(\r?\n)(\s*)(const response = await fetch\(\r?\n\s*`\/integrations\/social\/)/,
+    "$1$2$3if (invite) {\n$3  const link = await createInviteLink(fetch, identifier);\n$3  if (link) {\n$3    toaster.show(\n$3      'Davet bağlantısı panoya kopyalandı; bağlantı 1 saat geçerlidir',\n$3      'success'\n$3    );\n$3    modal.closeAll();\n$3    copy(link);\n$3    return;\n$3  }\n$3}\n$3$4",
+    ['components/launches/add.provider.component.tsx'],
+  ],
+  [
+    /(import copy from 'copy-to-clipboard';\r?\n)(?!import \{ createInviteLink)/,
+    "$1import { createInviteLink } from '@gitroom/frontend/components/launches/invite.link';\n",
+    ['components/launches/add.provider.component.tsx'],
   ],
   // Kanal listeleri: seçili olmayan kanal adı okunabilsin (%20 yerine %50 soluk)
   [/opacity-20/g, 'opacity-50', channelLists],
