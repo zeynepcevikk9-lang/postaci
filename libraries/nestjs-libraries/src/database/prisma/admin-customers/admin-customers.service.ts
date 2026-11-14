@@ -11,6 +11,7 @@ import {
 import { AdminSetPlanDto } from '@gitroom/nestjs-libraries/dtos/admin/admin.set.plan.dto';
 import { SubscriptionService } from '@gitroom/nestjs-libraries/database/prisma/subscriptions/subscription.service';
 import { NotificationService } from '@gitroom/nestjs-libraries/database/prisma/notifications/notification.service';
+import { BankTransferService } from '@gitroom/nestjs-libraries/database/prisma/bank-transfer/bank.transfer.service';
 
 @Injectable()
 export class AdminCustomersService {
@@ -18,7 +19,8 @@ export class AdminCustomersService {
     private _adminCustomersRepository: AdminCustomersRepository,
     private _iyzicoProvider: IyzicoProvider,
     private _subscriptionService: SubscriptionService,
-    private _notificationService: NotificationService
+    private _notificationService: NotificationService,
+    private _bankTransferService: BankTransferService
   ) {}
 
   // Hesaba elle plan verir ya da aboneliğini kaldırır. Kaldırmada kartla süren
@@ -129,9 +131,8 @@ export class AdminCustomersService {
     };
   }
 
-  // Özet kutuları. Tahmini aylık gelir, iyzico'daki plan fiyatlarıyla hesaplanır
-  // (yıllık planlar on ikiye bölünür); iyzico kurulu değilse ya da fiyat
-  // okunamazsa boş döner.
+  // Özet kutuları. Tahmini aylık gelir, satıştaki plan fiyatlarıyla hesaplanır
+  // (yıllık planlar on ikiye bölünür); fiyat okunamazsa boş döner.
   async summary() {
     const { accounts, byPlan, trialing, cancelling } =
       await this._adminCustomersRepository.summary();
@@ -140,8 +141,8 @@ export class AdminCustomersService {
     let monthlyRevenue: number | null = null;
     let currency: string | null = null;
     try {
-      const { enabled, plans } = await this._iyzicoProvider.getPlans();
-      if (enabled && plans.length) {
+      const plans = await this._bankTransferService.getSalePlans();
+      if (plans.length) {
         const paying = await this._adminCustomersRepository.payingByPlan(
           IYZICO_PROVIDER,
           MANUAL_PLAN_PREFIX
