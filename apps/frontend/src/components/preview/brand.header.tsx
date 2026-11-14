@@ -7,6 +7,7 @@ export interface Brand {
   name: string | null;
   logo: string | null;
   color: string | null;
+  accountType?: string;
 }
 
 export const BrandHeader: FC<{ brand?: Brand | null }> = ({ brand }) => {
