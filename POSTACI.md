@@ -37,7 +37,10 @@ en/tr çeviri dosyalarında çıktı. Bu güncellemeyle gelenler:
   çıkarken `.env` içinde `ENCRYPTION_PROVIDER="local"` ve `ENCRYPTION_KEY` tanımlanmalı
   (`.env.example` içinde açıklaması var). Anahtar kaybolursa bütün kanallar yeniden bağlanır.
 - Bağlantı ile kanal bağlama sayfası (`/integrations/connect/<kod>`): hesabı olmayan biri
-  gönderilen bağlantıdan kendi sosyal hesabını bağlar. Bağlantı genel API ile üretilir.
+  gönderilen bağlantıdan kendi sosyal hesabını bağlar. Panelde "Kanal Ekle"nin yanındaki
+  davet düğmesi bu bağlantıyı üretip panoya kopyalar (`POST /invite-links`,
+  `apps/backend/src/api/routes/invite.link.controller.ts`); bağlantı bir saat geçerlidir.
+  Ek bilgi isteyen kanal türlerinde düğme eski yola (doğrudan izin ekranı) düşer.
 - Veritabanı indeksleri (güncellemeden sonra `pnpm run prisma-db-push`).
 
 Güncelleme aldıktan sonra sıra: `pnpm install`, `pnpm run prisma-db-push`,
