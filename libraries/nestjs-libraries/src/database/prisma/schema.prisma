@@ -1899,6 +1899,8 @@ model AgencyBrand {
   name           String?
   logo           String?
   color          String?
+  // agency: müşterileri olan ajans; business: yalnızca kendi hesaplarını yöneten işletme
+  accountType    String   @default("agency")
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 }
