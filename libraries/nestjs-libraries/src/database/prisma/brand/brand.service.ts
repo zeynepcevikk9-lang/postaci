@@ -6,9 +6,15 @@ export interface Brand {
   name: string | null;
   logo: string | null;
   color: string | null;
+  accountType: string;
 }
 
-const emptyBrand: Brand = { name: null, logo: null, color: null };
+const emptyBrand: Brand = {
+  name: null,
+  logo: null,
+  color: null,
+  accountType: 'agency',
+};
 
 @Injectable()
 export class BrandService {
@@ -25,6 +31,8 @@ export class BrandService {
       name: body.name?.trim() || null,
       logo: body.logo?.trim() || null,
       color: body.color?.trim() || null,
+      // gönderilmediyse kayıtlı tür değişmez
+      ...(body.accountType ? { accountType: body.accountType } : {}),
     });
   }
 }
