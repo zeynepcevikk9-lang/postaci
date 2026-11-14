@@ -1953,3 +1953,21 @@ model IyzicoCheckout {
   @@index([organizationId])
   @@index([subscriptionReferenceCode])
 }
+
+// Postacı: havale / EFT ödeme bildirimi. Kullanıcı bildirir, yönetici ödemeyi
+// görünce onaylar (PENDING -> APPROVED | REJECTED) ve plan elle tanımlanır.
+model BankTransferRequest {
+  id             String    @id @default(uuid())
+  organizationId String
+  userId         String
+  billing        String
+  period         String
+  amount         Float
+  code           String
+  status         String    @default("PENDING")
+  createdAt      DateTime  @default(now())
+  decidedAt      DateTime?
+
+  @@index([organizationId, status])
+  @@index([status])
+}
