@@ -28,6 +28,12 @@ git merge upstream/main
 Birleştirmeyi kolay tutmak için Postiz'in dosyalarını olabildiğince az değiştiriyor,
 yeni özellikleri ayrı dosya ve modüllerde yazıyoruz.
 
+Durum (15 Kas 2026): Postiz'in 23 commit gerisindeyiz. Aradan yalnızca gönderi kaydetmeyi
+düzelten `aa3954ee` ("posts fix") tek başına alındı; o olmadan yeni gönderi kaydı 404
+veriyordu. Kalanlar (kanal anahtarlarının şifrelenmesi, veritabanı indeksleri) henüz
+birleştirilmedi. Güncelleme aldıktan sonra temel akışı (gönderi oluştur, taslak kaydet)
+tarayıcıda denemeden yayına çıkılmaz.
+
 Renkler ve sekme başlıkları Postiz'in onlarca dosyasında sabit yazılıdır. Bunları elle
 değil betikle çeviriyoruz; güncelleme aldıktan sonra betik yeniden çalıştırılır:
 
