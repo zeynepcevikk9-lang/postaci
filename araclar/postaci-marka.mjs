@@ -46,6 +46,9 @@ const colors = {
   // Postiz'in pembe ikincil düğmeleri ve bildirim noktası: mercan
   '#d82d7e': '#ff6b4a',
   '#ff3ea2': '#ff6b4a',
+  // Boş medya kütüphanesi görselindeki açık mor tonlar: açık mercan
+  '#dacbfb': '#ffd0c4',
+  '#e7ddfe': '#ffe3db',
 };
 
 // Sekme başlıkları ve menüdeki sabit metinler
@@ -313,8 +316,8 @@ const customerGroupImport =
 const patches = [
   // Kanal listeleri: önce müşteri adına göre sırala
   [
-    /(\r?\n\s*\[)('type', 'disabled', 'identifier'\],\r?\n\s*\[)('desc', 'asc', 'asc'\])/,
-    "$1(o: any) => o?.customer?.name || '', $2'asc', $3",
+    /(\r?\n)(\s*)\['type', 'disabled', 'identifier'\],\r?\n\s*\['desc', 'asc', 'asc'\]/,
+    "$1$2[\n$2  (o: any) => o?.customer?.name || '',\n$2  (o: any) => o?.customer?.id || '',\n$2  'type',\n$2  'disabled',\n$2  'identifier',\n$2],\n$2['asc', 'asc', 'desc', 'asc', 'asc']",
     channelLists,
   ],
   // Kanal listeleri: seçili olmayan kanal adı okunabilsin (%20 yerine %50 soluk)
