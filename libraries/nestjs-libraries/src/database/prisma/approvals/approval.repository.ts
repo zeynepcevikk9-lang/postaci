@@ -109,6 +109,30 @@ export class ApprovalRepository {
     });
   }
 
+  // Ajansın gönderdiği onay planları, en yenisi önce.
+  listPlans(organizationId: string, take: number) {
+    return this._plans.model.approvalPlan.findMany({
+      where: { organizationId, kind: 'plan', deletedAt: null },
+      orderBy: { createdAt: 'desc' },
+      take,
+      select: {
+        id: true,
+        customerName: true,
+        autoSchedule: true,
+        from: true,
+        to: true,
+        createdAt: true,
+      },
+    });
+  }
+
+  deletePlan(organizationId: string, id: string) {
+    return this._plans.model.approvalPlan.updateMany({
+      where: { id, organizationId },
+      data: { deletedAt: new Date() },
+    });
+  }
+
   getPlan(id: string) {
     return this._plans.model.approvalPlan.findFirst({
       where: { id, deletedAt: null },
