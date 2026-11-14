@@ -22,11 +22,12 @@ import {
 const LOOK_AHEAD_DAYS = 30;
 const MAX_CHIPS = 8;
 
-const kindClass: Record<SpecialDayKind, string> = {
-  resmi: 'bg-[#D9482B]/10 text-[#B93A21]',
-  dini: 'bg-[#17915C]/10 text-[#17915C]',
-  ozel: 'bg-[#3D4FE0]/10 text-[#3D4FE0]',
-  ticari: 'bg-[#D98A00]/15 text-[#8A5A00]',
+// Günün türü küçük bir noktayla gösterilir; etiketlerin kendisi tek tiptir.
+const kindDot: Record<SpecialDayKind, string> = {
+  resmi: 'bg-[#FF6B4A]',
+  dini: 'bg-[#12B76A]',
+  ozel: 'bg-[#3D4FE0]',
+  ticari: 'bg-[#F5A524]',
 };
 
 export const SpecialDaysStrip: FC = () => {
@@ -101,8 +102,7 @@ export const SpecialDaysStrip: FC = () => {
           type="button"
           onClick={createDraft(day)}
           className={clsx(
-            'flex items-center gap-[6px] h-[30px] px-[10px] rounded-full text-[13px] whitespace-nowrap cursor-pointer hover:opacity-80',
-            kindClass[day.kind]
+            'flex items-center gap-[7px] h-[30px] px-[11px] rounded-full text-[13px] whitespace-nowrap cursor-pointer border border-newTableBorder bg-newBgColorInner text-newTextColor hover:bg-boxHover'
           )}
           data-tooltip-id="tooltip"
           data-tooltip-content={t(
@@ -110,9 +110,9 @@ export const SpecialDaysStrip: FC = () => {
             'Create a draft post for this day'
           )}
         >
-          <span className="font-[700]">{dateLabel(day.date)}</span>
-          <span>{day.name}</span>
-          <span className="font-[700]">+</span>
+          <span className={clsx('w-[7px] h-[7px] rounded-full', kindDot[day.kind])} />
+          <span className="font-[600]">{dateLabel(day.date)}</span>
+          <span className="text-textItemBlur">{day.name}</span>
         </button>
       ))}
     </div>
