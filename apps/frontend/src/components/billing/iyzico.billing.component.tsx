@@ -386,7 +386,7 @@ const IyzicoPlans: FC<{
           ))}
         </div>
       )}
-      <div className="grid grid-cols-3 mobile:grid-cols-1 gap-[12px]">
+      <div className="grid grid-cols-[repeat(auto-fit,minmax(230px,1fr))] gap-[12px]">
         {plans
           .filter((plan) => plan.period === period)
           .map((plan) => {
