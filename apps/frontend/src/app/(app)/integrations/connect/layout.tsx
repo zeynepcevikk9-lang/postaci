@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import { ReactNode } from 'react';
 
 export const metadata: Metadata = {
-  title: 'Connect Channel',
+  title: 'Kanal bağlama',
 };
 
 export default async function ConnectLinkLayout({
