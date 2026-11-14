@@ -719,7 +719,7 @@
   "updated_successfully": "Başarıyla güncellendi",
   "create_post_title": "Gönderi Oluştur",
   "post_preview": "Gönderi Önizlemesi",
-  "check_circles_above": "Yukarıdaki daireleri kontrol edin",
+  "check_circles_above": "Önce yukarıdan kanal seçin",
   "create_output": "Çıktı oluştur",
   "assistant_initial_message": "Merhaba! Sosyal medya gönderilerinizi düzenlemenize yardımcı olabilirim.",
   "no_longer_global_mode": "Artık global modda değil",
