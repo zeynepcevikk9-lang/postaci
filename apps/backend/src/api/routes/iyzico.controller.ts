@@ -7,6 +7,7 @@ import { GetUserFromRequest } from '@gitroom/nestjs-libraries/user/user.from.req
 import { IyzicoProvider } from '@gitroom/nestjs-libraries/services/payment/providers/iyzico.provider';
 import { IyzicoCheckoutDto } from '@gitroom/nestjs-libraries/dtos/billing/iyzico.checkout.dto';
 import { UsersService } from '@gitroom/nestjs-libraries/database/prisma/users/users.service';
+import { BankTransferService } from '@gitroom/nestjs-libraries/database/prisma/bank-transfer/bank.transfer.service';
 import { CheckPolicies } from '@gitroom/backend/services/auth/permissions/permissions.ability';
 import {
   AuthorizationActions,
@@ -20,12 +21,14 @@ import {
 export class IyzicoController {
   constructor(
     private _iyzicoProvider: IyzicoProvider,
-    private _usersService: UsersService
+    private _usersService: UsersService,
+    private _bankTransferService: BankTransferService
   ) {}
 
+  // Plan seçme ekranı: planlar, kartla ödeme açık mı, havale bilgileri.
   @Get('/plans')
   getPlans(@GetOrgFromRequest() org: Organization) {
-    return this._iyzicoProvider.getPlans(org.allowTrial);
+    return this._bankTransferService.getPlanScreen(org);
   }
 
   @Post('/checkout')
