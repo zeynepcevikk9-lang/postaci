@@ -50,6 +50,22 @@ const texts = [
   // Ayarlar > saat biçimi seçenekleri
   ["label: 'AM:PM'", "label: '12 saat (ÖÖ/ÖS)'"],
   ["label: '24 hours'", "label: '24 saat'"],
+  // Yönetici çubuğu: renkleri postaci.theme.scss içindeki sınıfla sadeleşir
+  ['"bg-forth h-[52px] mobile:h-auto', '"postaci-admin-bar bg-forth h-[52px] mobile:h-auto'],
+  // Yönetim sayfaları (istatistik, hatalar)
+  ["label: 'Today'", "label: 'Bugün'"],
+  ["label: 'This week'", "label: 'Bu hafta'"],
+  ["label: 'This month'", "label: 'Bu ay'"],
+  ["label: 'Last 7 days'", "label: 'Son 7 gün'"],
+  ["label: 'Last 30 days'", "label: 'Son 30 gün'"],
+  ['<div className="text-right">Count</div>', '<div className="text-right">Sayı</div>'],
+  ['opacity-70">From</div>', 'opacity-70">Başlangıç</div>'],
+  ['opacity-70">To</div>', 'opacity-70">Bitiş</div>'],
+  ["'Total unknown errors' : 'Total errors'", "'Toplam bilinmeyen hata' : 'Toplam hata'"],
+  ["? 'Unknown errors per social'", "? 'Platforma göre bilinmeyen hata'"],
+  [": 'Errors per social'", ": 'Platforma göre hata'"],
+  // Sayfa dili: büyük harfe çevrilen başlıklarda Türkçe i/İ doğru çıksın
+  ['    <html>', '    <html lang="tr">'],
 ];
 
 // Postiz'de çeviri sistemine bağlanmamış, doğrudan İngilizce yazılmış metinler.
@@ -155,6 +171,38 @@ const hardcoded = {
   'Use self-hosted': 'Kendi sunucumu kullan',
   'Your instance has to be reachable from the internet over https.': 'Sunucunuz internetten https ile erişilebilir olmalı.',
   'Instance URL': 'Sunucu adresi',
+  // Yönetim sayfaları (istatistik, hatalar)
+  'Error Details': 'Hata ayrıntıları',
+  'Copy Debug Code': 'Hata ayıklama kodunu kopyala',
+  'Post ID': 'Gönderi kimliği',
+  'You do not have access to this page.': 'Bu sayfaya erişiminiz yok.',
+  'All platforms': 'Bütün platformlar',
+  'Email contains': 'E-posta içerir',
+  'Unknown Error first': 'Önce bilinmeyen hatalar',
+  'Per page': 'Sayfa başına',
+  'Clear filters': 'Süzgeçleri temizle',
+  'Failed to load errors.': 'Hatalar yüklenemedi.',
+  'No errors found.': 'Hata bulunamadı.',
+  'No data for this timeframe.': 'Bu dönem için veri yok.',
+  'Admin Stats': 'Yönetim: İstatistikler',
+  'Unknown errors only': 'Yalnızca bilinmeyen hatalar',
+  'Failed to load stats.': 'İstatistikler yüklenemedi.',
+  'Total posts published': 'Yayımlanan toplam gönderi',
+  'Total connected accounts': 'Bağlı toplam hesap',
+  'Posts published per social': 'Platforma göre yayımlanan gönderi',
+  'Connected accounts per social': 'Platforma göre bağlı hesap',
+  'Unique channels - published': 'Yayın yapan tekil kanallar',
+  'Unique channels - scheduled': 'Zamanlaması olan tekil kanallar',
+  'Unique users - published': 'Yayın yapan tekil kullanıcılar',
+  'Unique users - scheduled': 'Zamanlaması olan tekil kullanıcılar',
+  'Active users per source': 'Kaynağa göre etkin kullanıcı',
+  'Connected clients per name': 'Ada göre bağlı istemci',
+  'Unique channels - published (all platforms combined)': 'Yayın yapan tekil kanal (bütün platformlar)',
+  'Unique channels - scheduled (all platforms combined)': 'Zamanlaması olan tekil kanal (bütün platformlar)',
+  'Unique users - published (all platforms combined)': 'Yayın yapan tekil kullanıcı (bütün platformlar)',
+  'Unique users - scheduled (all platforms combined)': 'Zamanlaması olan tekil kullanıcı (bütün platformlar)',
+  'Unique users - active (all sources combined)': 'Etkin tekil kullanıcı (bütün kaynaklar)',
+  'Connected clients (all clients combined)': 'Bağlı istemci (bütün istemciler)',
 };
 
 // Çeviri sistemine bağlanmamış uyarı ve onay mesajları (tek tırnaklı sabit metin).
@@ -210,6 +258,10 @@ const patches = [
     /onNext=\{\(\) => setStep\(2\)\}(\r?\n\s*)onSkip=\{\(\) => setStep\(2\)\}/,
     'onNext={onClose}$1onSkip={onClose}',
   ],
+  // Takvim varsayılan olarak ay görünümünde açılır (ajans işi aylık planlanır)
+  [/\? 'day'(\r?\n\s*): 'week'(\r?\n\s*\);)/, "? 'day'$1: 'month'$2"],
+  // Yönetim istatistiklerindeki "Apply" düğmesi
+  [/(\n\s*)Apply(\r?\n\s*<\/Button>)/, '$1Uygula$2'],
 ];
 
 const colorExt = new Set(['.tsx', '.ts', '.scss', '.css']);
