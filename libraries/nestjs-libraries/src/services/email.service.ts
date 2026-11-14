@@ -1,3 +1,4 @@
+import { toTurkish } from '@gitroom/nestjs-libraries/services/turkish.messages';
 import { Injectable } from '@nestjs/common';
 import { EmailInterface } from '@gitroom/nestjs-libraries/emails/email.interface';
 import { ResendProvider } from '@gitroom/nestjs-libraries/emails/resend.provider';
@@ -68,6 +69,10 @@ export class EmailService {
       return;
     }
 
+    // Postacı: Postiz'in İngilizce e-posta metinleri Türkçeye çevrilir
+    subject = toTurkish(subject);
+    html = toTurkish(html);
+
     if (!process.env.EMAIL_FROM_ADDRESS || !process.env.EMAIL_FROM_NAME) {
       console.log(
         'Email sender information not found in environment variables'
@@ -128,7 +133,7 @@ export class EmailService {
                         margin: 0;
                     ">${process.env.EMAIL_FROM_NAME}</h2>
                     <div style="font-size: 12px">
-                      You can change your notification preferences in your <a href="${settingsUrl}">account settings.</a>
+                      Bildirim tercihlerinizi <a href="${settingsUrl}">hesap ayarlarınızdan</a> değiştirebilirsiniz.
                      </div>
                 </div>
             </div>
