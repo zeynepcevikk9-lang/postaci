@@ -432,26 +432,45 @@ export class ApprovalService {
   async getRecentActivity(organizationId: string) {
     const approvals = await this._approvalRepository.getRecentApprovals(
       organizationId,
-      10
+      60
     );
     if (!approvals.length) {
       return [];
     }
     const posts = await this._approvalRepository.getPostsContent(
       organizationId,
-      approvals.map((a) => a.postId)
+      [...new Set(approvals.map((a) => a.postId))]
     );
-    return approvals.map((approval) => ({
-      id: approval.id,
-      postId: approval.postId,
-      status: approval.status,
-      reviewerName: approval.reviewerName,
-      note: approval.note,
-      createdAt: approval.createdAt,
-      text: postContentPlainText(
-        posts.find((p) => p.id === approval.postId)?.content || ''
-      ).slice(0, 140),
-    }));
+    const seen = new Set<string>();
+    return approvals
+      .filter((approval) => posts.some((p) => p.id === approval.postId))
+      .map((approval) => ({
+        id: approval.id,
+        postId: approval.postId,
+        status: approval.status,
+        reviewerName: approval.reviewerName,
+        note: approval.note,
+        createdAt: approval.createdAt,
+        text: postContentPlainText(
+          posts.find((p) => p.id === approval.postId)?.content || ''
+        ).slice(0, 140),
+      }))
+      .filter((item) => {
+        // aynı içerik birden çok kanala gidiyorsa müşterinin kararı tek satır
+        const key = [
+          item.reviewerName,
+          item.status,
+          item.note || '',
+          item.text,
+          new Date(item.createdAt).toISOString().slice(0, 16),
+        ].join('|');
+        if (seen.has(key)) {
+          return false;
+        }
+        seen.add(key);
+        return true;
+      })
+      .slice(0, 10);
   }
 
   // Ajans için: gönderilen onay planları ve her birinin durumu (kaç gönderi
