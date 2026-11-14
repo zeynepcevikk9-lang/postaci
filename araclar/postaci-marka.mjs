@@ -43,6 +43,9 @@ const colors = {
   '#a78bfa': '#ff8a66',
   '#c4b5fd': '#ffc2b3',
   '#4f46e5': '#14172b', // kaydırma çubuğu dolgusu
+  // Postiz'in pembe ikincil düğmeleri ve bildirim noktası: mercan
+  '#d82d7e': '#ff6b4a',
+  '#ff3ea2': '#ff6b4a',
 };
 
 // Sekme başlıkları ve menüdeki sabit metinler
@@ -50,6 +53,8 @@ const texts = [
   // Mor gölgeler: yeni palette nötr gölge
   ['shadow-purple-500/25', 'shadow-black/10'],
   ['shadow-purple-500/40', 'shadow-black/20'],
+  // Gönderi önizlemesinde kanal seçilmemişken görünen ad
+  ["current === 'global' ? 'Global Edit'", "current === 'global' ? 'Genel düzenleme'"],
   ["isGeneralServerSide() ? 'Postiz Calendar' : 'Gitroom Launches'", "isGeneralServerSide() ? 'Postacı Takvim' : 'Gitroom Launches'"],
   ["isGeneralServerSide() ? 'Postiz' : 'Gitroom'", "isGeneralServerSide() ? 'Postacı' : 'Gitroom'"],
   ["'Postiz - Agent'", "'Postacı Asistan'"],
@@ -234,6 +239,26 @@ const hardcoded = {
 
 // Çeviri sistemine bağlanmamış uyarı ve onay mesajları (tek tırnaklı sabit metin).
 const messages = {
+  'Please reconnect the channel from the calendar': 'Lütfen kanalı takvimden yeniden bağlayın',
+  'Please refresh the integration from the calendar': 'Lütfen kanalı takvimden yeniden bağlayın',
+  'Video generation failed or timed out — if it completes, it will appear in your media library':
+    'Video üretilemedi ya da süre doldu; tamamlanırsa medya kütüphanenizde görünür',
+  'Invite link copied to clipboard, link will be available for 1 hour':
+    'Davet bağlantısı panoya kopyalandı; bağlantı 1 saat geçerlidir',
+  'Debug code copied to clipboard': 'Hata ayıklama kodu panoya kopyalandı',
+  'App created! Copy your client secret now - it will only be shown once.':
+    'Uygulama oluşturuldu. Gizli anahtarı şimdi kopyalayın; yalnızca bir kez gösterilir.',
+  'Secret rotated! Copy your new client secret now.':
+    'Gizli anahtar yenilendi. Yeni anahtarı şimdi kopyalayın.',
+  'Name and Redirect URL are required': 'Ad ve yönlendirme adresi zorunludur',
+  'Failed to create app': 'Uygulama oluşturulamadı',
+  'App updated': 'Uygulama güncellendi',
+  'Failed to update app': 'Uygulama güncellenemedi',
+  'Failed to rotate secret': 'Gizli anahtar yenilenemedi',
+  'Failed to delete app': 'Uygulama silinemedi',
+  'Please enter an agent name': 'Lütfen bir ajan adı girin',
+  'Claim URL copied to clipboard': 'Bağlantı panoya kopyalandı',
+  'Are you sure? it will delete the current text': 'Emin misiniz? Mevcut metin silinecek',
   'Successfully claimed the code': 'Kod başarıyla kullanıldı',
   'Code already claimed or invalid code': 'Kod daha önce kullanılmış ya da geçersiz',
   'Subscription updated successfully': 'Abonelik güncellendi',
