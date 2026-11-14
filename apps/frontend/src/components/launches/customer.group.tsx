@@ -32,7 +32,7 @@ export const CustomerGroup: FC<{
       {show && (
         <div
           className={clsx(
-            'flex items-center gap-[8px] mobile:hidden',
+            'flex items-center gap-[8px] w-full mobile:hidden',
             !!index && 'mt-[4px] pt-[14px] border-t border-newTableBorder'
           )}
         >
