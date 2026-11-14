@@ -59,6 +59,15 @@ interface Summary {
 const PAGE_SIZE = 20;
 const PLANS = ['STANDARD', 'TEAM', 'PRO', 'ULTIMATE'];
 
+// Kademelerin Postacı plan adları
+const PLAN_NAMES: Record<string, string> = {
+  STANDARD: 'İşletme',
+  TEAM: 'Başlangıç',
+  PRO: 'Ajans',
+  ULTIMATE: 'Büyük Ajans',
+};
+const planName = (value: string) => PLAN_NAMES[value] || value;
+
 const useCustomers = (params: { page: number; search: string; plan: string }) => {
   const fetch = useFetch();
   const query = new URLSearchParams({
@@ -216,7 +225,7 @@ const PendingTransfers: FC<{ onDecided: () => void }> = ({ onDecided }) => {
             <div className="opacity-70">{request.email}</div>
           </div>
           <div>
-            {request.billing} ·{' '}
+            {planName(request.billing)} ·{' '}
             {request.period === 'YEARLY'
               ? t('iyzico_yearly', 'Yearly')
               : t('iyzico_monthly', 'Monthly')}
@@ -358,7 +367,7 @@ const PlanModal: FC<{ customer: Customer; onSaved: () => void }> = ({
             >
               {PLANS.map((value) => (
                 <option key={value} value={value}>
-                  {value}
+                  {planName(value)}
                 </option>
               ))}
             </select>
@@ -570,7 +579,7 @@ export const AdminCustomersComponent: FC = () => {
           </option>
           {PLANS.map((value) => (
             <option key={value} value={value}>
-              {value}
+              {planName(value)}
             </option>
           ))}
         </select>
@@ -626,7 +635,7 @@ export const AdminCustomersComponent: FC = () => {
               <div className="truncate font-[600]">{customer.name}</div>
               <div className="truncate">{customer.owner?.email || '—'}</div>
               <div>
-                {customer.plan === 'FREE' ? '—' : customer.plan}
+                {customer.plan === 'FREE' ? '—' : planName(customer.plan)}
                 {customer.period && (
                   <span className="opacity-70">
                     {' '}
