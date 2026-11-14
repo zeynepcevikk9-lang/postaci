@@ -14,17 +14,42 @@ const src = join(root, 'apps', 'frontend', 'src');
 
 // Postiz rengi -> Postacı rengi (büyük/küçük harf fark etmez)
 const colors = {
-  '#612bd3': '#3d4fe0', // ana renk
-  '#612ad5': '#3d4fe0',
-  '#5520cb': '#2f3ec2', // ana rengin üzerine gelince
-  '#fc69ff': '#ff6b4a', // vurgu rengi
-  '#3900b2': '#2f3ec2', // açık tema: seçili öğe yazısı
-  '#ebe8ff': '#e8ebff', // açık tema: seçili öğe zemini
-  '#2d1b57': '#1b2457', // açık tema: pencere arkası
+  '#612bd3': '#14172b', // ana renk: mürekkep (lacivert-siyah)
+  '#612ad5': '#14172b',
+  '#5520cb': '#262a45', // ana rengin üzerine gelince
+  '#fc69ff': '#ff6b4a', // vurgu rengi: mercan
+  '#3900b2': '#14172b', // açık tema: seçili öğe yazısı
+  '#ebe8ff': '#f1ece1', // açık tema: seçili öğe zemini
+  '#2d1b57': '#14172b', // açık tema: pencere arkası
+  // Postacı'nın önceki mavi paleti (15 Kas 2026'da bırakıldı)
+  '#3d4fe0': '#14172b',
+  '#2f3ec2': '#262a45',
+  '#e8ebff': '#f1ece1',
+  '#1b2457': '#14172b',
+  // Postiz'in dağınık kalan mor tonları
+  '#662fda': '#14172b',
+  '#5720cb': '#262a45',
+  '#7640e0': '#262a45', // düğme üzerine gelince
+  '#5023b8': '#262a45',
+  '#7b3ff2': '#14172b',
+  '#8c66ff': '#ff6b4a',
+  '#622ff6': '#ff6b4a', // seçili kanalın çerçevesi
+  '#ae8afc': '#d6472a', // metin içindeki bahsetmeler ve bağlantılar
+  '#b69dec': '#d6472a',
+  '#622aff': '#ff6b4a', // karşılama penceresindeki geçişli düğme
+  '#8b5cf6': '#ff8a66',
+  '#7c3aff': '#f25a39',
+  '#9d6eff': '#ff7d5c',
+  '#a78bfa': '#ff8a66',
+  '#c4b5fd': '#ffc2b3',
+  '#4f46e5': '#14172b', // kaydırma çubuğu dolgusu
 };
 
 // Sekme başlıkları ve menüdeki sabit metinler
 const texts = [
+  // Mor gölgeler: yeni palette nötr gölge
+  ['shadow-purple-500/25', 'shadow-black/10'],
+  ['shadow-purple-500/40', 'shadow-black/20'],
   ["isGeneralServerSide() ? 'Postiz Calendar' : 'Gitroom Launches'", "isGeneralServerSide() ? 'Postacı Takvim' : 'Gitroom Launches'"],
   ["isGeneralServerSide() ? 'Postiz' : 'Gitroom'", "isGeneralServerSide() ? 'Postacı' : 'Gitroom'"],
   ["'Postiz - Agent'", "'Postacı Asistan'"],
@@ -251,7 +276,40 @@ const hardcodedRe = new RegExp(
 // Dosyaya özel düzeltmeler (satır sonu \n ya da \r\n olabilir).
 // Karşılama penceresi: Postiz'in yapay zekâ bağlayıcıları ve İngilizce tanıtım
 // videosu adımları Postacı'da gösterilmez; kanal bağlama adımıyla biter.
+// Kanal listesi olan sayfalar: kanallar müşteriye göre ayrılır (CustomerGroup)
+const channelLists = [
+  'components/platform-analytics/platform.analytics.tsx',
+  'components/agents/agent.tsx',
+  'components/plugs/plugs.tsx',
+];
+const customerGroupImport =
+  "import { CustomerGroup } from '@gitroom/frontend/components/launches/customer.group';";
+
 const patches = [
+  // Kanal listeleri: önce müşteri adına göre sırala
+  [
+    /(\r?\n\s*\[)('type', 'disabled', 'identifier'\],\r?\n\s*\[)('desc', 'asc', 'asc'\])/,
+    "$1(o: any) => o?.customer?.name || '', $2'asc', $3",
+    channelLists,
+  ],
+  // Kanal listeleri: seçili olmayan kanal adı okunabilsin (%20 yerine %50 soluk)
+  [/opacity-20/g, 'opacity-50', channelLists],
+  // Kanal listeleri: her satır CustomerGroup içine alınır (müşteri başlığı)
+  [
+    /(\{sortedIntegrations\.map\(\(integration, index\) => \(\r?\n)(\s*)<div(\r?\n)/,
+    '$1$2<CustomerGroup\n$2  key={integration.id}\n$2  integrations={sortedIntegrations}\n$2  index={index}\n$2>\n$2<div$3',
+    channelLists,
+  ],
+  [
+    /(\{integration\.name\}\r?\n\s*<\/div>\r?\n\s*<\/div>\r?\n)(\s*)(\)\)\})/,
+    '$1$2  </CustomerGroup>\n$2$3',
+    channelLists,
+  ],
+  [
+    /^('use client';\r?\n\r?\n)(?![\s\S]*components\/launches\/customer\.group)/,
+    '$1' + customerGroupImport + '\n',
+    channelLists,
+  ],
   [
     /(      t\('connect_channels', 'Connect Channels'\),\r?\n)      t\('connect_agents', 'Connect Agents'\),\r?\n      t\('watch_tutorial', 'Watch Tutorial'\),\r?\n/,
     '$1',
@@ -319,7 +377,9 @@ for (const file of walk(src)) {
         'deleteDialog(`Are you sure you want to delete ${data.name}?`)',
         'deleteDialog(`${data.name} silinsin mi?`)'
       );
-      for (const [from, to] of patches) {
+      const relative = file.slice(src.length + 1).replace(/\\/g, '/');
+      for (const [from, to, only] of patches) {
+        if (only && !only.includes(relative)) continue;
         if (from.test(after)) {
           textHits++;
           after = after.replace(from, to);
