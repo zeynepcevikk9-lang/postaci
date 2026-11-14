@@ -41,7 +41,7 @@ export const Logo = () => {
       fill="none"
       className="mt-[8px] min-w-[60px] min-h-[60px]"
     >
-      <rect x="8" y="16" width="44" height="31" rx="8" fill="#3D4FE0" />
+      <rect x="8" y="16" width="44" height="31" rx="8" fill="#FF6B4A" />
       <path
         d="M12.5 21.5L30 35L47.5 21.5"
         stroke="white"
@@ -49,7 +49,7 @@ export const Logo = () => {
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <circle cx="45" cy="18" r="7.5" fill="#FF6B4A" stroke="white" strokeWidth="2.6" />
+      <circle cx="45" cy="18" r="7.5" fill="#14172B" stroke="white" strokeWidth="2.6" />
     </svg>
   );
 };
