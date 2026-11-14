@@ -16,6 +16,11 @@ import { deleteDialog } from '@gitroom/react/helpers/delete.dialog';
 import { LoadingComponent } from '@gitroom/frontend/components/layout/loading';
 import { pricing } from '@gitroom/nestjs-libraries/database/prisma/subscriptions/pricing';
 import i18next from '@gitroom/react/translation/i18next';
+import {
+  BankTransferModal,
+  TransferInfo,
+  TransferPending,
+} from '@gitroom/frontend/components/billing/bank.transfer';
 
 export interface IyzicoPlan {
   billing: string;
@@ -42,7 +47,13 @@ export const useIyzicoPlans = () => {
   const load = useCallback(async () => {
     return (await fetch('/iyzico/plans')).json();
   }, []);
-  return useSWR<{ enabled: boolean; plans: IyzicoPlan[] }>(
+  // card: kartla abonelik (iyzico) açık mı; transfer: havale bilgileri (kapalıysa null)
+  return useSWR<{
+    enabled: boolean;
+    card: boolean;
+    plans: IyzicoPlan[];
+    transfer: TransferInfo | null;
+  }>(
     '/iyzico/plans',
     load,
     { revalidateOnFocus: false }
@@ -293,7 +304,11 @@ const IyzicoCheckoutModal: FC<{ plan: IyzicoPlan }> = ({ plan }) => {
   );
 };
 
-const IyzicoPlans: FC<{ plans: IyzicoPlan[] }> = ({ plans }) => {
+const IyzicoPlans: FC<{
+  plans: IyzicoPlan[];
+  card: boolean;
+  transfer: TransferInfo | null;
+}> = ({ plans, card, transfer }) => {
   const t = useT();
   const modal = useModals();
   const hasYearly = plans.some((plan) => plan.period === 'YEARLY');
@@ -316,6 +331,25 @@ const IyzicoPlans: FC<{ plans: IyzicoPlan[] }> = ({ plans }) => {
       });
     },
     []
+  );
+
+  const chooseTransfer = useCallback(
+    (plan: IyzicoPlan) => () => {
+      if (!transfer) {
+        return;
+      }
+      modal.openModal({
+        classNames: {
+          modal: 'md',
+        },
+        title: t('transfer_title', 'Pay by bank transfer'),
+        withCloseButton: true,
+        closeOnEscape: true,
+        closeOnClickOutside: true,
+        children: <BankTransferModal plan={plan} transfer={transfer} />,
+      });
+    },
+    [transfer]
   );
 
   if (!plans.length) {
@@ -397,13 +431,32 @@ const IyzicoPlans: FC<{ plans: IyzicoPlan[] }> = ({ plans }) => {
                     </li>
                   )}
                 </ul>
-                <Button className="rounded-[8px]" onClick={choose(plan)}>
-                  {plan.trialDays > 0
-                    ? t('iyzico_start_trial', 'Try free for {{days}} days', {
-                        days: plan.trialDays,
-                      })
-                    : t('iyzico_subscribe', 'Subscribe')}
-                </Button>
+                {card && (
+                  <Button className="rounded-[8px]" onClick={choose(plan)}>
+                    {plan.trialDays > 0
+                      ? t('iyzico_start_trial', 'Try free for {{days}} days', {
+                          days: plan.trialDays,
+                        })
+                      : t('iyzico_subscribe', 'Subscribe')}
+                  </Button>
+                )}
+                {!!transfer &&
+                  (card ? (
+                    <button
+                      type="button"
+                      onClick={chooseTransfer(plan)}
+                      className="text-[13px] underline text-textItemBlur cursor-pointer"
+                    >
+                      {t('transfer_pay', 'Pay by bank transfer')}
+                    </button>
+                  ) : (
+                    <Button
+                      className="rounded-[8px]"
+                      onClick={chooseTransfer(plan)}
+                    >
+                      {t('transfer_pay', 'Pay by bank transfer')}
+                    </Button>
+                  ))}
               </div>
             );
           })}
@@ -412,11 +465,13 @@ const IyzicoPlans: FC<{ plans: IyzicoPlan[] }> = ({ plans }) => {
   );
 };
 
-const IyzicoCurrent: FC<{ sub: any; plans: IyzicoPlan[] }> = ({
-  sub,
-  plans,
-}) => {
+const IyzicoCurrent: FC<{
+  sub: any;
+  plans: IyzicoPlan[];
+  transfer: TransferInfo | null;
+}> = ({ sub, plans, transfer }) => {
   const t = useT();
+  const modal = useModals();
   const fetch = useFetch();
   const toast = useToaster();
   const { mutate } = useSWRConfig();
@@ -518,6 +573,28 @@ const IyzicoCurrent: FC<{ sub: any; plans: IyzicoPlan[] }> = ({
             {t('iyzico_cancel', 'Cancel subscription')}
           </Button>
         )}
+        {/* Elle tanımlanmış (havale) plan aynı yolla yenilenir */}
+        {!!transfer &&
+          !!plan &&
+          String(sub.identifier || '').startsWith('manual-') && (
+            <Button
+              className="rounded-[8px]"
+              onClick={() =>
+                modal.openModal({
+                  classNames: {
+                    modal: 'md',
+                  },
+                  title: t('transfer_title', 'Pay by bank transfer'),
+                  withCloseButton: true,
+                  closeOnEscape: true,
+                  closeOnClickOutside: true,
+                  children: <BankTransferModal plan={plan} transfer={transfer} />,
+                })
+              }
+            >
+              {t('transfer_renew', 'Renew by bank transfer')}
+            </Button>
+          )}
       </div>
 
       {!!payments?.length && (
@@ -591,10 +668,19 @@ export const IyzicoBillingComponent: FC<{ sub?: any }> = ({ sub }) => {
 
   return (
     <div className="flex flex-col gap-[18px] w-full text-newTextColor">
+      <TransferPending transfer={data?.transfer} plans={data?.plans || []} />
       {sub ? (
-        <IyzicoCurrent sub={sub} plans={data?.plans || []} />
+        <IyzicoCurrent
+          sub={sub}
+          plans={data?.plans || []}
+          transfer={data?.transfer || null}
+        />
       ) : (
-        <IyzicoPlans plans={data?.plans || []} />
+        <IyzicoPlans
+          plans={data?.plans || []}
+          card={!!data?.card}
+          transfer={data?.transfer || null}
+        />
       )}
     </div>
   );
