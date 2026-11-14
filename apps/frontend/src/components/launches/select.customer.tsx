@@ -4,6 +4,7 @@ import { uniqBy } from 'lodash';
 import React, { FC, useCallback, useMemo, useRef, useState } from 'react';
 import { Integrations } from '@gitroom/frontend/components/launches/calendar.context';
 import { useT } from '@gitroom/react/translation/get.transation.service.client';
+import { useAccountType } from '@gitroom/frontend/components/layout/account.type';
 import clsx from 'clsx';
 import { useClickOutside } from '@mantine/hooks';
 import { useToaster } from '@gitroom/react/toaster/toaster';
@@ -11,7 +12,7 @@ import { useLaunchStore } from '@gitroom/frontend/components/new-launch/store';
 import { useShallow } from 'zustand/react/shallow';
 import { UserIcon, DropdownArrowIcon } from '@gitroom/frontend/components/ui/icons';
 
-export const SelectCustomer: FC<{
+const SelectCustomerInner: FC<{
   onChange: (value: string) => void;
   integrations: Integrations[];
   customer?: string;
@@ -144,4 +145,15 @@ export const SelectCustomer: FC<{
       )}
     </div>
   );
+};
+
+// Postacı: işletme kipinde (tek işletme, müşterisi yok) müşteri seçimi gösterilmez.
+export const SelectCustomer: FC<
+  React.ComponentProps<typeof SelectCustomerInner>
+> = (props) => {
+  const business = useAccountType() === 'business';
+  if (business) {
+    return null;
+  }
+  return <SelectCustomerInner {...props} />;
 };
