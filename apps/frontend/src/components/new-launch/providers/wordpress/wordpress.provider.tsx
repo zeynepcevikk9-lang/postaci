@@ -31,12 +31,12 @@ const WordpressSettings: FC = () => {
         {...form.register('categories')}
       />
       <WordpressTerms
-        label="WordPress Tags"
+        label="WordPress etiketleri"
         func="tagsList"
         {...form.register('tags')}
       />
       <MediaComponent
-        label="Cover picture"
+        label="Kapak görseli"
         description="Add a cover picture"
         {...form.register('main_image')}
       />

@@ -82,7 +82,7 @@ const MentionList: FC = (props: any) => {
     <div className="dropdown-menu bg-newBgColorInner text-textColor border border-tableBorder rounded-lg shadow-menu max-h-60 overflow-y-auto p-2">
       {props?.items?.none ? (
         <div className="flex items-center justify-center p-2 text-textItemBlur">
-          We don't have autocomplete for this social media
+          Bu kanal için otomatik tamamlama yok
         </div>
       ) : props?.loading ? (
         <div className="flex items-center justify-center p-2 text-textItemBlur">
@@ -91,7 +91,7 @@ const MentionList: FC = (props: any) => {
       ) : props?.items ? (
         props.items.length === 0 ? (
           <div className="p-2 text-textItemBlur text-center">
-            No results found
+            Sonuç bulunamadı
           </div>
         ) : (
           props?.items?.map((item: any, index: any) => (

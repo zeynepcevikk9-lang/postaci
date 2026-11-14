@@ -55,7 +55,7 @@ export const WhopExperienceSelect: FC<{
   return (
     <Select
       name={name}
-      label="Select Forum"
+      label="Forum seçin"
       onChange={onChangeInner}
       value={currentExperience}
     >

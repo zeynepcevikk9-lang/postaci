@@ -240,7 +240,7 @@ export const Subreddit: FC<{
           <Input
             placeholder="/r/selfhosted"
             name="search"
-            label="Search Subreddit"
+            label="Subreddit ara"
             readOnly={loading}
             value={searchValue}
             error={errors?.message}

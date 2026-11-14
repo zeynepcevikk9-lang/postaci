@@ -449,7 +449,7 @@ const ChromeExtensionWarning: FC<{
           )}
         </li>
         <li>
-          We will store your cookies securely to facilitate the connection.
+          Bağlantıyı kurabilmek için oturum bilgilerinizi güvenli biçimde saklarız.
         </li>
         <li>
           Postiz does not take responsibility for any issues arising or account

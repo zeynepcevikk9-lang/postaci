@@ -34,10 +34,10 @@ export const LifetimeDeal = () => {
     ).json();
     if (success) {
       mutate('/user/self');
-      toast.show('Successfully claimed the code');
+      toast.show('Kod başarıyla kullanıldı');
       fireEvents('lifetime_claimed');
     } else {
-      toast.show('Code already claimed or invalid code', 'warning');
+      toast.show('Kod daha önce kullanılmış ya da geçersiz', 'warning');
     }
     setCode('');
   }, [code]);
@@ -176,7 +176,7 @@ export const LifetimeDeal = () => {
               <Input
                 label="Code"
                 translationKey="label_code"
-                placeholder="Enter your code"
+                placeholder="Kodunuzu girin"
                 disableForm={true}
                 name="code"
                 value={code}

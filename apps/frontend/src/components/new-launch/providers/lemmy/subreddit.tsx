@@ -131,7 +131,7 @@ export const Subreddit: FC<{
           <Input
             placeholder="Community"
             name="search"
-            label="Search Community"
+            label="Topluluk ara"
             readOnly={loading}
             value={searchValue}
             error={errors?.message}

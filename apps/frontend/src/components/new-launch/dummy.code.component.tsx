@@ -16,10 +16,10 @@ export const DummyCodeComponent: FC<{ code: any }> = ({ code }) => {
           className="mr-[50px]"
           onClick={() => {
             copy(JSON.stringify(code, null, 2));
-            toaster.show('Code copied to clipboard', 'success');
+            toaster.show('Kod panoya kopyalandı', 'success');
           }}
         >
-          Copy Code
+          Kodu kopyala
         </Button>
       </TopTitle>
       <button

@@ -259,7 +259,7 @@ export const DatePickerPanel: FC<{
       <TimeInput
         onChange={changeDate('time')}
         format={isUSCitizen() ? '12' : '24'}
-        label="Pick time"
+        label="Saat seçin"
         classNames={{
           label: 'text-textColor py-[12px]',
           input:

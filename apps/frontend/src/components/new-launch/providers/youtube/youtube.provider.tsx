@@ -82,7 +82,7 @@ const YoutubeSettings: FC = () => {
         </div>
       </div>
       <Select
-        label="Privacy Status"
+        label="Gizlilik durumu"
         {...register('type', {
           value: 'public',
         })}
@@ -94,7 +94,7 @@ const YoutubeSettings: FC = () => {
         ))}
       </Select>
       <Select
-        label="Made for kids"
+        label="Çocuklara özel"
         {...register('selfDeclaredMadeForKids', {
           value: 'no',
         })}

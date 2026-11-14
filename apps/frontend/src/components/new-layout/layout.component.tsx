@@ -147,7 +147,7 @@ export const LayoutComponent = ({ children }: { children: ReactNode }) => {
                         <button
                           className="hidden mobile:flex items-center justify-center w-[36px] h-[36px] -ms-[6px] rounded-[8px] text-textItemBlur hover:text-newTextColor hover:bg-boxFocused"
                           onClick={() => setMenuOpen(true)}
-                          aria-label="Open menu"
+                          aria-label="Menüyü aç"
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"

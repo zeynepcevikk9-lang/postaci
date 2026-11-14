@@ -24,11 +24,11 @@ const DevtoSettings: FC = () => {
       <Input label="Title" {...form.register('title')} />
       <Canonical
         date={date}
-        label="Canonical Link"
+        label="Özgün bağlantı (canonical)"
         {...form.register('canonical')}
       />
       <MediaComponent
-        label="Cover picture"
+        label="Kapak görseli"
         description="Add a cover picture"
         {...form.register('main_image')}
       />

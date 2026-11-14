@@ -35,13 +35,13 @@ const SaveSetModal: FC<{
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <div>
         <Input
-          label="Set Name"
+          label="Set adı"
           translationKey="label_set_name"
           name="setName"
           value={name}
           disableForm={true}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Enter a name for this set"
+          placeholder="Bu set için bir ad yazın"
           autoFocus
         />
       </div>
@@ -128,9 +128,9 @@ export const Sets: FC = () => {
                         });
                         modal.closeAll();
                         mutate();
-                        toaster.show('Set saved successfully', 'success');
+                        toaster.show('Set kaydedildi', 'success');
                       } catch (error) {
-                        toaster.show('Failed to save set', 'warning');
+                        toaster.show('Set kaydedilemedi', 'warning');
                       }
                     }}
                     onCancel={() => modal.closeAll()}
@@ -152,12 +152,12 @@ export const Sets: FC = () => {
 
   const deleteSet = useCallback(
     (data: any) => async () => {
-      if (await deleteDialog(`Are you sure you want to delete ${data.name}?`)) {
+      if (await deleteDialog(`${data.name} silinsin mi?`)) {
         await fetch(`/sets/${data.id}`, {
           method: 'DELETE',
         });
         mutate();
-        toaster.show('Set deleted successfully', 'success');
+        toaster.show('Set silindi', 'success');
       }
     },
     []
@@ -169,7 +169,7 @@ export const Sets: FC = () => {
     <div className="flex flex-col">
       <h3 className="text-[20px]">Sets ({data?.length || 0})</h3>
       <div className="text-customColor18 mt-[4px]">
-        Manage your content sets for easy reuse across posts.
+        Gönderilerde yeniden kullanmak için içerik setlerinizi yönetin.
       </div>
       <div className="my-[16px] mt-[16px] bg-sixth border-fifth items-center border rounded-[4px] p-[24px] flex gap-[24px]">
         <div className="flex flex-col w-full">
@@ -202,7 +202,7 @@ export const Sets: FC = () => {
               onClick={addSet()}
               className={clsx((data?.length || 0) > 0 && 'my-[16px]')}
             >
-              Add a set
+              Set ekle
             </Button>
           </div>
         </div>

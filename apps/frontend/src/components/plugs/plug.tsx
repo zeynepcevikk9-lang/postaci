@@ -125,7 +125,7 @@ export const PlugPop: FC<{
         })),
       }),
     });
-    toaster.show('Plug updated', 'success');
+    toaster.show('Eklenti güncellendi', 'success');
     closeAll();
   }, []);
 

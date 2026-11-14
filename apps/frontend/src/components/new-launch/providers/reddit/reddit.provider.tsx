@@ -86,7 +86,7 @@ const RedditPreview: FC = (props) => {
     },
   });
   if (!settings || !settings.length) {
-    return <>Please add at least one Subreddit from the settings</>;
+    return <>Lütfen ayarlardan en az bir subreddit ekleyin</>;
   }
   return (
     <div className="flex flex-col gap-[40px] w-full">

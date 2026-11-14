@@ -52,7 +52,7 @@ export const FacebookSettings = () => {
     <>
       <div className="pt-[20px]">
         <Select
-          label="Post Type"
+          label="Gönderi türü"
           {...register('post_type', {
             value: 'post',
           })}

@@ -60,14 +60,14 @@ export function ForgotReturn({ token }: { token: string }) {
           <>
             <div className="space-y-4 text-textColor">
               <Input
-                label="New Password"
+                label="Yeni şifre"
                 translationKey="label_new_password"
                 {...form.register('password')}
                 type="password"
                 placeholder={t('label_password', 'Password')}
               />
               <Input
-                label="Repeat Password"
+                label="Şifreyi yineleyin"
                 translationKey="label_repeat_password"
                 {...form.register('repeatPassword')}
                 type="password"

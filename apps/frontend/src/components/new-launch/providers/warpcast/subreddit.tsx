@@ -115,7 +115,7 @@ export const Subreddit: FC<{
           <Input
             placeholder="Channel"
             name="search"
-            label="Search Channel"
+            label="Kanal ara"
             readOnly={loading}
             value={searchValue}
             error={errors?.message}

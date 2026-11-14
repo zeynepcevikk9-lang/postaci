@@ -14,8 +14,8 @@ const TumblrSettings = () => {
   return (
     <>
       <Input label="Title" {...form.register('title')} />
-      <Input label="Link URL" {...form.register('link')} />
-      <Input label="Source URL" {...form.register('sourceUrl')} />
+      <Input label="Bağlantı adresi" {...form.register('link')} />
+      <Input label="Kaynak adresi" {...form.register('sourceUrl')} />
       <Input label="Tags" {...form.register('tags')} />
     </>
   );

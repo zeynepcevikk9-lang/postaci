@@ -78,7 +78,7 @@ const ConnectComponent: FC<{
       }),
     });
     if (response.status === 404) {
-      toast.show('Repository not found', 'warning');
+      toast.show('Depo bulunamadı', 'warning');
       return;
     }
     setConnected(`${select}/${repo}`);
@@ -108,7 +108,7 @@ const ConnectComponent: FC<{
           onChange={(e) => setUrl(e.target.value)}
           name="github"
           label=""
-          placeholder="Full GitHub URL"
+          placeholder="Tam GitHub adresi"
         />
         <Button
           className="h-[44px] mt-[7px]"

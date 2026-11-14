@@ -125,7 +125,7 @@ export const LinkedinCompany: FC<{
       onSelect(options.value);
       onClose();
     } catch (e) {
-      toast.show('Failed to load profile', 'warning');
+      toast.show('Profil yüklenemedi', 'warning');
     }
   };
   return (

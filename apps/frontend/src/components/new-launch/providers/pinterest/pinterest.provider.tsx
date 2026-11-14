@@ -19,7 +19,7 @@ const PinterestSettings: FC = () => {
       <Input label={'Link'} {...register('link')} />
       <PinterestBoard {...register('board')} />
       <ColorPicker
-        label="Select Pin Color"
+        label="Pin rengi seçin"
         name="dominant_color"
         enabled={false}
         canBeCancelled={true}

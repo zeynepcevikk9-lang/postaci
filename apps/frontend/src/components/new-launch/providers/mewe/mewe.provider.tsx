@@ -18,10 +18,10 @@ const MeweComponent: FC = () => {
   return (
     <div>
       <Select
-        label="Post To"
+        label="Paylaşılacak yer"
         {...form.register('postType')}
       >
-        <option value="timeline">My Timeline</option>
+        <option value="timeline">Zaman tünelim</option>
         <option value="group">Group</option>
       </Select>
       {postType === 'group' && (

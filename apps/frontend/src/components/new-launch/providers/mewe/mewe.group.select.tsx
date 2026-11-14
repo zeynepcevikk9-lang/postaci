@@ -47,7 +47,7 @@ export const MeweGroupSelect: FC<{
   return (
     <Select
       name={name}
-      label="Select Group"
+      label="Grup seçin"
       onChange={onChangeInner}
       value={currentGroup}
     >

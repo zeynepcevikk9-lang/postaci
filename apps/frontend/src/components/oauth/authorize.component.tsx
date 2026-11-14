@@ -121,7 +121,7 @@ export const OAuthAuthorize: FC<{ logged: boolean }> = ({ logged }) => {
             <Logo />
           </div>
           <div className="text-[16px] text-gray-400">
-            Please wait...
+            Lütfen bekleyin...
           </div>
           <div className="mt-[32px] flex justify-center">
             <div className="w-[48px] h-[48px] border-[3px] border-[#3D4FE0] border-t-transparent rounded-full animate-spin" />
@@ -156,7 +156,7 @@ export const OAuthAuthorize: FC<{ logged: boolean }> = ({ logged }) => {
             </svg>
           </div>
           <div className="text-[28px] font-semibold mb-[12px]">
-            Authorization Error
+            Yetkilendirme hatası
           </div>
           <div className="text-[16px] text-gray-400 max-w-[400px]">
             {error}
@@ -227,9 +227,9 @@ export const OAuthAuthorize: FC<{ logged: boolean }> = ({ logged }) => {
                   account. It will be able to:
                 </div>
                 <ul className="text-[14px] list-disc list-inside space-y-[4px]">
-                  <li>Access your integrations and channels</li>
-                  <li>Create and schedule posts on your behalf</li>
-                  <li>Read your post analytics</li>
+                  <li>Bağlantılarınıza ve kanallarınıza erişme</li>
+                  <li>Sizin adınıza gönderi oluşturma ve zamanlama</li>
+                  <li>Gönderi analitiğinizi okuma</li>
                 </ul>
               </div>
 
@@ -255,7 +255,7 @@ export const OAuthAuthorize: FC<{ logged: boolean }> = ({ logged }) => {
                   onClick={signIn}
                   className="bg-[#3D4FE0] hover:bg-[#7B3FF2] text-white rounded-[8px] py-[10px] px-[16px] text-[14px] font-semibold transition-colors"
                 >
-                  Sign in to Postiz
+                  Postacı ile giriş yapın
                 </button>
               )}
 
@@ -265,7 +265,7 @@ export const OAuthAuthorize: FC<{ logged: boolean }> = ({ logged }) => {
                   disabled={submitting}
                   className="text-[14px] text-gray-400 hover:text-white disabled:opacity-50 transition-colors"
                 >
-                  Use self-hosted
+                  Kendi sunucumu kullan
                 </button>
               )}
             </>

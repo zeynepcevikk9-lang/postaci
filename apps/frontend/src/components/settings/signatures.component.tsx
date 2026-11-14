@@ -50,7 +50,7 @@ export const SignaturesComponent: FC<{
           method: 'DELETE',
         });
         mutate();
-        toaster.show('Signature deleted successfully', 'success');
+        toaster.show('İmza silindi', 'success');
       }
     },
     []
@@ -235,7 +235,7 @@ const AddOrRemoveSignature: FC<{
               onChange={(e) => {
                 form.setValue('content', e.target.value);
               }}
-              placeholder="Write your signature..."
+              placeholder="İmzanızı yazın..."
               autosuggestionsConfig={{
                 textareaPurpose: `Assist me in writing social media signature`,
                 chatApiConfigs: {},
@@ -244,7 +244,7 @@ const AddOrRemoveSignature: FC<{
           </div>
 
           <Select
-            label="Auto add signature?"
+            label="İmza otomatik eklensin mi?"
             translationKey="label_auto_add_signature"
             {...form.register('autoAdd', {
               setValueAs: (value) => value === 'true',

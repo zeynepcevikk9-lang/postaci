@@ -22,7 +22,7 @@ const MediumSettings: FC = () => {
       <Input label="Subtitle" {...form.register('subtitle')} />
       <Canonical
         date={date}
-        label="Canonical Link"
+        label="Özgün bağlantı (canonical)"
         {...form.register('canonical')}
       />
       <div>

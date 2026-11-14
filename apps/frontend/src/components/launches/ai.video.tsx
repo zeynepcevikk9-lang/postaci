@@ -45,7 +45,7 @@ export const Modal: FC<{
 
     const customParams = form.getValues();
     if (!(await form.trigger())) {
-      toaster.show('Please fill all required fields', 'warning');
+      toaster.show('Lütfen zorunlu alanları doldurun', 'warning');
       return;
     }
     try {
@@ -61,7 +61,7 @@ export const Modal: FC<{
       if (image.status == 200 || image.status == 201) {
         onChange(await image.json());
       } else {
-        toaster.show('Video generation failed', 'warning');
+        toaster.show('Video üretilemedi', 'warning');
       }
     } catch (e) {
       toaster.show(

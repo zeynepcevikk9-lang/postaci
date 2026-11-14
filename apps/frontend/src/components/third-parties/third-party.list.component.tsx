@@ -49,7 +49,7 @@ export const ApiModal: FC<{
       });
 
       if (add.ok) {
-        toaster.show('Integration added successfully', 'success');
+        toaster.show('Bağlantı eklendi', 'success');
         if (closePopup) {
           closePopup();
         } else {
@@ -81,7 +81,7 @@ export const ApiModal: FC<{
           onSubmit={methods.handleSubmit(submit)}
         >
           <div className="pt-[10px]">
-            <Input label="API Key" name="api" />
+            <Input label="API anahtarı" name="api" />
           </div>
           <div>
             <Button loading={loading} type="submit">

@@ -23,7 +23,7 @@ export const PreConditionComponentModal: FC = () => {
         <Button
           onClick={() => (window.location.href = '/billing?finishTrial=true')}
         >
-          End trial and pay now
+          Denemeyi bitir ve şimdi öde
         </Button>
         <Button onClick={modal.closeCurrent} secondary={true}>Cancel</Button>
       </div>

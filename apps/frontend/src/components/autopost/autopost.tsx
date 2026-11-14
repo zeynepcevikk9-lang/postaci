@@ -298,7 +298,7 @@ export const AddOrEditWebhook: FC<{
               {...form.register('url')}
             />
             <Select
-              label="Should we sync the current last post?"
+              label="Şu anki son gönderi de eşitlensin mi?"
               translationKey="label_should_sync_last_post"
               {...form.register('syncLast', {
                 setValueAs: (value) => {
@@ -313,7 +313,7 @@ export const AddOrEditWebhook: FC<{
               ))}
             </Select>
             <Select
-              label="Autogenerate content"
+              label="İçerik otomatik üretilsin"
               translationKey="label_autogenerate_content"
               {...form.register('generateContent', {
                 setValueAs: (value) => value === 'true' || value === true,
@@ -348,7 +348,7 @@ export const AddOrEditWebhook: FC<{
               </>
             )}
             <Select
-              label="Generate Picture?"
+              label="Görsel üretilsin mi?"
               translationKey="label_generate_picture"
               {...form.register('addPicture', {
                 setValueAs: (value) => value === 'true' || value === true,

@@ -1314,7 +1314,7 @@ export const ManageModal: FC<AddEditModalProps> = (props) => {
                 }
                 onClick={schedule('draft')}
               >
-                Save Set
+                Seti kaydet
               </button>
             )}
             {!addEditSets && (

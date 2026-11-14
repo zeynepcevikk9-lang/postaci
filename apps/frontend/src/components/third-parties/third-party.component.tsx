@@ -26,7 +26,7 @@ export const ThirdPartyMenuComponent: FC<{
   const deleteChannel = (id: string) => async () => {
     setShow(false);
     if (
-      !(await deleteDialog('Are you sure you want to delete this integration?'))
+      !(await deleteDialog('Bu bağlantıyı silmek istediğinize emin misiniz?'))
     ) {
       return;
     }
@@ -36,7 +36,7 @@ export const ThirdPartyMenuComponent: FC<{
     });
 
     if (res.ok) {
-      toaster.show('Integration deleted successfully', 'success');
+      toaster.show('Bağlantı silindi', 'success');
       reload();
     } else {
       const error = await res.json();
@@ -115,7 +115,7 @@ export const ThirdPartyComponent = () => {
       {!isLoading && (
         <div className="bg-sixth border-fifth border rounded-[4px] p-[24px]">
           {!data?.length ? (
-            <div className="text-customColor18">No Integrations Yet</div>
+            <div className="text-customColor18">Henüz bağlantı yok</div>
           ) : (
             <div className="flex flex-col gap-[16px]">
               {data?.map((p: any) => (

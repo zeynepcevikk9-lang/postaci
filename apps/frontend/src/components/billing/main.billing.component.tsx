@@ -413,7 +413,7 @@ const Accept: FC<{ resolve: (res: boolean) => void }> = ({ resolve }) => {
           Apply 50% discount for 3 months
         </Button>
         <Button onClick={() => resolve(false)} className="!bg-red-800">
-          Cancel my subscription
+          Aboneliğimi iptal et
         </Button>
       </div>
     </div>
@@ -735,7 +735,7 @@ export const MainBillingComponent: FC<{
             billing,
             monthlyOrYearly === 'on' ? 'YEARLY' : 'MONTHLY'
           );
-          toast.show('Subscription updated successfully');
+          toast.show('Abonelik güncellendi');
         }
         setLoading(false);
       },

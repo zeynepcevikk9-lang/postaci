@@ -77,7 +77,7 @@ export const OAuthSelfHosted: FC<{
       className="border-t border-[#2A2929] pt-[16px] flex flex-col gap-[16px]"
     >
       <div className="flex flex-col gap-[4px]">
-        <div className="text-[16px] font-semibold">Use self-hosted</div>
+        <div className="text-[16px] font-semibold">Kendi sunucumu kullan</div>
         <div className="text-[14px] text-gray-400">
           {appName} will work with your own Postiz instance. Postiz Cloud
           relays its requests, and your API key is stored encrypted.
@@ -88,7 +88,7 @@ export const OAuthSelfHosted: FC<{
           saved Postiz login (email + password) into this form */}
       <Input
         name="instance_url"
-        label="Instance URL"
+        label="Sunucu adresi"
         disableForm={true}
         removeError={true}
         value={instanceUrl}
@@ -102,7 +102,7 @@ export const OAuthSelfHosted: FC<{
       <div className="flex flex-col gap-[6px]">
         <Input
           name="api_key"
-          label="API key"
+          label="API anahtarı"
           disableForm={true}
           removeError={true}
           value={apiKey}
@@ -159,7 +159,7 @@ export const OAuthSelfHosted: FC<{
       </div>
 
       <div className="text-[12px] text-gray-400 text-center">
-        Your instance has to be reachable from the internet over https.
+        Sunucunuz internetten https ile erişilebilir olmalı.
       </div>
     </form>
   );

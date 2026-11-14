@@ -119,7 +119,7 @@ export const FinishTrial: FC<{ close: () => void }> = (props) => {
                 {finished && (
                   <div className="flex flex-col">
                     <div>
-                      Your trial has ended and your plan's first payment was charged.
+                      Deneme süreniz bitti ve planınızın ilk ödemesi alındı.
                     </div>
                     <div className="flex gap-[10px] mt-[20px]">
                       {closeButton}

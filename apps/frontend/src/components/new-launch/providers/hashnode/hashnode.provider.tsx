@@ -25,11 +25,11 @@ const HashnodeSettings: FC = () => {
       <Input label="Subtitle" {...form.register('subtitle')} />
       <Canonical
         date={date}
-        label="Canonical Link"
+        label="Özgün bağlantı (canonical)"
         {...form.register('canonical')}
       />
       <MediaComponent
-        label="Cover picture"
+        label="Kapak görseli"
         description="Add a cover picture"
         {...form.register('main_image')}
       />

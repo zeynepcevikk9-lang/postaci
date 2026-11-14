@@ -48,7 +48,7 @@ const InstagramCollaborators: FC<{
   return (
     <>
       <Select
-        label="Post Type"
+        label="Gönderi türü"
         {...register('post_type', {
           value: 'post',
         })}
@@ -94,7 +94,7 @@ const InstagramCollaborators: FC<{
 
           {isTrialReel && (
             <Select
-              label="Graduation Strategy"
+              label="Deneme sonrası yayın biçimi"
               {...register('graduation_strategy', {
                 value: 'MANUAL',
               })}

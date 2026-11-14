@@ -54,7 +54,7 @@ const TwitchSettings: FC = () => {
   return (
     <div className="flex flex-col">
       <Select
-        label="Message Type"
+        label="Mesaj türü"
         {...register('messageType', {
           value: 'message',
         })}
@@ -67,7 +67,7 @@ const TwitchSettings: FC = () => {
       </Select>
       {messageType === 'announcement' && (
         <Select
-          label="Announcement Color"
+          label="Duyuru rengi"
           {...register('announcementColor', {
             value: 'primary',
           })}

@@ -1143,7 +1143,7 @@ export const Impersonate = () => {
                 <div className="flex-1 mobile:basis-full">
                   <Input
                     autoComplete="off"
-                    placeholder="Write the user details"
+                    placeholder="Kullanıcı adı ya da e-postası yazın"
                     name="impersonate"
                     disableForm={true}
                     label=""

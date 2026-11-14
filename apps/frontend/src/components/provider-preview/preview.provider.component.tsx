@@ -212,7 +212,7 @@ export const ProviderPreviewComponent: FC<ProviderPreviewProps> = ({
   if (!SettingsComponent) {
     return (
       <div className="p-4 text-sm">
-        This provider has no configurable settings.
+        Bu kanalın ayarlanabilir bir seçeneği yok.
       </div>
     );
   }

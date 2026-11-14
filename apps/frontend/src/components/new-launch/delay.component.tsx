@@ -118,7 +118,7 @@ export const DelayComponent: FC<{
                 value={customValue}
                 onChange={(e) => setCustomValue(e.target.value)}
                 onClick={(e) => e.stopPropagation()}
-                placeholder="Custom min"
+                placeholder="Özel dk"
                 className={clsx(
                   'flex-1 w-full h-[32px] px-[8px] rounded-[4px] bg-newBgColor border text-[13px] outline-none focus:border-[#3D4FE0]',
                   isCustomDelay ? 'border-[#3D4FE0]' : 'border-newTextColor/10'
@@ -144,7 +144,7 @@ export const DelayComponent: FC<{
               onClick={() => handleSelectDelay(0)}
               className="mt-[8px] h-[32px] w-full rounded-[4px] text-[13px] text-red-400 hover:bg-red-400/10"
             >
-              Remove delay
+              Gecikmeyi kaldır
             </button>
           )}
         </div>

@@ -390,7 +390,7 @@ export const MediaComponentInner: FC<{
                   {(newThumbnail || thumbnail) && (
                     <img
                       src={newThumbnail || thumbnail}
-                      alt="Current thumbnail"
+                      alt="Şimdiki küçük görsel"
                       className="max-w-full max-h-[500px] object-contain rounded-lg border border-tableBorder"
                     />
                   )}
@@ -403,7 +403,7 @@ export const MediaComponentInner: FC<{
                     onClick={() => setIsEditingThumbnail(true)}
                     className="bg-third text-textColor px-6 py-2 rounded-lg hover:bg-opacity-80 transition-all flex-1 border border-tableBorder whitespace-nowrap"
                   >
-                    Select Frame
+                    Kare seç
                   </button>
                   <button
                     disabled={loading}
@@ -433,7 +433,7 @@ export const MediaComponentInner: FC<{
                     }
                     className="bg-third text-textColor px-6 py-2 rounded-lg hover:bg-opacity-80 transition-all flex-1 border border-tableBorder whitespace-nowrap"
                   >
-                    From Gallery
+                    Galeriden
                   </button>
                   {(thumbnail || newThumbnail) && (
                     <button
@@ -513,7 +513,7 @@ export const MediaComponentInner: FC<{
             onClick={save}
             className="flex-1 bg-forth text-white px-6 py-2 rounded-lg hover:bg-opacity-80 transition-all"
           >
-            Save Changes
+            Değişiklikleri kaydet
           </button>
         </div>
       )}

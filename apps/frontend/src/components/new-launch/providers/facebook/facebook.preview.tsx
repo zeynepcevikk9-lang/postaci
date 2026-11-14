@@ -261,7 +261,7 @@ export const FacebookPreview: FC<{
       {renderContent.length > 1 && (
         <>
           <div className="flex items-center">
-            <div className="text-[14px] font-[700]">Most relevant</div>
+            <div className="text-[14px] font-[700]">En alakalı</div>
             <div>
               <svg
                 width="20"

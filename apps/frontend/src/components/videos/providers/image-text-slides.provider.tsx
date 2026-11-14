@@ -101,7 +101,7 @@ const VoiceSelector: FC = () => {
   if (isLoading || !data?.voices?.length) {
     return (
       <div className="flex items-center justify-center py-4">
-        <div className="text-sm text-gray-500">Loading voices...</div>
+        <div className="text-sm text-gray-500">Sesler yükleniyor...</div>
       </div>
     );
   }
@@ -109,7 +109,7 @@ const VoiceSelector: FC = () => {
   return (
     <div className="space-y-3">
       <div className="text-sm font-medium text-textColor mb-4">
-        Select a Voice
+        Bir ses seçin
       </div>
       <div className="space-y-2">
         {data.voices.map((voice) => (
