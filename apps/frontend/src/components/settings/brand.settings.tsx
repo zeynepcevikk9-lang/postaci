@@ -38,6 +38,9 @@ export const BrandSettings: FC = () => {
   const [name, setName] = useState('');
   const [logo, setLogo] = useState('');
   const [color, setColor] = useState('');
+  const [accountType, setAccountType] = useState<'agency' | 'business'>(
+    'agency'
+  );
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
@@ -45,6 +48,7 @@ export const BrandSettings: FC = () => {
       setName(data.name || '');
       setLogo(data.logo || '');
       setColor(data.color || '');
+      setAccountType(data.accountType === 'business' ? 'business' : 'agency');
     }
   }, [data]);
 
@@ -59,7 +63,7 @@ export const BrandSettings: FC = () => {
     try {
       const response = await fetch('/brand', {
         method: 'PUT',
-        body: JSON.stringify({ name, logo, color }),
+        body: JSON.stringify({ name, logo, color, accountType }),
       });
       if (!response.ok) {
         throw new Error(String(response.status));
@@ -71,25 +75,80 @@ export const BrandSettings: FC = () => {
     } finally {
       setSaving(false);
     }
-  }, [name, logo, color]);
+  }, [name, logo, color, accountType]);
 
   return (
     <div className="flex flex-col gap-[20px] max-w-[640px]">
       <div>
         <h3 className="text-[20px] font-[600]">
-          {t('brand_title', 'Agency brand')}
+          {accountType === 'business'
+            ? t('brand_title_business', 'Brand')
+            : t('brand_title', 'Agency brand')}
         </h3>
         <p className="text-[14px] text-textItemBlur mt-[4px]">
-          {t(
+          {accountType === 'business'
+            ? t(
+                'brand_description_business',
+                'This name and logo appear on the pages you share: post previews and monthly reports.'
+              )
+            : t(
             'brand_description',
             'Your clients see this name and logo on the pages you share with them: post previews, approval plans and monthly reports.'
           )}
         </p>
       </div>
 
+      <div className="flex flex-col gap-[8px]">
+        <span className="text-[14px]">
+          {t('account_type', 'Account type')}
+        </span>
+        <div className="grid grid-cols-2 mobile:grid-cols-1 gap-[10px]">
+          {(
+            [
+              {
+                value: 'agency',
+                title: t('account_type_agency', 'Agency'),
+                text: t(
+                  'account_type_agency_text',
+                  'You manage the accounts of several clients; you send plans for approval and reports to them.'
+                ),
+              },
+              {
+                value: 'business',
+                title: t('account_type_business', 'Business'),
+                text: t(
+                  'account_type_business_text',
+                  'You manage only your own accounts. Client selection and client approval are hidden.'
+                ),
+              },
+            ] as const
+          ).map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              onClick={() => setAccountType(option.value)}
+              className={
+                accountType === option.value
+                  ? 'text-start rounded-[10px] p-[14px] border-2 border-btnPrimary bg-boxFocused cursor-pointer'
+                  : 'text-start rounded-[10px] p-[14px] border-2 border-newTableBorder cursor-pointer hover:bg-boxHover'
+              }
+            >
+              <span className="block text-[15px] font-[600]">
+                {option.title}
+              </span>
+              <span className="block text-[13px] text-textItemBlur mt-[4px]">
+                {option.text}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="flex flex-col gap-[6px]">
         <label htmlFor="brand-name" className="text-[14px]">
-          {t('brand_name', 'Agency name')}
+          {accountType === 'business'
+            ? t('brand_name_business', 'Business name')
+            : t('brand_name', 'Agency name')}
         </label>
         <input
           id="brand-name"
