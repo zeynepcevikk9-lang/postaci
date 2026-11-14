@@ -1386,5 +1386,17 @@
   "import_selected": "Seçilenleri içe aktar",
   "import_from": "Şuradan içe aktar:",
   "import": "İçe aktar",
-  "total": "Toplam"
+  "total": "Toplam",
+  "sent_plans_title": "Gönderdiğiniz planlar",
+  "sent_plans_progress": "{{total}} gönderinin {{approved}} tanesi onaylandı",
+  "sent_plans_empty": "Bu dönemde gönderi yok",
+  "sent_plans_changes": "{{count}} değişiklik isteği",
+  "sent_plans_pending": "{{count}} bekliyor",
+  "sent_plans_remind": "WhatsApp'tan hatırlat",
+  "sent_plans_open": "Aç",
+  "sent_plans_reminder_message": "Hatırlatma: içerik planınızdaki {{count}} gönderi onayınızı bekliyor. Buradan inceleyebilirsiniz:",
+  "sent_plans_remove_confirm": "Müşterinizdeki bağlantı artık açılmaz. Gönderiler ve verilmiş kararlar olduğu gibi kalır.",
+  "sent_plans_remove_yes": "Evet, kaldır",
+  "sent_plans_remove_title": "Onay planı kaldırılsın mı?",
+  "sent_plans_waiting_tooltip": "Müşteriden yanıt bekleyen planlar"
 }
