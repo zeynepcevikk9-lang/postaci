@@ -115,6 +115,138 @@ const fieldClass =
 const COLUMNS =
   'grid-cols-[minmax(160px,1.4fr)_minmax(180px,1.4fr)_110px_minmax(150px,1fr)_60px_70px_70px_110px_110px_190px]';
 
+interface TransferRequest {
+  id: string;
+  organizationName: string;
+  email: string;
+  billing: string;
+  period: 'MONTHLY' | 'YEARLY';
+  amount: number;
+  code: string;
+  createdAt: string;
+}
+
+const useTransfers = () => {
+  const fetch = useFetch();
+  return useSWR<TransferRequest[]>(
+    '/admin/transfers',
+    async (url: string) => {
+      const res = await fetch(url);
+      if (!res.ok) {
+        throw new Error('Failed to load transfers');
+      }
+      return res.json();
+    },
+    { revalidateOnFocus: false }
+  );
+};
+
+// Bekleyen havale bildirimleri: ödeme banka hesabında görülünce onaylanır.
+const PendingTransfers: FC<{ onDecided: () => void }> = ({ onDecided }) => {
+  const t = useT();
+  const fetch = useFetch();
+  const toast = useToaster();
+  const { data, mutate } = useTransfers();
+  const [busy, setBusy] = useState<string | null>(null);
+
+  const decide = useCallback(
+    (request: TransferRequest, action: 'approve' | 'reject') => async () => {
+      if (
+        action === 'approve' &&
+        !(await deleteDialog(
+          t(
+            'admin_transfer_approve_confirm',
+            'Approve only after you see the payment in the bank account. The plan opens right away.'
+          ),
+          t('admin_transfer_approve_yes', 'Yes, payment received'),
+          `${request.organizationName} · ${request.amount} TL`,
+          t('no_cancel', 'No, cancel!')
+        ))
+      ) {
+        return;
+      }
+      setBusy(request.id);
+      try {
+        const response = await fetch(
+          `/admin/transfers/${request.id}/${action}`,
+          { method: 'POST' }
+        );
+        if (!response.ok) {
+          const body = await response.json().catch(() => ({}));
+          throw new Error(body?.message);
+        }
+        toast.show(
+          action === 'approve'
+            ? t('admin_transfer_approved', 'The plan was opened')
+            : t('admin_transfer_rejected', 'The notice was rejected'),
+          'success'
+        );
+        await mutate();
+        onDecided();
+      } catch (err: any) {
+        toast.show(
+          `${t('admin_transfer_failed', 'The action could not be completed')}${
+            err?.message ? `: ${err.message}` : ''
+          }`,
+          'warning'
+        );
+      } finally {
+        setBusy(null);
+      }
+    },
+    [onDecided]
+  );
+
+  if (!data?.length) {
+    return null;
+  }
+
+  return (
+    <div className="flex flex-col gap-[8px] border border-newTableBorder rounded-[8px] p-[14px]">
+      <div className="text-[15px] font-[600]">
+        {t('admin_transfers', 'Bank transfer notices')} ({data.length})
+      </div>
+      {data.map((request) => (
+        <div
+          key={request.id}
+          className="flex items-center gap-[12px] flex-wrap text-[13px] border-t border-newTableBorder pt-[8px]"
+        >
+          <div className="flex-1 min-w-[200px]">
+            <div className="font-[600]">{request.organizationName}</div>
+            <div className="opacity-70">{request.email}</div>
+          </div>
+          <div>
+            {request.billing} ·{' '}
+            {request.period === 'YEARLY'
+              ? t('iyzico_yearly', 'Yearly')
+              : t('iyzico_monthly', 'Monthly')}
+          </div>
+          <div className="font-[600]">
+            {request.amount.toLocaleString(i18next.resolvedLanguage || 'tr')} TL
+          </div>
+          <div>{request.code}</div>
+          <div className="opacity-70">{formatDate(request.createdAt)}</div>
+          <Button
+            className="rounded-[8px]"
+            loading={busy === request.id}
+            onClick={decide(request, 'approve')}
+          >
+            {t('admin_transfer_approve', 'Approve')}
+          </Button>
+          <button
+            type="button"
+            disabled={busy === request.id}
+            onClick={decide(request, 'reject')}
+            className="underline cursor-pointer whitespace-nowrap"
+          >
+            {t('admin_transfer_reject', 'Reject')}
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 // Hesaba elle plan verme (havale ile ödeyenler) ya da aboneliği kaldırma.
 const PlanModal: FC<{ customer: Customer; onSaved: () => void }> = ({
   customer,
@@ -398,6 +530,13 @@ export const AdminCustomersComponent: FC = () => {
           />
         </div>
       )}
+
+      <PendingTransfers
+        onDecided={() => {
+          mutate();
+          mutateSummary();
+        }}
+      />
 
       <div className="flex flex-wrap gap-[8px] items-center">
         <input
