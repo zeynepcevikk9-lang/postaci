@@ -68,6 +68,12 @@ node araclar/postaci-marka.mjs
       müşteri sayfası `/p/plan/<anahtar>`; aynı içeriğin bütün kanalları tek kalem; "Tümünü onayla")
 - [x] Müşteri onayı, 3. adım: takvimde onay rozeti; planda "onaylanınca taslak zamanlansın" seçeneği
       (onaylanan taslak zamanlanır, değişiklik istenen zamanlanmış gönderi taslağa döner)
+- [x] Müşteri onayı, gönderilen planlar: "Onaya gönder" penceresinde gönderilen planların listesi
+      (kaç gönderi onaylandı, kaçı bekliyor, kaçında değişiklik istendi), bekleyene WhatsApp'tan
+      hatırlatma, planı kaldırma; düğmede yanıt bekleyen plan sayısı
+- [x] Panel teması: renkler `apps/frontend/src/app/postaci.theme.scss` içinde (Postiz'in
+      `colors.scss` dosyasına dokunulmaz); lacivert yazı, serin açık zemin, mavi ve mercan; koyu tema
+      lacivert tabanlı; yönetici çubuğu tek renk; takvim varsayılan olarak ay görünümünde açılır
 - [ ] Müşteri onayı, 4. adım: WhatsApp Business API ile otomatik gönderim (başvuru gerekir)
 - [x] Ajans markası, 1. adım: Ayarlar > Ajans Markası (ad, logo, renk); müşterinin gördüğü
       sayfalarda (önizleme, onay planı, rapor) Postacı yerine ajans görünür
