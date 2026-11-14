@@ -96,27 +96,137 @@
 // Yönetici çubuğu (yalnızca süper yönetici görür): tek renk koyu zemin, aynı
 // biçimde düğmeler. Postiz'de her düğme ayrı bir parlak renkteydi.
 .postaci-admin-bar {
-  background: #0e1330 !important;
-  border-color: #0e1330 !important;
+  // Lacivertten maviye geçen zemin; panelin geri kalanından ayrı bir "yönetim
+  // şeridi" olduğu ilk bakışta anlaşılır.
+  background: linear-gradient(100deg, #0e1330 0%, #1b2457 52%, #2f3ec2 135%) !important;
+  border: 0 !important;
+  border-radius: 14px !important;
   color: #fff;
+  height: auto !important;
+  min-height: 56px;
+  padding: 10px 16px !important;
+  box-shadow: 0 14px 30px -18px rgba(14, 19, 48, 0.75);
 
+  // İçerik çubuğun tamamına yayılır (Postiz'de 600 piksele sıkışıktı)
+  > div {
+    width: 100% !important;
+  }
+
+  // Sıra: etiket, sayfalar (Müşteriler, İstatistikler, Hatalar), araçlar, arama
+  [class*='gap-[10px]'] {
+    gap: 8px;
+    flex-wrap: wrap;
+
+    &::before {
+      content: 'Yönetim';
+      order: -2;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #ff6b4a;
+      padding-inline-end: 14px;
+      margin-inline-end: 6px;
+      border-inline-end: 1px solid rgba(255, 255, 255, 0.16);
+      line-height: 28px;
+    }
+  }
+
+  // Düğmeler: Postiz'de her biri ayrı parlak renkteydi; burada tek aile
   [class*='rounded-[4px]'][class*='bg-'] {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
     background: rgba(255, 255, 255, 0.1) !important;
+    border: 1px solid rgba(255, 255, 255, 0.12);
     color: #fff !important;
     font-size: 13px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    border-radius: 6px;
-    transition: background 0.15s ease;
+    font-weight: 600;
+    line-height: 1;
+    padding: 9px 14px !important;
+    border-radius: 999px !important;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.2) !important;
+      background: #ff6b4a !important;
+      border-color: #ff6b4a;
+      transform: translateY(-1px);
+    }
+
+    &::before {
+      content: '';
+      width: 14px;
+      height: 14px;
+      background: currentColor;
+      -webkit-mask: var(--postaci-icon) center / contain no-repeat;
+      mask: var(--postaci-icon) center / contain no-repeat;
+    }
+  }
+
+  // Sayfalar öne alınır
+  [class*='gap-[10px]'] > [class*='rounded-[4px]']:nth-last-child(1) {
+    order: -1;
+    --postaci-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='8' r='3.5'/%3E%3Cpath d='M2.5 20a6.5 6.5 0 0 1 13 0'/%3E%3Cpath d='M16 4.6a3.5 3.5 0 0 1 0 6.8'/%3E%3Cpath d='M18.5 14.2A6.5 6.5 0 0 1 21.5 20'/%3E%3C/svg%3E");
+  }
+  [class*='gap-[10px]'] > [class*='rounded-[4px]']:nth-last-child(2) {
+    order: -1;
+    --postaci-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 20V11'/%3E%3Cpath d='M10 20V4'/%3E%3Cpath d='M16 20v-6'/%3E%3Cpath d='M22 20H2'/%3E%3C/svg%3E");
+  }
+  [class*='gap-[10px]'] > [class*='rounded-[4px]']:nth-last-child(3) {
+    order: -1;
+    --postaci-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3 2.5 19.5h19L12 3Z'/%3E%3Cpath d='M12 10v4.5'/%3E%3Cpath d='M12 17.2v.3'/%3E%3C/svg%3E");
+  }
+
+  // Araçlar (duyuru, hata ayıklama): daha sakin, çerçeveli
+  [class*='gap-[10px]'] > [class*='rounded-[4px]']:nth-last-child(4),
+  [class*='gap-[10px]'] > [class*='rounded-[4px]']:nth-last-child(5) {
+    background: transparent !important;
+    border-color: rgba(255, 255, 255, 0.22);
+    color: rgba(255, 255, 255, 0.78) !important;
+    font-weight: 500;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  // Arama kutusu sağda, koyu ve yuvarlak
+  [class*='gap-[10px]'] > .flex-1 {
+    order: 5;
+    flex: 0 1 300px;
+    margin-inline-start: auto;
+
+    > div > div {
+      background: rgba(255, 255, 255, 0.09) !important;
+      border: 1px solid rgba(255, 255, 255, 0.16) !important;
+      border-radius: 999px !important;
+      height: 36px !important;
+      padding: 0 14px;
+    }
+
+    input {
+      background: transparent !important;
+      color: #fff !important;
+      font-size: 13px;
+
+      &::placeholder {
+        color: rgba(255, 255, 255, 0.55);
+      }
     }
   }
 
   // Kullanıcı olarak girilmişken çıkış düğmesi belirgin kalsın
   [class*='bg-red-'] {
     background: #ff6b4a !important;
+    border-color: #ff6b4a;
+  }
+
+  // Dar ekranda arama kendi satırına iner
+  @media (max-width: 1025px) {
+    [class*='gap-[10px]'] > .flex-1 {
+      flex: 1 1 100%;
+      margin-inline-start: 0;
+    }
   }
 }
 
