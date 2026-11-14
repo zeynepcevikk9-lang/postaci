@@ -236,13 +236,13 @@
 // kaybolur; düğme ve çerçevelerde mercana, yazıda açık mercana döner. Bilerek mürekkep
 // rengi kalan öğeler (ana sayfanın karşılama kartı gibi) `postaci-ink` sınıfını taşır.
 .dark {
-  [class*='bg-[#14172b]' i]:not(.postaci-ink):not([class*='bg-[#14172b]/' i]):not([class*='hover:bg-[#14172b]' i]) {
+  [class~='bg-[#14172b]' i]:not(.postaci-ink) {
     background-color: #ff6b4a !important;
   }
-  [class*='text-[#14172b]' i]:not(.postaci-ink):not([class*='hover:text-[#14172b]' i]) {
+  [class~='text-[#14172b]' i]:not(.postaci-ink) {
     color: #ff8a66 !important;
   }
-  [class*='border-[#14172b]' i]:not(.postaci-ink):not([class*='hover:border-[#14172b]' i]) {
+  [class~='border-[#14172b]' i]:not(.postaci-ink) {
     border-color: #ff6b4a !important;
   }
 }
