@@ -1,4 +1,4 @@
-import { IsOptional, IsString, Matches, MaxLength } from 'class-validator';
+import { IsIn, IsOptional, IsString, Matches, MaxLength } from 'class-validator';
 
 // Ajans markası. Boş bırakılan alan temizlenir (Postacı varsayılanı kullanılır).
 export class BrandDto {
@@ -20,4 +20,9 @@ export class BrandDto {
   @IsString()
   @Matches(/^$|^#[0-9a-fA-F]{6}$/, { message: 'color must be like #3D4FE0' })
   color?: string;
+
+  // Hesap türü: ajans (müşterileri var) ya da işletme (yalnızca kendi hesapları)
+  @IsOptional()
+  @IsIn(['agency', 'business'])
+  accountType?: 'agency' | 'business';
 }
