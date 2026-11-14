@@ -2,103 +2,105 @@
 // dokunulmaz, böylece Postiz güncellemesiyle çakışmaz. global.scss içinden,
 // colors.scss'ten sonra yüklenir.
 //
-// Palet tanıtım sitesiyle aynı aileden: mürekkep laciverti yazı, serin açık
-// zemin, mavi ana renk, mercan vurgu. Saf siyah ve mor kalıntıları kullanılmaz.
+// Palet: sıcak açık zemin, beyaz kartlar, mürekkep rengi (lacivert-siyah) yazı ve
+// düğmeler, mercan vurgu. Mavi-mor tonlar kullanılmaz. Tanıtım sitesiyle aynı aile.
 
 :root {
   .light {
-    // Zeminler ve çizgiler
-    --new-bgColor: #f3f4f9;
+    // Zeminler ve çizgiler (sıcak nötr)
+    --new-bgColor: #f5f2ec;
     --new-bgColorInner: #ffffff;
-    --new-settings: #eef0f6;
-    --new-sep: #d8dbe8;
-    --new-border: #e6e8f1;
-    --new-bgLineColor: #e6e8f1;
-    --new-blockSeparator: #f1f2f7;
-    --new-box-hover: #f5f6fb;
-    --new-col-color: #eef0f6;
-    --new-table-border: #e6e8f1;
-    --new-table-header: #f6f7fb;
+    --new-settings: #f1ede5;
+    --new-sep: #ddd7ca;
+    --new-border: #e9e4d9;
+    --new-bgLineColor: #e9e4d9;
+    --new-blockSeparator: #f4f1ea;
+    --new-box-hover: #f8f5ef;
+    --new-col-color: #f1ede5;
+    --new-table-border: #e9e4d9;
+    --new-table-header: #faf8f3;
     // Geçmiş saatlerin çizgili zemini: neredeyse görünmez
-    --new-big-strips: #f8f9fc;
-    --new-back-drop: #0e1330;
+    --new-big-strips: #fbfaf6;
+    --new-back-drop: #14172b;
 
     // Yazı
-    --new-textColor: 22 26 51;
-    --new-textItemBlur: #6b7090;
-    --new-table-text: #6b7090;
-    --new-menu-dots: #8a8fa8;
-    --new-menu-hover: #161a33;
+    --new-textColor: 20 23 43;
+    --new-textItemBlur: #77726a;
+    --new-table-text: #77726a;
+    --new-menu-dots: #9a958c;
+    --new-menu-hover: #14172b;
 
-    // Vurgu
-    --new-textItemFocused: #2f3ec2;
-    --new-boxFocused: #e8ebff;
-    --new-btn-simple: #eef0f6;
-    --new-btn-text: #161a33;
-    --new-btn-primary: #3d4fe0;
+    // Vurgu: düğmeler mürekkep rengi, işaretler mercan
+    --new-textItemFocused: #14172b;
+    --new-boxFocused: #f1ece1;
+    --new-btn-simple: #f1ede5;
+    --new-btn-text: #14172b;
+    --new-btn-primary: #14172b;
     --new-ai-btn: #ff6b4a;
     --new-table-text-focused: #ff6b4a;
 
-    // Eski değişkenler: mor kalıntıları maviye, siyah yazı laciverte
-    --color-primary: #f3f4f9;
-    --color-text: #161a33;
-    --color-seventh: #3d4fe0;
-    --color-custom4: #3d4fe0;
-    --color-custom7: #3d4fe0;
-    --color-custom45: #3d4fe0;
-    --color-custom51: #3d4fe0;
-    --color-custom28: #b7c1ff;
-    --color-custom41: #c9d0ff;
-    --color-custom29: #1b2457;
-    --color-custom50: #1b2457;
-    --color-table-border: #e6e8f1;
+    // Eski değişkenler
+    --color-primary: #f5f2ec;
+    --color-text: #14172b;
+    --color-forth: #14172b;
+    --color-seventh: #14172b;
+    --color-custom4: #14172b;
+    --color-custom7: #14172b;
+    --color-custom45: #14172b;
+    --color-custom51: #14172b;
+    --color-custom28: #e7dfd0;
+    --color-custom41: #e7dfd0;
+    --color-custom29: #14172b;
+    --color-custom50: #14172b;
+    --color-table-border: #e9e4d9;
   }
 
   .dark {
-    // Koyu tema da lacivert tabanlı (nötr siyah değil)
-    --new-bgColor: #0b0f26;
-    --new-bgColorInner: #141a3a;
-    --new-settings: #1b2247;
-    --new-sep: #39416b;
-    --new-border: #232b55;
-    --new-bgLineColor: #1d2449;
-    --new-blockSeparator: #1f2650;
-    --new-box-hover: #1a2146;
-    --new-col-color: #232b55;
-    --new-table-border: #262e5a;
-    --new-table-header: #171d40;
-    --new-big-strips: #11163a;
-    --new-back-drop: #050714;
+    // Koyu tema: sıcak koyu zemin; düğmeler mercan
+    --new-bgColor: #121110;
+    --new-bgColorInner: #1c1a18;
+    --new-settings: #24211e;
+    --new-sep: #46423c;
+    --new-border: #2c2925;
+    --new-bgLineColor: #262320;
+    --new-blockSeparator: #262320;
+    --new-box-hover: #22201d;
+    --new-col-color: #2c2925;
+    --new-table-border: #302d28;
+    --new-table-header: #1f1d1a;
+    --new-big-strips: #181614;
+    --new-back-drop: #000000;
 
-    --new-textItemBlur: #9aa0c3;
-    --new-table-text: #9aa0c3;
-    --new-menu-dots: #8a8fa8;
+    --new-textItemBlur: #a39e94;
+    --new-table-text: #a39e94;
+    --new-menu-dots: #8f8a80;
 
-    --new-textItemFocused: #141a3a;
-    --new-btn-simple: #232b55;
-    --new-btn-primary: #4c5ef0;
+    --new-textItemFocused: #1c1a18;
+    --new-btn-simple: #2c2925;
+    --new-btn-primary: #ff6b4a;
     --new-ai-btn: #ff6b4a;
 
-    --color-primary: #0b0f26;
-    --color-secondary: #0b0f26;
-    --color-third: #0b0f26;
-    --color-seventh: #4c5ef0;
-    --color-custom4: #4c5ef0;
-    --color-custom7: #4c5ef0;
-    --color-custom45: #4c5ef0;
-    --color-custom51: #4c5ef0;
-    --color-custom30: #2f3ec2;
-    --color-custom40: #0b0f26;
-    --color-custom48: #0b0f26;
+    --color-primary: #121110;
+    --color-secondary: #121110;
+    --color-third: #121110;
+    --color-forth: #ff6b4a;
+    --color-seventh: #ff6b4a;
+    --color-custom4: #ff6b4a;
+    --color-custom7: #ff6b4a;
+    --color-custom45: #ff6b4a;
+    --color-custom51: #ff6b4a;
+    --color-custom30: #d6472a;
+    --color-custom40: #121110;
+    --color-custom48: #121110;
   }
 }
 
 // Yönetici çubuğu (yalnızca süper yönetici görür): tek renk koyu zemin, aynı
 // biçimde düğmeler. Postiz'de her düğme ayrı bir parlak renkteydi.
 .postaci-admin-bar {
-  // Lacivertten maviye geçen zemin; panelin geri kalanından ayrı bir "yönetim
+  // Mürekkep renginden sıcak tona geçen zemin; panelin geri kalanından ayrı bir "yönetim
   // şeridi" olduğu ilk bakışta anlaşılır.
-  background: linear-gradient(100deg, #0e1330 0%, #1b2457 52%, #2f3ec2 135%) !important;
+  background: linear-gradient(100deg, #14172b 0%, #1f2340 58%, #4a2c33 140%) !important;
   border: 0 !important;
   border-radius: 14px !important;
   color: #fff;
@@ -227,6 +229,21 @@
       flex: 1 1 100%;
       margin-inline-start: 0;
     }
+  }
+}
+
+// Koyu tema: bileşenlere doğrudan yazılmış mürekkep rengi (#14172b) koyu zeminde
+// kaybolur; düğme ve çerçevelerde mercana, yazıda açık mercana döner. Bilerek mürekkep
+// rengi kalan öğeler (ana sayfanın karşılama kartı gibi) `postaci-ink` sınıfını taşır.
+.dark {
+  [class*='bg-[#14172b]' i]:not(.postaci-ink):not([class*='bg-[#14172b]/' i]):not([class*='hover:bg-[#14172b]' i]) {
+    background-color: #ff6b4a !important;
+  }
+  [class*='text-[#14172b]' i]:not(.postaci-ink):not([class*='hover:text-[#14172b]' i]) {
+    color: #ff8a66 !important;
+  }
+  [class*='border-[#14172b]' i]:not(.postaci-ink):not([class*='hover:border-[#14172b]' i]) {
+    border-color: #ff6b4a !important;
   }
 }
 
