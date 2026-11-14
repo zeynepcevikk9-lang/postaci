@@ -46,6 +46,8 @@ import { IyzicoRepository } from '@gitroom/nestjs-libraries/database/prisma/iyzi
 import { IyzicoProvider } from '@gitroom/nestjs-libraries/services/payment/providers/iyzico.provider';
 import { AdminCustomersRepository } from '@gitroom/nestjs-libraries/database/prisma/admin-customers/admin-customers.repository';
 import { AdminCustomersService } from '@gitroom/nestjs-libraries/database/prisma/admin-customers/admin-customers.service';
+import { BankTransferRepository } from '@gitroom/nestjs-libraries/database/prisma/bank-transfer/bank.transfer.repository';
+import { BankTransferService } from '@gitroom/nestjs-libraries/database/prisma/bank-transfer/bank.transfer.service';
 import { AutopostRepository } from '@gitroom/nestjs-libraries/database/prisma/autopost/autopost.repository';
 import { AutopostService } from '@gitroom/nestjs-libraries/database/prisma/autopost/autopost.service';
 import { SetsService } from '@gitroom/nestjs-libraries/database/prisma/sets/sets.service';
@@ -107,6 +109,8 @@ import { AdminStatsService } from '@gitroom/nestjs-libraries/database/prisma/adm
     IyzicoProvider,
     AdminCustomersRepository,
     AdminCustomersService,
+    BankTransferRepository,
+    BankTransferService,
     MediaService,
     MediaRepository,
     AgenciesService,
