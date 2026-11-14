@@ -6,7 +6,7 @@
 // da WhatsApp'ta paylaşılır.
 
 import { FC, useCallback, useMemo, useState } from 'react';
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import copy from 'copy-to-clipboard';
 import i18next from '@gitroom/react/translation/i18next';
 import { useFetch } from '@gitroom/helpers/utils/custom.fetch';
@@ -15,6 +15,10 @@ import { Button } from '@gitroom/react/form/button';
 import { useToaster } from '@gitroom/react/toaster/toaster';
 import { useT } from '@gitroom/react/translation/get.transation.service.client';
 import { useCalendar } from '@gitroom/frontend/components/launches/calendar.context';
+import {
+  SentPlans,
+  useSentPlans,
+} from '@gitroom/frontend/components/launches/sent.plans';
 
 type Kind = 'plan' | 'report';
 
@@ -64,6 +68,7 @@ const PlanShareModal: FC<{
   const fetch = useFetch();
   const toast = useToaster();
   const { data: customers } = useCustomers();
+  const { mutate } = useSWRConfig();
   const months = useMemo(
     () => monthOptions(i18next.resolvedLanguage || 'tr', kind),
     [kind]
@@ -93,6 +98,9 @@ const PlanShareModal: FC<{
         throw new Error(String(response.status));
       }
       const { id } = await response.json();
+      if (kind === 'plan') {
+        mutate('/approvals/plans');
+      }
       setLink(
         `${window.location.origin}/p/${
           kind === 'plan' ? 'plan' : 'report'
@@ -257,17 +265,22 @@ const PlanShareModal: FC<{
           </div>
         </div>
       )}
+
+      {kind === 'plan' && <SentPlans />}
     </div>
   );
 };
 
 const toolbarButtonClass =
-  'h-[42px] px-[14px] rounded-[8px] border border-newTableBorder text-[14px] font-[500] whitespace-nowrap cursor-pointer hover:bg-boxHover';
+  'relative h-[42px] px-[14px] rounded-[8px] border border-newTableBorder text-[14px] font-[500] whitespace-nowrap cursor-pointer hover:bg-boxHover flex items-center gap-[8px]';
 
 export const PlanShareButton: FC = () => {
   const t = useT();
   const modal = useModals();
   const calendar = useCalendar();
+  // Müşteriden yanıt bekleyen plan sayısı düğmenin köşesinde gösterilir
+  const { data: plans } = useSentPlans();
+  const waiting = (plans || []).filter((plan) => plan.pending > 0).length;
 
   const open = useCallback(
     (kind: Kind) => () => {
@@ -293,13 +306,27 @@ export const PlanShareButton: FC = () => {
   return (
     <>
       <button type="button" onClick={open('plan')} className={toolbarButtonClass}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="m8.5 12.5 2.5 2.5 4.5-5" /></svg>
         {t('approval_plan_button', 'Send for approval')}
+        {!!waiting && (
+          <span
+            className="absolute -top-[6px] -end-[6px] min-w-[18px] h-[18px] px-[4px] rounded-full bg-[#F5A524] text-white text-[11px] font-bold flex items-center justify-center"
+            data-tooltip-id="tooltip"
+            data-tooltip-content={t(
+              'sent_plans_waiting_tooltip',
+              'Plans waiting for a client response'
+            )}
+          >
+            {waiting}
+          </span>
+        )}
       </button>
       <button
         type="button"
         onClick={open('report')}
         className={toolbarButtonClass}
       >
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M4 20V10" /><path d="M10 20V4" /><path d="M16 20v-7" /><path d="M22 20H2" /></svg>
         {t('report_button', 'Monthly report')}
       </button>
     </>
