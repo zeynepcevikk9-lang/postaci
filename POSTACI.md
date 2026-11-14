@@ -28,11 +28,21 @@ git merge upstream/main
 Birleştirmeyi kolay tutmak için Postiz'in dosyalarını olabildiğince az değiştiriyor,
 yeni özellikleri ayrı dosya ve modüllerde yazıyoruz.
 
-Durum (15 Kas 2026): Postiz'in 23 commit gerisindeyiz. Aradan yalnızca gönderi kaydetmeyi
-düzelten `aa3954ee` ("posts fix") tek başına alındı; o olmadan yeni gönderi kaydı 404
-veriyordu. Kalanlar (kanal anahtarlarının şifrelenmesi, veritabanı indeksleri) henüz
-birleştirilmedi. Güncelleme aldıktan sonra temel akışı (gönderi oluştur, taslak kaydet)
-tarayıcıda denemeden yayına çıkılmaz.
+Durum (15 Kas 2026): Postiz ana dalı `c22451b8` commit'ine kadar birleştirildi (birleştirme
+öncesi hâl `yedek/birlestirme-oncesi-20261115` dalında, yalnızca yerelde). Çakışma yalnız
+en/tr çeviri dosyalarında çıktı. Bu güncellemeyle gelenler:
+
+- Gönderi kaydetme düzeltmesi (o olmadan yeni gönderi kaydı 404 veriyordu).
+- Kanal anahtarlarını veritabanında şifreleme seçeneği. Varsayılan olarak kapalı; canlıya
+  çıkarken `.env` içinde `ENCRYPTION_PROVIDER="local"` ve `ENCRYPTION_KEY` tanımlanmalı
+  (`.env.example` içinde açıklaması var). Anahtar kaybolursa bütün kanallar yeniden bağlanır.
+- Bağlantı ile kanal bağlama sayfası (`/integrations/connect/<kod>`): hesabı olmayan biri
+  gönderilen bağlantıdan kendi sosyal hesabını bağlar. Bağlantı genel API ile üretilir.
+- Veritabanı indeksleri (güncellemeden sonra `pnpm run prisma-db-push`).
+
+Güncelleme aldıktan sonra sıra: `pnpm install`, `pnpm run prisma-db-push`,
+`node araclar/postaci-marka.mjs`, arka ucu derle, sonra temel akışı (gönderi oluştur, taslak
+kaydet) tarayıcıda dene. Bunlar denenmeden yayına çıkılmaz.
 
 Renkler ve sekme başlıkları Postiz'in onlarca dosyasında sabit yazılıdır. Bunları elle
 değil betikle çeviriyoruz; güncelleme aldıktan sonra betik yeniden çalıştırılır:
