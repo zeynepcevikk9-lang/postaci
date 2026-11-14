@@ -109,6 +109,23 @@ export class ApprovalRepository {
     });
   }
 
+  // Müşterilerden gelen son kararlar (onay ya da değişiklik isteği), en yenisi önce.
+  getRecentApprovals(organizationId: string, take: number) {
+    return this._approvals.model.postApproval.findMany({
+      where: { organizationId },
+      orderBy: { createdAt: 'desc' },
+      take,
+      select: approvalSelect,
+    });
+  }
+
+  getPostsContent(organizationId: string, ids: string[]) {
+    return this._post.model.post.findMany({
+      where: { organizationId, id: { in: ids } },
+      select: { id: true, content: true },
+    });
+  }
+
   // Ajansın gönderdiği onay planları, en yenisi önce.
   listPlans(organizationId: string, take: number) {
     return this._plans.model.approvalPlan.findMany({
