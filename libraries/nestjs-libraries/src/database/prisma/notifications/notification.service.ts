@@ -1,3 +1,4 @@
+import { toTurkish } from '@gitroom/nestjs-libraries/services/turkish.messages';
 import { Injectable } from '@nestjs/common';
 import { NotificationsRepository } from '@gitroom/nestjs-libraries/database/prisma/notifications/notifications.repository';
 import { EmailService } from '@gitroom/nestjs-libraries/services/email.service';
@@ -46,6 +47,9 @@ export class NotificationService {
     digest = false,
     type: NotificationType = 'success'
   ) {
+    // Postacı: Postiz'in İngilizce bildirim metinleri Türkçeye çevrilir
+    subject = toTurkish(subject);
+    message = toTurkish(message);
     await this._notificationRepository.createNotification(orgId, message);
     if (!sendEmail) {
       return;
