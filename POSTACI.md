@@ -98,7 +98,12 @@ node araclar/postaci-marka.mjs
       onay/ret, onayda planın elle tanımlanması, havale ile yenileme
 - [ ] Yönetim paneli, 3. adım: iade (şimdilik iyzico panelinden), hesap ayrıntı sayfası
       (ödeme geçmişi, notlar), bitişi yaklaşan elle planlar için hatırlatma
-- [ ] Tanıtım sitesi (ürün ana sayfası `site/` içinde; eksik: deneme kaydı formunun bağlanması, yayına alma; fiyatlar ve plan içerikleri kesinleşti)
+- [ ] Tanıtım sitesi (ürün ana sayfası `site/` içinde; yeni tasarım yapıldı, düğmeler panele bağlandı,
+      fiyatlar kesinleşti; eksik: yayına alma, yasal sayfalar, iletişim adresi)
+- [x] Türkçe taraması: kodda kullanılıp Türkçesi olmayan 261 metin çevrildi; doğrudan İngilizce
+      yazılmış metinler ve uyarılar `araclar/postaci-marka.mjs` ile Türkçeleştiriliyor; arka ucun
+      bildirim ve e-posta metinleri `services/turkish.messages.ts` üzerinden Türkçeye çevriliyor;
+      karşılama penceresi kanal bağlama adımıyla bitiyor (Postiz videosu ve bağlayıcı adımı yok)
 
 Kodun dışında, başvurusu erken yapılması gerekenler: Meta, TikTok ve LinkedIn uygulama
 onayları ile WhatsApp Business API.
@@ -149,9 +154,15 @@ Notlar:
 node site/serve.mjs   # http://localhost:4300
 ```
 
-Deneme kaydı formu, `index.html` içindeki `data-endpoint` özelliği doldurulana kadar kayıt
-göndermez ve ziyaretçiye kaydın şu an alınamadığını söyler. Sayfa ürünü yayındaki haliyle
-anlatır; anlatılan özellikler hazır olmadan yayına alınmamalıdır.
+Tasarım (15 Kas 2026): posta kimliği. Lacivert zemin, kâğıt tonu, mavi ve mercan; uçak postası
+şeridi ve posta damgası tekrar eden motifler; başlıklarda Bricolage Grotesque. Bölümler: giriş
+(takvim kartı, WhatsApp balonu), kanallar, dört duraklı yolculuk, farklı boyda özellik kutuları,
+öncesi/sonrası, fiyatlar, sorular, zarf biçiminde çağrı.
+
+Kayıt formu yoktur; "Ücretsiz deneyin" ve "Giriş yap" düğmeleri panele gider. Panelin adresi
+`index.html` başındaki `data-app-url` özniteliğindedir (yerelde `http://localhost:4200`); yayına
+alırken panelin gerçek adresiyle değiştirilir. Sayfa ürünü yayındaki haliyle anlatır; üründe
+karşılığı olmayan bir özellik ya da kanıtı olmayan bir iddia (müşteri sayısı, yorum) yazılmaz.
 
 Planlar (13 Kas 2026 kararı): Başlangıç, Ajans, Büyük Ajans; sınır bağlı sosyal medya hesabı
 sayısıdır (10 / 30 / 100, `pricing.ts` içindeki STANDARD / TEAM / PRO kademeleri), müşteri sayısı
