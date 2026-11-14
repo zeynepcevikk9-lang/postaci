@@ -61,8 +61,14 @@ export const Plugs = () => {
         )
       ),
       // data.filter((integration) => !integration.disabled),
-      [(o: any) => o?.customer?.name || '', 'type', 'disabled', 'identifier'],
-      ['asc', 'desc', 'asc', 'asc']
+      [
+        (o: any) => o?.customer?.name || '',
+        (o: any) => o?.customer?.id || '',
+        'type',
+        'disabled',
+        'identifier',
+      ],
+      ['asc', 'asc', 'desc', 'asc', 'asc']
     );
   }, [data, plugList]);
   const currentIntegration = useMemo(() => {

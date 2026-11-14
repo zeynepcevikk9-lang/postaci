@@ -103,8 +103,14 @@ export const AgentList: FC<{ onChange: (arr: any[]) => void }> = ({
   const sortedIntegrations = useMemo(() => {
     return orderBy(
       data || [],
-      [(o: any) => o?.customer?.name || '', 'type', 'disabled', 'identifier'],
-      ['asc', 'desc', 'asc', 'asc']
+      [
+        (o: any) => o?.customer?.name || '',
+        (o: any) => o?.customer?.id || '',
+        'type',
+        'disabled',
+        'identifier',
+      ],
+      ['asc', 'asc', 'desc', 'asc', 'asc']
     );
   }, [data]);
 
