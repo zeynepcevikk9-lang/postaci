@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { Organization } from '@prisma/client';
 import { GetOrgFromRequest } from '@gitroom/nestjs-libraries/user/org.from.request';
@@ -21,6 +21,21 @@ export class ApprovalsController {
     @Body() body: CreateApprovalPlanDto
   ) {
     return this._approvalService.createPlan(org, body);
+  }
+
+  // Gönderilen onay planları ve durumları.
+  @Get('/plans')
+  async listPlans(@GetOrgFromRequest() org: Organization) {
+    return this._approvalService.listPlans(org.id);
+  }
+
+  // Planı kaldırır; müşterideki bağlantı artık açılmaz.
+  @Delete('/plans/:id')
+  async deletePlan(
+    @GetOrgFromRequest() org: Organization,
+    @Param('id') id: string
+  ) {
+    return this._approvalService.deletePlan(org.id, id);
   }
 
   // Takvimdeki rozetler için gönderilerin güncel onay durumları.
