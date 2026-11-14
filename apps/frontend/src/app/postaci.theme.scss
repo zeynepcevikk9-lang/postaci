@@ -1,0 +1,127 @@
+// Postacı teması. Postiz'in renk değişkenlerini (colors.scss) ezer; o dosyaya
+// dokunulmaz, böylece Postiz güncellemesiyle çakışmaz. global.scss içinden,
+// colors.scss'ten sonra yüklenir.
+//
+// Palet tanıtım sitesiyle aynı aileden: mürekkep laciverti yazı, serin açık
+// zemin, mavi ana renk, mercan vurgu. Saf siyah ve mor kalıntıları kullanılmaz.
+
+:root {
+  .light {
+    // Zeminler ve çizgiler
+    --new-bgColor: #f3f4f9;
+    --new-bgColorInner: #ffffff;
+    --new-settings: #eef0f6;
+    --new-sep: #d8dbe8;
+    --new-border: #e6e8f1;
+    --new-bgLineColor: #e6e8f1;
+    --new-blockSeparator: #f1f2f7;
+    --new-box-hover: #f5f6fb;
+    --new-col-color: #eef0f6;
+    --new-table-border: #e6e8f1;
+    --new-table-header: #f6f7fb;
+    // Geçmiş saatlerin çizgili zemini: neredeyse görünmez
+    --new-big-strips: #f8f9fc;
+    --new-back-drop: #0e1330;
+
+    // Yazı
+    --new-textColor: 22 26 51;
+    --new-textItemBlur: #6b7090;
+    --new-table-text: #6b7090;
+    --new-menu-dots: #8a8fa8;
+    --new-menu-hover: #161a33;
+
+    // Vurgu
+    --new-textItemFocused: #2f3ec2;
+    --new-boxFocused: #e8ebff;
+    --new-btn-simple: #eef0f6;
+    --new-btn-text: #161a33;
+    --new-btn-primary: #3d4fe0;
+    --new-ai-btn: #ff6b4a;
+    --new-table-text-focused: #ff6b4a;
+
+    // Eski değişkenler: mor kalıntıları maviye, siyah yazı laciverte
+    --color-primary: #f3f4f9;
+    --color-text: #161a33;
+    --color-seventh: #3d4fe0;
+    --color-custom4: #3d4fe0;
+    --color-custom7: #3d4fe0;
+    --color-custom45: #3d4fe0;
+    --color-custom51: #3d4fe0;
+    --color-custom28: #b7c1ff;
+    --color-custom41: #c9d0ff;
+    --color-custom29: #1b2457;
+    --color-custom50: #1b2457;
+    --color-table-border: #e6e8f1;
+  }
+
+  .dark {
+    // Koyu tema da lacivert tabanlı (nötr siyah değil)
+    --new-bgColor: #0b0f26;
+    --new-bgColorInner: #141a3a;
+    --new-settings: #1b2247;
+    --new-sep: #39416b;
+    --new-border: #232b55;
+    --new-bgLineColor: #1d2449;
+    --new-blockSeparator: #1f2650;
+    --new-box-hover: #1a2146;
+    --new-col-color: #232b55;
+    --new-table-border: #262e5a;
+    --new-table-header: #171d40;
+    --new-big-strips: #11163a;
+    --new-back-drop: #050714;
+
+    --new-textItemBlur: #9aa0c3;
+    --new-table-text: #9aa0c3;
+    --new-menu-dots: #8a8fa8;
+
+    --new-textItemFocused: #141a3a;
+    --new-btn-simple: #232b55;
+    --new-btn-primary: #4c5ef0;
+    --new-ai-btn: #ff6b4a;
+
+    --color-primary: #0b0f26;
+    --color-secondary: #0b0f26;
+    --color-third: #0b0f26;
+    --color-seventh: #4c5ef0;
+    --color-custom4: #4c5ef0;
+    --color-custom7: #4c5ef0;
+    --color-custom45: #4c5ef0;
+    --color-custom51: #4c5ef0;
+    --color-custom30: #2f3ec2;
+    --color-custom40: #0b0f26;
+    --color-custom48: #0b0f26;
+  }
+}
+
+// Yönetici çubuğu (yalnızca süper yönetici görür): tek renk koyu zemin, aynı
+// biçimde düğmeler. Postiz'de her düğme ayrı bir parlak renkteydi.
+.postaci-admin-bar {
+  background: #0e1330 !important;
+  border-color: #0e1330 !important;
+  color: #fff;
+
+  [class*='rounded-[4px]'][class*='bg-'] {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #fff !important;
+    font-size: 13px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    border-radius: 6px;
+    transition: background 0.15s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.2) !important;
+    }
+  }
+
+  // Kullanıcı olarak girilmişken çıkış düğmesi belirgin kalsın
+  [class*='bg-red-'] {
+    background: #ff6b4a !important;
+  }
+}
+
+// CopilotKit'in geliştirici denetim penceresi (sağ üstteki yuvarlak düğme):
+// müşterinin göreceği bir şey değil, gizlenir.
+cpk-web-inspector {
+  display: none !important;
+}
