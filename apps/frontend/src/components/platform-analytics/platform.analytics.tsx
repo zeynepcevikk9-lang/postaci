@@ -223,7 +223,7 @@ export const PlatformAnalytics = () => {
                 onClick={() => {
                   if (integration.refreshNeeded) {
                     toaster.show(
-                      'Please reconnect the channel from the calendar',
+                      'Lütfen kanalı takvimden yeniden bağlayın',
                       'warning'
                     );
                     return;

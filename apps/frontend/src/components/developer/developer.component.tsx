@@ -118,7 +118,7 @@ export const DeveloperComponent: FC = () => {
 
   const createApp = useCallback(async () => {
     if (!name || !redirectUrl) {
-      toaster.show('Name and Redirect URL are required', 'warning');
+      toaster.show('Ad ve yönlendirme adresi zorunludur', 'warning');
       return;
     }
     try {
@@ -137,14 +137,14 @@ export const DeveloperComponent: FC = () => {
       if (result.clientSecret) {
         setPlaintextSecret(result.clientSecret);
         toaster.show(
-          'App created! Copy your client secret now - it will only be shown once.',
+          'Uygulama oluşturuldu. Gizli anahtarı şimdi kopyalayın; yalnızca bir kez gösterilir.',
           'success'
         );
       }
       setCreating(false);
       mutate();
     } catch {
-      toaster.show('Failed to create app', 'warning');
+      toaster.show('Uygulama oluşturulamadı', 'warning');
     }
   }, [name, description, redirectUrl, pictureId]);
 
@@ -159,11 +159,11 @@ export const DeveloperComponent: FC = () => {
           pictureId,
         }),
       });
-      toaster.show('App updated', 'success');
+      toaster.show('Uygulama güncellendi', 'success');
       setEditing(false);
       mutate();
     } catch {
-      toaster.show('Failed to update app', 'warning');
+      toaster.show('Uygulama güncellenemedi', 'warning');
     }
   }, [name, description, redirectUrl, pictureId]);
 
@@ -183,13 +183,13 @@ export const DeveloperComponent: FC = () => {
       if (result.clientSecret) {
         setPlaintextSecret(result.clientSecret);
         toaster.show(
-          'Secret rotated! Copy your new client secret now.',
+          'Gizli anahtar yenilendi. Yeni anahtarı şimdi kopyalayın.',
           'success'
         );
         mutate();
       }
     } catch {
-      toaster.show('Failed to rotate secret', 'warning');
+      toaster.show('Gizli anahtar yenilenemedi', 'warning');
     }
   }, [decision]);
 
@@ -208,7 +208,7 @@ export const DeveloperComponent: FC = () => {
       setPlaintextSecret(null);
       mutate();
     } catch {
-      toaster.show('Failed to delete app', 'warning');
+      toaster.show('Uygulama silinemedi', 'warning');
     }
   }, [decision]);
 

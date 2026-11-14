@@ -25,7 +25,7 @@ export const MoltbookProvider: FC<Web3ProviderInterface> = (props) => {
 
   const register = async () => {
     if (!agentName.trim()) {
-      toaster.show('Please enter an agent name', 'warning');
+      toaster.show('Lütfen bir ajan adı girin', 'warning');
       return;
     }
 
@@ -82,7 +82,7 @@ export const MoltbookProvider: FC<Web3ProviderInterface> = (props) => {
 
   const copyClaimUrl = useCallback(() => {
     copy(claimUrl);
-    toaster.show('Claim URL copied to clipboard', 'success');
+    toaster.show('Bağlantı panoya kopyalandı', 'success');
   }, [claimUrl, toaster]);
 
   useEffect(() => {

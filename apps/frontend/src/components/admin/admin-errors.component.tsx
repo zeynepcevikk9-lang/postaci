@@ -55,7 +55,7 @@ const ErrorDetailsModal: FC<{ row: ErrorRow }> = ({ row }) => {
         2
       )
     );
-    toaster.show('Debug code copied to clipboard', 'success');
+    toaster.show('Hata ayıklama kodu panoya kopyalandı', 'success');
   }, [parsedMessage, parsedBody, row, toaster]);
 
   return (
@@ -225,7 +225,7 @@ export const AdminErrorsComponent: FC = () => {
           2
         )
       );
-      toaster.show('Debug code copied to clipboard', 'success');
+      toaster.show('Hata ayıklama kodu panoya kopyalandı', 'success');
     },
     [toaster]
   );

@@ -128,7 +128,7 @@ export const Plugs = () => {
                 onClick={() => {
                   if (integration.refreshNeeded) {
                     toaster.show(
-                      'Please refresh the integration from the calendar',
+                      'Lütfen kanalı takvimden yeniden bağlayın',
                       'warning'
                     );
                     return;

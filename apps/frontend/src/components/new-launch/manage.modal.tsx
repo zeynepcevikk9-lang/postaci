@@ -1370,7 +1370,7 @@ export const ManageModal: FC<AddEditModalProps> = (props) => {
                       showPostNow ? 'flex' : 'hidden group-hover:flex'
                     )}
                   >
-                    <div className="text-white rounded-[8px] bg-[#D82D7E] h-[44px] w-full flex justify-center items-center post-now">
+                    <div className="text-white rounded-[8px] bg-[#FF6B4A] h-[44px] w-full flex justify-center items-center post-now">
                       {t('post_now', 'Post Now')}
                     </div>
                   </button>

@@ -65,7 +65,7 @@ export const Modal: FC<{
       }
     } catch (e) {
       toaster.show(
-        'Video generation failed or timed out — if it completes, it will appear in your media library',
+        'Video üretilemedi ya da süre doldu; tamamlanırsa medya kütüphanenizde görünür',
         'warning'
       );
     }

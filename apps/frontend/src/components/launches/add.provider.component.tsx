@@ -606,7 +606,7 @@ export const AddProviderComponent: FC<{
 
           if (invite) {
             toaster.show(
-              'Invite link copied to clipboard, link will be available for 1 hour',
+              'Davet bağlantısı panoya kopyalandı; bağlantı 1 saat geçerlidir',
               'success'
             );
             modal.closeAll();

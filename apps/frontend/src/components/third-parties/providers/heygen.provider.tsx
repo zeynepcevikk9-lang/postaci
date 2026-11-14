@@ -127,7 +127,7 @@ const HeygenProviderComponent = () => {
 
   const generateVoice = useCallback(async () => {
     if (
-      !(await deleteDialog('Are you sure? it will delete the current text'))
+      !(await deleteDialog('Emin misiniz? Mevcut metin silinecek'))
     ) {
       return;
     }
