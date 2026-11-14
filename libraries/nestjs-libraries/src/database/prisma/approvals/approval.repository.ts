@@ -121,7 +121,7 @@ export class ApprovalRepository {
 
   getPostsContent(organizationId: string, ids: string[]) {
     return this._post.model.post.findMany({
-      where: { organizationId, id: { in: ids } },
+      where: { organizationId, id: { in: ids }, deletedAt: null },
       select: { id: true, content: true },
     });
   }
