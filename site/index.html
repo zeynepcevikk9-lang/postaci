@@ -1,33 +1,28 @@
 <!doctype html>
-<html lang="tr">
+<!-- data-app-url: panelin adresi. Yayına alırken panelin gerçek adresiyle değiştirin. -->
+<html lang="tr" data-app-url="http://localhost:4200">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Postacı | Sosyal medya ajansları için planlama, müşteri onayı ve raporlama</title>
-<meta name="description" content="Bütün müşterilerinizin sosyal medya hesaplarını tek panelden yönetin. Gönderileri planlayın, onayı WhatsApp'tan alın, aylık raporu kendiliğinden gönderin.">
+<meta name="description" content="Bütün müşterilerinizin sosyal medya hesaplarını tek panelden yönetin. Gönderileri planlayın, onayı WhatsApp'tan alın, ay sonu raporunu logonuzla gönderin.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
 </head>
 <body>
 
-<div class="topbar">
-  <div class="wrap topbar-in">
-    <span class="topbar-tag">Yeni</span>
-    <span class="topbar-text">Müşteri onayını artık <strong>WhatsApp'tan</strong> alın.</span>
-    <a class="topbar-link" href="#ozellikler">Nasıl çalışır →</a>
-  </div>
-</div>
+<div class="airmail" aria-hidden="true"></div>
 
 <header class="nav">
   <div class="wrap nav-in">
     <a class="brand" href="#top" aria-label="Postacı ana sayfa">
-      <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
         <rect x="3" y="8" width="34" height="24" rx="6" fill="#3d4fe0"/>
         <path d="M6.5 12.5l13.5 10.5 13.5-10.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="31.5" cy="10.5" r="6" fill="#ff6b4a" stroke="#fff" stroke-width="2"/>
+        <circle cx="31.5" cy="10.5" r="6" fill="#ff6b4a" stroke="#0e1330" stroke-width="2"/>
       </svg>
       <span>Postacı</span>
     </a>
@@ -38,33 +33,14 @@
 
     <div class="nav-menu" id="nav-menu">
       <nav class="nav-links" aria-label="Ana menü">
-        <a href="#top">Ana Sayfa</a>
-        <div class="dd">
-          <button class="dd-btn" aria-expanded="false">Özellikler <svg viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <div class="dd-panel">
-            <a href="#ozellik-takvim"><strong>İçerik takvimi</strong><span>Bütün müşteriler tek takvimde</span></a>
-            <a href="#ozellik-onay"><strong>WhatsApp'tan onay</strong><span>Müşteri telefonundan onaylar</span></a>
-            <a href="#ozellik-rapor"><strong>Aylık rapor</strong><span>Ajans logonuzla PDF</span></a>
-            <a href="#ozellik-ozelgun"><strong>Özel gün takvimi</strong><span>Türkiye'ye özel günler hazır</span></a>
-            <a href="#ozellik-yz"><strong>Yapay zekâ yardımcısı</strong><span>Metin ve görsel fikirleri</span></a>
-            <a href="#ozellik-eticaret"><strong>E-ticaret bağlantısı</strong><span>Üründen gönderi taslağı</span></a>
-          </div>
-        </div>
-        <div class="dd">
-          <button class="dd-btn" aria-expanded="false">Kanallar <svg viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1.5l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-          <div class="dd-panel dd-cols">
-            <a href="#kanallar">Instagram</a><a href="#kanallar">Facebook</a><a href="#kanallar">TikTok</a><a href="#kanallar">YouTube</a>
-            <a href="#kanallar">X</a><a href="#kanallar">LinkedIn</a><a href="#kanallar">Pinterest</a><a href="#kanallar">Threads</a>
-            <a href="#kanallar">Telegram</a><a href="#kanallar">Google İşletme</a>
-          </div>
-        </div>
+        <a href="#yolculuk">Nasıl çalışır</a>
+        <a href="#ozellikler">Özellikler</a>
         <a href="#fiyat">Fiyatlar</a>
         <a href="#sss">Sorular</a>
-        <a href="#basla">İletişim</a>
       </nav>
       <div class="nav-actions">
-        <a class="nav-login" href="#basla">Giriş yap</a>
-        <a class="btn btn-primary btn-sm" href="#basla">Ücretsiz deneyin</a>
+        <a class="nav-login" data-app="login" href="#">Giriş yap</a>
+        <a class="btn btn-coral btn-sm" data-app="register" href="#">Ücretsiz deneyin</a>
       </div>
     </div>
   </div>
@@ -73,24 +49,49 @@
 <main id="top">
 
   <!-- Giriş -->
-  <section class="hero">
+  <section class="hero" style="padding:0">
     <div class="wrap hero-in">
-      <h1>Ajansınızın sosyal medya işini tek panelden yürütün</h1>
-      <p class="lead">Gönderileri tek takvimde planlayın, müşteri onayını WhatsApp'tan alın, ay sonu raporunu Postacı hazırlasın.</p>
+      <div>
+        <p class="kicker">Sosyal medya ajansları için</p>
+        <h1>Gönderi hazır.<br>Onay <em>WhatsApp'tan.</em><br>Rapor kendiliğinden.</h1>
+        <p class="lead">Postacı, bütün müşterilerinizin ayını tek panelde toplar: plan takvimde, müşteri onayı telefonda, ay sonu raporu logonuzla hazır.</p>
+        <div class="hero-cta">
+          <a class="btn btn-coral" data-app="register" href="#">7 gün ücretsiz deneyin</a>
+          <a class="btn btn-ghost" href="#fiyat">Fiyatları görün</a>
+        </div>
+        <ul class="hero-notes">
+          <li>Türkçe panel</li>
+          <li>TL fiyat, KDV dahil</li>
+          <li>Kurulum gerekmez</li>
+        </ul>
+      </div>
 
-      <form class="hero-form" id="hero-form" novalidate>
-        <label class="sr" for="hero-email">E-posta adresiniz</label>
-        <input id="hero-email" type="email" placeholder="E-posta adresinizi yazın, 7 gün ücretsiz deneyin" autocomplete="email">
-        <button class="btn btn-primary" type="submit">Ücretsiz deneyin</button>
-      </form>
+      <div class="scene" aria-hidden="true">
+        <div class="cal">
+          <div class="cal-head">Lale Kafe <span>Kasım, 4. hafta</span></div>
+          <div class="cal-grid">
+            <div class="cal-day"><b>Pzt 23</b><div class="post ok">Yeni kış menüsü</div></div>
+            <div class="cal-day"><b>Sal 24</b><div class="post day">Öğretmenler Günü</div><div class="post ok">Öğretmenlere ikram</div></div>
+            <div class="cal-day"><b>Çar 25</b><div class="post wait">Barista tanıtımı</div></div>
+            <div class="cal-day"><b>Per 26</b><div class="post">Hafta sonu etkinliği</div></div>
+            <div class="cal-day"><b>Cum 27</b><div class="post day">Efsane Cuma</div><div class="post wait">Kahve çekirdeği indirimi</div></div>
+          </div>
+        </div>
+        <div class="wa">
+          <div class="wa-from">Mavi Ajans</div>
+          Merhaba Ayşe Hanım, kasım planı hazır. Gönderilere göz atıp onaylayabilirsiniz.
+          <div class="wa-card"><b>Lale Kafe · Kasım planı</b><span>9 gönderi onayınızı bekliyor</span></div>
+          <div class="wa-btn">Tümünü onayla</div>
+        </div>
+        <div class="postmark"><span>ONAYLANDI<small>24 KASIM</small></span></div>
+      </div>
+    </div>
+  </section>
 
-      <ul class="badges">
-        <li>Türkçe arayüz</li>
-        <li>TL fiyat ve e-fatura</li>
-        <li>Kurulum gerekmez</li>
-      </ul>
-
-      <p class="channels-title" id="kanallar">Bütün kanallarınızı bir araya getirin</p>
+  <!-- Kanallar -->
+  <div class="channels" id="kanallar">
+    <div class="wrap channels-in">
+      <p>28'den fazla kanala tek yerden paylaşın</p>
       <ul class="tiles" aria-label="Desteklenen kanallar">
         <li title="Instagram"><svg viewBox="0 0 32 32" role="img" aria-label="Instagram"><defs><linearGradient id="ig" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#f9a43a"/><stop offset=".5" stop-color="#e1306c"/><stop offset="1" stop-color="#7b3fe4"/></linearGradient></defs><rect x="4" y="4" width="24" height="24" rx="7.5" fill="url(#ig)"/><circle cx="16" cy="16" r="5.2" fill="none" stroke="#fff" stroke-width="2.2"/><circle cx="22.6" cy="9.6" r="1.5" fill="#fff"/></svg></li>
         <li title="Facebook"><svg viewBox="0 0 32 32" role="img" aria-label="Facebook"><circle cx="16" cy="16" r="13" fill="#1877f2"/><path d="M17.6 26V17h3l.5-3.6h-3.5v-2.2c0-1 .4-1.8 1.9-1.8h1.7V6.2c-.8-.1-1.700-.2-2.6-.2-2.700 0-4.400 1.600-4.400 4.600v2.800h-3V17h3v9z" fill="#fff"/></svg></li>
@@ -102,178 +103,174 @@
         <li title="Threads"><svg viewBox="0 0 32 32" role="img" aria-label="Threads"><circle cx="16" cy="16" r="13" fill="#111"/><text x="16" y="21.500" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="15" font-weight="700" fill="#fff">@</text></svg></li>
         <li title="Telegram"><svg viewBox="0 0 32 32" role="img" aria-label="Telegram"><circle cx="16" cy="16" r="13" fill="#2aabee"/><path d="M8 15.600l14.500-5.800c.7-.3 1.300.2 1.100 1.100l-2.400 11.300c-.2.800-.7 1-1.400.600l-3.700-2.700-1.800 1.700c-.2.200-.4.400-.8.400l.3-3.800 6.900-6.200c.3-.3-.1-.4-.5-.2l-8.500 5.400-3.700-1.200c-.8-.2-.8-.800.0-1.100z" fill="#fff"/></svg></li>
         <li title="Google İşletme"><svg viewBox="0 0 32 32" role="img" aria-label="Google İşletme"><path d="M6 13h20v12.500a1.500 1.500 0 0 1-1.500 1.500h-17A1.500 1.500 0 0 1 6 25.500z" fill="#4285f4"/><path d="M7.500 5h17l3 7.500a3.400 3.400 0 0 1-6.300 1.700 3.500 3.500 0 0 1-5.200.4 3.500 3.500 0 0 1-5.200-.4A3.400 3.400 0 0 1 4.500 12.500z" fill="#8ab4f8"/><rect x="18" y="18" width="5" height="5" rx="1" fill="#fff"/></svg></li>
-      </ul>
-      <ul class="chips" aria-label="Birlikte çalışan araçlar">
-        <li>WhatsApp onayı</li><li>ikas</li><li>Ticimax</li><li>Trendyol</li><li>WordPress</li><li>RSS</li><li>Yapay zekâ</li>
+        <li class="more">+18 kanal</li>
       </ul>
     </div>
-  </section>
+  </div>
 
-  <!-- Rakamlarla -->
-  <section class="proof">
-    <div class="wrap center">
-      <p class="eyebrow">Postacı tek bakışta</p>
-      <h2>Ajansın bütün ayı aynı yerde döner.</h2>
-      <p class="sub">Plan, onay, yayın ve rapor ayrı ayrı araçlarda değil, tek panelde ilerler.</p>
-      <ul class="stats">
-        <li><strong>28+</strong><span>Desteklenen kanal</span></li>
-        <li><strong>1</strong><span>Takvim, bütün müşteriler</span></li>
-        <li><strong>0</strong><span>Müşterinizin indireceği uygulama</span></li>
-        <li><strong>₺</strong><span>TL fiyat, e-fatura</span></li>
-      </ul>
+  <!-- Bir ayın yolculuğu -->
+  <section class="route" id="yolculuk">
+    <div class="wrap">
+      <div class="head">
+        <p class="kicker">Nasıl çalışır</p>
+        <h2>Bir müşterinin ayı, dört durakta biter.</h2>
+        <p>Plan, onay, yayın ve rapor ayrı araçlarda ve WhatsApp gruplarında dağılmaz; aynı yoldan sırayla geçer.</p>
+      </div>
+      <ol class="stops">
+        <li class="stop">
+          <div class="stop-no">1</div>
+          <h3>Planlayın</h3>
+          <p>Özel günler takvimde işaretli gelir. Hazır taslakları düzenleyin, ayın gönderilerini yerleştirin.</p>
+          <time>Ayın ilk haftası</time>
+        </li>
+        <li class="stop">
+          <div class="stop-no">2</div>
+          <h3>Onaya gönderin</h3>
+          <p>Bütün ayı tek bağlantıyla WhatsApp'tan paylaşın. Müşteriniz telefonundan onaylar ya da notunu yazar.</p>
+          <time>Tek mesaj</time>
+        </li>
+        <li class="stop">
+          <div class="stop-no">3</div>
+          <h3>Postacı paylaşsın</h3>
+          <p>Onaylanan gönderiler seçtiğiniz gün ve saatte bütün kanallarda yayımlanır. Onaylanmayan yayımlanmaz.</p>
+          <time>Ay boyunca</time>
+        </li>
+        <li class="stop">
+          <div class="stop-no">4</div>
+          <h3>Raporu iletin</h3>
+          <p>Ay sonunda logonuzu taşıyan rapor hazırdır. Bağlantısını gönderin ya da PDF olarak kaydedin.</p>
+          <time>Ayın son günü</time>
+        </li>
+      </ol>
     </div>
   </section>
 
   <!-- Özellikler -->
-  <section class="showcase" id="ozellikler">
+  <section class="features" id="ozellikler">
     <div class="wrap">
-      <div class="center">
-        <p class="eyebrow">Ajanslar için tasarlandı</p>
-        <h2>Planlamadan rapora, her ay elle yaptığınız işler Postacı'da.</h2>
-        <p class="sub">Onay beklemek, özel günleri takip etmek, rapor hazırlamak: ajansın vaktini alan işleri tek akışta toplar.</p>
-        <span class="pill-title">✦ Öne çıkan özellikler</span>
+      <div class="head center">
+        <p class="kicker">Özellikler</p>
+        <h2>Ajansın günlük işine göre kuruldu.</h2>
+        <p>Genel bir paylaşım aracı değil: müşterisi olan, onay bekleyen, rapor veren ekipler için.</p>
       </div>
 
-      <div class="cards">
-        <article class="card card-wide" id="ozellik-onay">
-          <div class="card-text">
-            <p class="card-eyebrow">Yalnız Postacı'da</p>
-            <h3>Müşteri onayı WhatsApp'tan gelsin</h3>
-            <p>Ekran görüntüsü gönderip cevap beklemeyi bırakın. Tek bir gönderiyi ya da ayın bütün planını bağlantıyla paylaşın; müşteriniz telefonundan görsün, onaylasın ya da notunu yazsın.</p>
-            <ul class="checks">
-              <li>Müşteriniz hesap açmaz, uygulama indirmez</li>
-              <li>Ayın bütün gönderileri tek seferde onaylanır</li>
-              <li>Kim, neyi, ne zaman onayladı; kaydı tutulur</li>
-            </ul>
-          </div>
-          <div class="win" aria-hidden="true">
-            <div class="win-bar"><i></i><i></i><i></i><span>Nisan planı · 12 gönderi</span></div>
-            <div class="win-body">
-              <div class="row"><span class="thumb t1"></span><div><strong>3 Nisan · Instagram</strong><small>Yeni bahar menüsü</small></div><span class="tag-ok">Onaylandı</span></div>
-              <div class="row"><span class="thumb t2"></span><div><strong>17 Nisan · Instagram</strong><small>Hafta sonu kahvaltısı</small></div><span class="tag-wait">Not var</span></div>
-              <div class="row"><span class="thumb t3"></span><div><strong>23 Nisan · Facebook</strong><small>23 Nisan kutlaması</small></div><span class="tag-ok">Onaylandı</span></div>
-              <div class="win-cta">Tümünü onayla</div>
+      <div class="bento">
+        <article class="tile s4">
+          <div class="split">
+            <div>
+              <h3>Onay WhatsApp'tan gelir</h3>
+              <p style="color:rgba(255,255,255,.7);margin-top:10px">Müşteriniz uygulama indirmez, hesap açmaz. Bağlantıya dokunur, gönderiyi görür, onaylar ya da değişiklik ister. Kararı takvimde anında görürsünüz.</p>
+            </div>
+            <div class="chat">
+              <div class="bubble me"><b>Siz</b>Cuma gönderisi hazır, onayınızı bekliyor.</div>
+              <div class="bubble you"><b>Ayşe · Lale Kafe</b>Fiyatı 89 TL yapalım, gerisi çok iyi.</div>
+              <div class="bubble me"><b>Siz</b>Güncelledim, yeniden gönderdim.</div>
+              <div class="bubble you"><b>Ayşe · Lale Kafe</b>Onaylandı ✓</div>
             </div>
           </div>
         </article>
 
-        <article class="card" id="ozellik-takvim">
-          <p class="card-eyebrow">Kolay ve hızlı yönetim</p>
-          <h3>Bütün müşteriler tek takvimde</h3>
-          <p>Hesapları müşteriye göre gruplayın. Haftayı ve ayı tek ekranda görün, gönderileri sürükleyerek taşıyın, en uygun saate zamanlayın.</p>
-          <div class="win" aria-hidden="true">
-            <div class="win-bar"><i></i><i></i><i></i><span>İçerik takvimi</span></div>
-            <div class="win-body">
-              <div class="mini-cal">
-                <b>Pzt</b><b>Sal</b><b>Çar</b><b>Per</b><b>Cum</b><b>Cmt</b><b>Paz</b>
-                <span></span><span class="on a"></span><span></span><span class="on b"></span><span></span><span class="on a"></span><span></span>
-                <span class="on b"></span><span></span><span class="on c"></span><span></span><span class="on a"></span><span></span><span></span>
-                <span></span><span class="on a"></span><span></span><span class="on b"></span><span class="on gold"></span><span></span><span class="on c"></span>
-              </div>
-            </div>
+        <article class="tile s2 blue">
+          <h3>Bütün ay tek bağlantıda</h3>
+          <p>Gönderi gönderi uğraşmayın. Ayın planını bir kez paylaşın; müşteri tek ekranda hepsini onaylasın.</p>
+          <div class="art counts">
+            <div><b>9</b><span>gönderi</span></div>
+            <div><b>7</b><span>onaylandı</span></div>
+            <div><b>2</b><span>not var</span></div>
           </div>
         </article>
 
-        <article class="card" id="ozellik-rapor">
-          <p class="card-eyebrow">Raporlama</p>
-          <h3>Ajans logolu aylık rapor</h3>
-          <p>Her müşteri için erişim, etkileşim ve en iyi gönderileri gösteren Türkçe PDF rapor, ay bitince logonuzla hazır olur.</p>
-          <div class="win" aria-hidden="true">
-            <div class="win-bar"><i></i><i></i><i></i><span>Nisan raporu · Lale Kafe</span></div>
-            <div class="win-body">
-              <div class="kpis"><div><small>Erişim</small><strong>48,2 B</strong></div><div><small>Etkileşim</small><strong>3.910</strong></div><div><small>Gönderi</small><strong>12</strong></div></div>
-              <div class="bars"><i style="height:38%"></i><i style="height:55%"></i><i style="height:46%"></i><i style="height:72%"></i><i style="height:64%"></i><i style="height:88%"></i><i style="height:76%"></i></div>
-            </div>
-          </div>
-        </article>
-
-        <article class="card" id="ozellik-ozelgun">
-          <p class="card-eyebrow">Hazır içerik</p>
+        <article class="tile s2 light">
           <h3>Türkiye özel gün takvimi</h3>
-          <p>Bayramlar, 23 Nisan, 10 Kasım, Anneler Günü, kandiller ve indirim dönemleri takvimde hazır gelir; her biri için taslak gönderi oluşur.</p>
-          <div class="win" aria-hidden="true">
-            <div class="win-bar"><i></i><i></i><i></i><span>Yaklaşan özel günler</span></div>
-            <div class="win-body">
-              <div class="day"><span class="date">23<small>Nis</small></span><div><strong>Ulusal Egemenlik ve Çocuk Bayramı</strong><small>Taslak hazır</small></div></div>
-              <div class="day"><span class="date">1<small>May</small></span><div><strong>Emek ve Dayanışma Günü</strong><small>Taslak hazır</small></div></div>
-              <div class="day"><span class="date">10<small>May</small></span><div><strong>Anneler Günü</strong><small>Taslak hazır</small></div></div>
-            </div>
+          <p>Millî ve dinî günler, anneler günü, indirim dönemleri takvimde hazır gelir; her biri için başlangıç taslağı da.</p>
+          <ul class="art dates">
+            <li><b>24 Kas</b>Öğretmenler Günü</li>
+            <li><b>27 Kas</b>Efsane Cuma</li>
+            <li><b>31 Ara</b>Yılbaşı</li>
+            <li><b>14 Şub</b>Sevgililer Günü</li>
+          </ul>
+        </article>
+
+        <article class="tile s2">
+          <h3>Logonuzla aylık rapor</h3>
+          <p>Yayımlanan gönderiler, kanallar ve onay sayıları tek sayfada. Müşteriye bağlantı ya da PDF olarak gider.</p>
+          <div class="art">
+            <div class="bars"><i style="height:38%"></i><i style="height:52%"></i><i style="height:44%"></i><i style="height:70%"></i><i style="height:62%"></i><i style="height:100%"></i></div>
+            <div class="report-foot"><span>Mavi Ajans · Kasım raporu</span><span>PDF</span></div>
           </div>
         </article>
 
-        <article class="card" id="ozellik-yz">
-          <p class="card-eyebrow">Akıllı içerik üretimi</p>
-          <h3>Yapay zekâ yardımcısı</h3>
-          <p>Gönderi metni, başlık ve görsel fikirleri için yardım alın. Markanın diline uygun taslakları saniyeler içinde hazırlayın.</p>
-          <div class="win" aria-hidden="true">
-            <div class="win-bar"><i></i><i></i><i></i><span>Yardımcı</span></div>
-            <div class="win-body">
-              <div class="msg me">Lale Kafe için Anneler Günü gönderisi yaz, sıcak bir dille.</div>
-              <div class="msg ai">Annenizle baş başa bir kahve molası 🌷 Bu pazar, annelere tatlımız bizden.</div>
-              <div class="sk-row"><span class="sk w60"></span><span class="sk w30"></span></div>
-            </div>
+        <article class="tile s2">
+          <h3>Mağazadaki yenilik gönderiye dönüşsün</h3>
+          <p>Müşterinizin e-ticaret sitesine yeni ürün girince Postacı haber verir; görseliyle birlikte taslağı hazırlar.</p>
+          <div class="art flow">
+            <div class="box"><b>Yeni ürün</b><span>Keten gömlek · 890 TL</span></div>
+            <div class="arrow">→</div>
+            <div class="box"><b>Gönderi taslağı</b><span>Görsel ve metin hazır</span></div>
           </div>
         </article>
 
-        <article class="card card-wide card-rev" id="ozellik-eticaret">
-          <div class="card-text">
-            <p class="card-eyebrow">E-ticaret</p>
-            <h3>Mağazadaki yenilik gönderiye dönüşsün</h3>
-            <p>ikas, Ticimax ve Trendyol mağazalarını bağlayın. Yeni ürün eklendiğinde ya da indirim başladığında gönderi taslağı takviminize düşer; siz yalnızca düzenleyip onaya gönderirsiniz.</p>
-            <ul class="checks">
-              <li>Ürün görseli, adı ve fiyatı taslağa kendiliğinden gelir</li>
-              <li>İndirim ve kampanyalar gözden kaçmaz</li>
-            </ul>
+        <article class="tile s3 light">
+          <h3>Müşteriniz sizin markanızı görür</h3>
+          <p>Onay sayfalarında ve raporda ajansınızın adı, logosu ve rengi yer alır. Postacı arkada kalır.</p>
+          <div class="art swap">
+            <span class="logo old">Postacı</span>
+            <span class="arrow">→</span>
+            <span class="logo new">Mavi Ajans</span>
           </div>
-          <div class="win" aria-hidden="true">
-            <div class="win-bar"><i></i><i></i><i></i><span>Mağazadan gelen taslaklar</span></div>
-            <div class="win-body">
-              <div class="row"><span class="thumb t4"></span><div><strong>Yeni ürün · Keten gömlek</strong><small>1.290 TL · ikas</small></div><span class="tag-new">Taslak</span></div>
-              <div class="row"><span class="thumb t5"></span><div><strong>İndirim · %20 yaz koleksiyonu</strong><small>Trendyol</small></div><span class="tag-new">Taslak</span></div>
-            </div>
+        </article>
+
+        <article class="tile s3">
+          <h3>Bütün müşteriler tek takvimde</h3>
+          <p>Kanalları müşteriye göre gruplayın, takvimi müşteriye göre süzün. Ekip arkadaşlarınızı davet edin, herkes kendi kullanıcısıyla çalışsın.</p>
+          <div class="art people">
+            <i style="background:#3d4fe0">ZÇ</i><i style="background:#ff6b4a">MK</i><i style="background:#12b76a">EA</i><i style="background:#f5a524">+2</i>
+            <span>Ekip üyeleri Ajans planından itibaren</span>
           </div>
         </article>
       </div>
     </div>
   </section>
 
-  <!-- Avantajlar -->
-  <section class="more">
+  <!-- Öncesi / sonrası -->
+  <section class="versus">
     <div class="wrap">
-      <p class="eyebrow">Postacı'nın avantajları</p>
-      <h2>Ajansınızı öne çıkarın</h2>
-      <div class="adv">
-        <article><span class="no">01</span><h3>Kendi markanızla panel</h3><p>Müşteriniz panele sizin logonuz ve sizin alan adınızla girer. Postacı arkada kalır.</p></article>
-        <article><span class="no">02</span><h3>Ekip çalışması</h3><p>Ekip arkadaşlarınızı davet edin, kimin hangi müşteride çalışacağını belirleyin, gönderiler üzerinde yorumlaşın.</p></article>
-        <article><span class="no">03</span><h3>Tekrarlayan ve otomatik gönderiler</h3><p>Düzenli paylaşımları bir kez kurun. Blog yazılarınız RSS üzerinden kendiliğinden gönderi taslağına dönüşsün.</p></article>
-        <article><span class="no">04</span><h3>Medya kütüphanesi ve tasarım</h3><p>Görselleri müşteri bazında saklayın, panelden çıkmadan düzenleyin, her kanala uygun boyutta paylaşın.</p></article>
+      <div class="head center">
+        <p class="kicker">Fark</p>
+        <h2>Aynı iş, daha az yazışma.</h2>
       </div>
-    </div>
-  </section>
-
-  <!-- Nasıl çalışır -->
-  <section class="how" id="dongu">
-    <div class="wrap">
-      <div class="center">
-        <p class="eyebrow">Nasıl çalışır</p>
-        <h2>Her ay dört adım</h2>
+      <div class="versus-grid">
+        <div class="versus-col before">
+          <h3>Postacı'dan önce</h3>
+          <ul>
+            <li>Gönderi görselleri WhatsApp grubunda kaybolur</li>
+            <li>"Bunu onaylamış mıydım?" sorusu ay boyu sürer</li>
+            <li>Takvim bir Excel dosyasında, yayın başka bir araçta</li>
+            <li>Ay sonu raporu için ekran görüntüsü toplanır</li>
+            <li>Özel günler son dakikada hatırlanır</li>
+          </ul>
+        </div>
+        <div class="versus-col after">
+          <h3>Postacı ile</h3>
+          <ul>
+            <li>Her gönderinin onayı, notu ve geçmişi kendi üzerinde durur</li>
+            <li>Onaylanmayan gönderi yayımlanmaz</li>
+            <li>Plan, onay ve yayın aynı takvimde ilerler</li>
+            <li>Rapor ay sonunda logonuzla hazırdır</li>
+            <li>Özel günler ve taslakları takvimde bekler</li>
+          </ul>
+        </div>
       </div>
-      <ol class="steps">
-        <li><span>1</span><h3>Planlayın</h3><p>Özel günler işaretli gelir. Taslakları düzenleyin, ayın gönderilerini takvime yerleştirin.</p></li>
-        <li><span>2</span><h3>Onaya gönderin</h3><p>Planı WhatsApp'tan paylaşın. Müşteriniz telefonundan onaylar ya da not düşer.</p></li>
-        <li><span>3</span><h3>Postacı paylaşsın</h3><p>Onaylanan gönderiler seçtiğiniz gün ve saatte bütün kanallarda yayımlanır.</p></li>
-        <li><span>4</span><h3>Raporu gönderin</h3><p>Ay sonunda logonuzu taşıyan rapor hazırdır. Müşterinize tek tıkla iletin.</p></li>
-      </ol>
     </div>
   </section>
 
   <!-- Fiyatlar -->
   <section class="pricing" id="fiyat">
     <div class="wrap">
-      <div class="center">
-        <p class="eyebrow">Fiyatlar</p>
-        <h2>Size uygun planı seçin</h2>
-        <p class="sub">Fiyatlar TL'dir ve KDV dahildir. İlk 7 gün ücretsizdir; istediğiniz zaman iptal edebilirsiniz.</p>
+      <div class="head center">
+        <p class="kicker">Fiyatlar</p>
+        <h2>Hesap sayınıza göre üç plan.</h2>
+        <p>Fiyatlar TL'dir ve KDV dahildir. İlk 7 gün ücretsizdir; istediğiniz zaman iptal edebilirsiniz.</p>
         <div class="toggle" role="group" aria-label="Ödeme dönemi">
           <button type="button" class="is-on" data-period="month" aria-pressed="true">Aylık</button>
           <button type="button" data-period="year" aria-pressed="false">Yıllık <em>2 ay bedava</em></button>
@@ -285,7 +282,7 @@
           <h3>Başlangıç</h3>
           <p class="plan-for">Yeni ajanslar ve serbest çalışanlar</p>
           <p class="price"><strong data-month="590 TL" data-year="5.900 TL">590 TL</strong><span data-month="/ ay" data-year="/ yıl">/ ay</span></p>
-          <a class="btn btn-outline" href="#basla">7 gün ücretsiz deneyin</a>
+          <a class="btn btn-line" data-app="register" href="#">7 gün ücretsiz deneyin</a>
           <ul class="feat">
             <li>10 sosyal medya hesabı</li>
             <li>Sınırsız müşteri</li>
@@ -303,7 +300,7 @@
           <h3>Ajans</h3>
           <p class="plan-for">Düzenli müşteri portföyü olan ajanslar</p>
           <p class="price"><strong data-month="1.790 TL" data-year="17.900 TL">1.790 TL</strong><span data-month="/ ay" data-year="/ yıl">/ ay</span></p>
-          <a class="btn btn-primary" href="#basla">7 gün ücretsiz deneyin</a>
+          <a class="btn btn-coral" data-app="register" href="#">7 gün ücretsiz deneyin</a>
           <ul class="feat">
             <li>30 sosyal medya hesabı</li>
             <li>Sınırsız müşteri</li>
@@ -317,7 +314,7 @@
           <h3>Büyük Ajans</h3>
           <p class="plan-for">Çok müşterili, kalabalık ekipli ajanslar</p>
           <p class="price"><strong data-month="3.490 TL" data-year="34.900 TL">3.490 TL</strong><span data-month="/ ay" data-year="/ yıl">/ ay</span></p>
-          <a class="btn btn-outline" href="#basla">7 gün ücretsiz deneyin</a>
+          <a class="btn btn-line" data-app="register" href="#">7 gün ücretsiz deneyin</a>
           <ul class="feat">
             <li>100 sosyal medya hesabı</li>
             <li>Sınırsız müşteri</li>
@@ -327,102 +324,94 @@
           </ul>
         </article>
       </div>
-      <p class="plans-note">Bütün planlarda: 7 gün ücretsiz deneme, Türkçe destek, yapay zekâ yardımcısı, medya kütüphanesi ve müşteri bazlı takvim.</p>
+      <p class="plans-note">Bütün planlarda: 7 gün ücretsiz deneme, Türkçe destek, medya kütüphanesi ve müşteri bazlı takvim.</p>
     </div>
   </section>
 
   <!-- Sorular -->
   <section class="faq" id="sss">
-    <div class="wrap narrow">
-      <div class="center">
-        <p class="eyebrow">Sorular</p>
+    <div class="wrap">
+      <div class="head center">
+        <p class="kicker">Sorular</p>
         <h2>Sık sorulanlar</h2>
       </div>
-      <details>
-        <summary>Müşterimin bir uygulama indirmesi ya da hesap açması gerekiyor mu?</summary>
-        <p>Hayır. Onay bağlantısı WhatsApp'tan gelir ve telefonun tarayıcısında açılır. Müşteriniz gönderileri görür, onaylar ya da notunu yazar.</p>
-      </details>
-      <details>
-        <summary>Hangi kanallara gönderi paylaşabilirim?</summary>
-        <p>Instagram, Facebook, TikTok, YouTube, X, LinkedIn, Pinterest, Threads, Telegram ve Google İşletme başta olmak üzere 28'den fazla kanalı bağlayabilirsiniz.</p>
-      </details>
-      <details>
-        <summary>Fatura alabilir miyim?</summary>
-        <p>Evet. Ödemeler TL ile alınır ve her ödeme için faturanız kesilir.</p>
-      </details>
-      <details>
-        <summary>Planımı sonradan değiştirebilir miyim?</summary>
-        <p>Evet. Plan değiştirmek için bize yazmanız yeterli. Aboneliği istediğiniz zaman panelden iptal edebilirsiniz; ödediğiniz dönemin sonuna kadar kullanmaya devam edersiniz.</p>
-      </details>
-      <details>
-        <summary>Ekibimdeki herkes aynı hesabı mı kullanacak?</summary>
-        <p>Hayır. Her ekip üyesi kendi kullanıcısıyla girer; kimin hangi müşteride çalışacağını siz belirlersiniz.</p>
-      </details>
-      <details>
-        <summary>Müşterim kendi hesaplarının şifresini bana vermek zorunda mı?</summary>
-        <p>Hayır. Hesaplar platformların kendi yetkilendirme ekranıyla bağlanır; şifre paylaşılmaz ve yetki istenildiği an geri alınabilir.</p>
-      </details>
+      <div class="faq-grid">
+        <details>
+          <summary>Müşterimin bir uygulama indirmesi ya da hesap açması gerekiyor mu?</summary>
+          <p>Hayır. Onay bağlantısı WhatsApp'tan gelir ve telefonun tarayıcısında açılır. Müşteriniz gönderileri görür, onaylar ya da notunu yazar.</p>
+        </details>
+        <details>
+          <summary>Hangi kanallara gönderi paylaşabilirim?</summary>
+          <p>Instagram, Facebook, TikTok, YouTube, X, LinkedIn, Pinterest, Threads, Telegram ve Google İşletme başta olmak üzere 28'den fazla kanalı bağlayabilirsiniz.</p>
+        </details>
+        <details>
+          <summary>Müşterim kendi hesaplarının şifresini bana vermek zorunda mı?</summary>
+          <p>Hayır. Hesaplar platformların kendi yetkilendirme ekranıyla bağlanır; şifre paylaşılmaz ve yetki istenildiği an geri alınabilir.</p>
+        </details>
+        <details>
+          <summary>Fatura alabilir miyim?</summary>
+          <p>Evet. Ödemeler TL ile alınır ve her ödeme için faturanız kesilir.</p>
+        </details>
+        <details>
+          <summary>Planımı sonradan değiştirebilir miyim?</summary>
+          <p>Evet. Plan değiştirmek için bize yazmanız yeterli. Aboneliği istediğiniz zaman panelden iptal edebilirsiniz; ödediğiniz dönemin sonuna kadar kullanmaya devam edersiniz.</p>
+        </details>
+        <details>
+          <summary>Ekibimdeki herkes aynı hesabı mı kullanacak?</summary>
+          <p>Hayır. Ajans planından itibaren her ekip üyesi kendi kullanıcısıyla girer.</p>
+        </details>
+      </div>
     </div>
   </section>
 
-  <!-- Kayıt / iletişim -->
+  <!-- Çağrı -->
   <section class="cta" id="basla">
-    <div class="wrap cta-in">
-      <div class="cta-text">
-        <p class="eyebrow eyebrow-light">Hemen başlayın</p>
-        <h2>Postacı'yı 7 gün ücretsiz deneyin</h2>
-        <p>Ajansınızın adını ve e-posta adresinizi yazın; hesabınızın giriş bilgilerini gönderelim. Sorunuz varsa aynı formdan yazabilirsiniz.</p>
-        <ul class="checks checks-light">
-          <li>Kurulum gerekmez, tarayıcıdan çalışır</li>
-          <li>İlk müşterinizi dakikalar içinde eklersiniz</li>
-          <li>Türkçe destek</li>
-        </ul>
+    <div class="wrap">
+      <div class="envelope">
+        <div class="envelope-in">
+          <div class="postmark" aria-hidden="true"><span>7 GÜN<small>ÜCRETSİZ</small></span></div>
+          <h2>Bu ayın planını Postacı'ya emanet edin.</h2>
+          <p>Hesabınızı açın, ilk müşterinizin kanallarını bağlayın ve onay bağlantısını bugün gönderin.</p>
+          <a class="btn btn-coral" data-app="register" href="#">7 gün ücretsiz deneyin</a>
+        </div>
       </div>
-      <form class="form" id="join-form" data-endpoint="" novalidate>
-        <label for="agency">Ajans adı</label>
-        <input id="agency" name="agency" type="text" autocomplete="organization" required>
-        <label for="email">E-posta</label>
-        <input id="email" name="email" type="email" autocomplete="email" required>
-        <label for="clients">Kaç müşteri yönetiyorsunuz?</label>
-        <select id="clients" name="clients">
-          <option>1–5</option><option>6–20</option><option>21–50</option><option>50'den fazla</option>
-        </select>
-        <label for="note">Notunuz (isteğe bağlı)</label>
-        <textarea id="note" name="note" rows="3"></textarea>
-        <button class="btn btn-primary" type="submit">Ücretsiz denemeyi başlat</button>
-        <p class="form-msg" id="form-msg" role="status" aria-live="polite"></p>
-      </form>
     </div>
   </section>
 
 </main>
 
 <footer class="footer">
-  <div class="wrap footer-grid">
-    <div class="footer-brand">
-      <a class="brand" href="#top"><svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true"><rect x="3" y="8" width="34" height="24" rx="6" fill="#3d4fe0"/><path d="M6.5 12.5l13.5 10.5 13.5-10.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="31.5" cy="10.5" r="6" fill="#ff6b4a" stroke="#fff" stroke-width="2"/></svg><span>Postacı</span></a>
-      <p>Sosyal medya ajansları için planlama, müşteri onayı ve raporlama aracı.</p>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="#top">
+          <svg viewBox="0 0 40 40" aria-hidden="true">
+            <rect x="3" y="8" width="34" height="24" rx="6" fill="#3d4fe0"/>
+            <path d="M6.5 12.5l13.5 10.5 13.5-10.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+            <circle cx="31.5" cy="10.5" r="6" fill="#ff6b4a" stroke="#0e1330" stroke-width="2"/>
+          </svg>
+          <span>Postacı</span>
+        </a>
+        <p>Sosyal medya ajansları için planlama, müşteri onayı ve raporlama.</p>
+      </div>
+      <div>
+        <h4>Ürün</h4>
+        <ul>
+          <li><a href="#yolculuk">Nasıl çalışır</a></li>
+          <li><a href="#ozellikler">Özellikler</a></li>
+          <li><a href="#fiyat">Fiyatlar</a></li>
+          <li><a href="#sss">Sorular</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Hesap</h4>
+        <ul>
+          <li><a data-app="login" href="#">Giriş yap</a></li>
+          <li><a data-app="register" href="#">Ücretsiz deneyin</a></li>
+        </ul>
+      </div>
     </div>
-    <nav aria-label="Ürün">
-      <h4>Ürün</h4>
-      <a href="#ozellikler">Özellikler</a><a href="#dongu">Nasıl çalışır</a><a href="#fiyat">Fiyatlar</a><a href="#sss">Sorular</a>
-    </nav>
-    <nav aria-label="Özellikler">
-      <h4>Özellikler</h4>
-      <a href="#ozellik-onay">WhatsApp'tan onay</a><a href="#ozellik-takvim">İçerik takvimi</a><a href="#ozellik-rapor">Aylık rapor</a><a href="#ozellik-ozelgun">Özel gün takvimi</a><a href="#ozellik-eticaret">E-ticaret bağlantısı</a>
-    </nav>
-    <nav aria-label="Kanallar">
-      <h4>Kanallar</h4>
-      <a href="#kanallar">Instagram</a><a href="#kanallar">Facebook</a><a href="#kanallar">TikTok</a><a href="#kanallar">LinkedIn</a><a href="#kanallar">YouTube</a>
-    </nav>
-    <nav aria-label="Başlayın">
-      <h4>Başlayın</h4>
-      <a href="#basla">Ücretsiz deneyin</a><a href="#basla">Giriş yap</a><a href="#basla">İletişim</a>
-    </nav>
-  </div>
-  <div class="wrap footer-legal">
-    <span>© 2026 Postacı</span>
-    <span>Açık kaynaklı <a href="https://github.com/gitroomhq/postiz-app" rel="noopener">Postiz</a> üzerine kuruludur (AGPL-3.0) · <a href="https://github.com/zeynepcevikk9-lang/postaci" rel="noopener">Kaynak kod</a></span>
+    <div class="footer-bottom">© <span id="year">2026</span> Postacı</div>
   </div>
 </footer>
 
