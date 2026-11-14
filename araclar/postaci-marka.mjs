@@ -66,6 +66,8 @@ const texts = [
   [": 'Errors per social'", ": 'Platforma göre hata'"],
   // Sayfa dili: büyük harfe çevrilen başlıklarda Türkçe i/İ doğru çıksın
   ['    <html>', '    <html lang="tr">'],
+  // Giriş yapan kullanıcı takvime değil ana sayfaya düşer
+  ["!!process.env.IS_GENERAL ? '/launches' : `/analytics`", "!!process.env.IS_GENERAL ? '/home' : `/analytics`"],
 ];
 
 // Postiz'de çeviri sistemine bağlanmamış, doğrudan İngilizce yazılmış metinler.
@@ -262,6 +264,11 @@ const patches = [
   [/\? 'day'(\r?\n\s*): 'week'(\r?\n\s*\);)/, "? 'day'$1: 'month'$2"],
   // Yönetim istatistiklerindeki "Apply" düğmesi
   [/(\n\s*)Apply(\r?\n\s*<\/Button>)/, '$1Uygula$2'],
+  // Menünün başına Ana Sayfa (yalnızca henüz eklenmediyse eşleşir)
+  [
+    /(  const firstMenu = \[\r?\n)(    \{\r?\n      name: isGeneral \? t\('calendar', 'Calendar'\))/,
+    '$1    {\n      name: t(\'home_menu\', \'Home\'),\n      icon: (\n        <svg\n          xmlns="http://www.w3.org/2000/svg"\n          width="21"\n          height="21"\n          viewBox="0 0 24 24"\n          fill="none"\n        >\n          <path\n            d="M4 10.5 12 4l8 6.5V19a1.5 1.5 0 0 1-1.5 1.5H15V15H9v5.5H5.5A1.5 1.5 0 0 1 4 19v-8.5Z"\n            stroke="currentColor"\n            strokeWidth="1.8"\n            strokeLinecap="round"\n            strokeLinejoin="round"\n          />\n        </svg>\n      ),\n      path: \'/home\',\n    },\n$2',
+  ],
 ];
 
 const colorExt = new Set(['.tsx', '.ts', '.scss', '.css']);
