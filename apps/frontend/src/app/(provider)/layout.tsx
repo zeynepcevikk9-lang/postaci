@@ -13,7 +13,7 @@ import UtmSaver from '@gitroom/helpers/utils/utm.saver';
 
 export default async function AppLayout({ children }: { children: ReactNode }) {
   return (
-    <html>
+    <html lang="tr">
       <head>
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>

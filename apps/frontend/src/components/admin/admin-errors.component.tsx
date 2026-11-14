@@ -61,9 +61,9 @@ const ErrorDetailsModal: FC<{ row: ErrorRow }> = ({ row }) => {
   return (
     <div className="rounded-[4px] border border-newTableBorder bg-newBgColorInner px-[16px] pb-[16px] relative w-full max-h-[80vh] overflow-auto">
       <div className="sticky top-0 bg-newBgColorInner py-[16px] flex items-center justify-between gap-[12px] z-10 border-b border-newTableBorder mb-[12px]">
-        <div className="text-[16px] font-[600]">Error Details</div>
+        <div className="text-[16px] font-[600]">Hata ayrıntıları</div>
         <div className="flex gap-[8px] items-center">
-          <Button onClick={copyAll}>Copy Debug Code</Button>
+          <Button onClick={copyAll}>Hata ayıklama kodunu kopyala</Button>
           <button
             className="outline-none w-[28px] h-[28px] flex items-center justify-center hover:bg-tableBorder cursor-pointer rounded"
             type="button"
@@ -113,7 +113,7 @@ const ErrorDetailsModal: FC<{ row: ErrorRow }> = ({ row }) => {
           </div>
         </div>
         <div className="col-span-2">
-          <div className="opacity-60">Post ID</div>
+          <div className="opacity-60">Gönderi kimliği</div>
           <div>{row.postId}</div>
         </div>
       </div>
@@ -233,7 +233,7 @@ export const AdminErrorsComponent: FC = () => {
   if (!user?.isSuperAdmin) {
     return (
       <div className="text-textColor p-[20px]">
-        You do not have access to this page.
+        Bu sayfaya erişiminiz yok.
       </div>
     );
   }
@@ -260,7 +260,7 @@ export const AdminErrorsComponent: FC = () => {
             }}
             className="bg-newBgColorInner h-[38px] border border-newTableBorder rounded-[8px] px-[10px] text-[14px] text-textColor min-w-[180px]"
           >
-            <option value="">All platforms</option>
+            <option value="">Bütün platformlar</option>
             {(platforms || []).map((p) => (
               <option key={p} value={p}>
                 {p}
@@ -270,7 +270,7 @@ export const AdminErrorsComponent: FC = () => {
         </div>
 
         <div className="flex flex-col gap-[6px]">
-          <div className="text-[12px] opacity-70">Email contains</div>
+          <div className="text-[12px] opacity-70">E-posta içerir</div>
           <div className="flex gap-[8px]">
             <input
               value={emailInput}
@@ -294,11 +294,11 @@ export const AdminErrorsComponent: FC = () => {
               setUnknownFirst(e.target.checked);
             }}
           />
-          Unknown Error first
+          Önce bilinmeyen hatalar
         </label>
 
         <div className="flex flex-col gap-[6px]">
-          <div className="text-[12px] opacity-70">Per page</div>
+          <div className="text-[12px] opacity-70">Sayfa başına</div>
           <select
             value={limit}
             onChange={(e) => {
@@ -316,16 +316,16 @@ export const AdminErrorsComponent: FC = () => {
         </div>
 
         <Button secondary onClick={onClear}>
-          Clear filters
+          Süzgeçleri temizle
         </Button>
       </div>
 
       {isLoading ? (
         <LoadingComponent />
       ) : error ? (
-        <div className="text-red-400">Failed to load errors.</div>
+        <div className="text-red-400">Hatalar yüklenemedi.</div>
       ) : !data || data.items.length === 0 ? (
-        <div className="opacity-70">No errors found.</div>
+        <div className="opacity-70">Hata bulunamadı.</div>
       ) : (
         <div className="border border-newTableBorder rounded-[8px] overflow-hidden">
           <div className="grid grid-cols-[170px_120px_220px_1fr_220px] gap-[12px] px-[12px] py-[10px] bg-newBgColorInner text-[12px] uppercase opacity-70 border-b border-newTableBorder">

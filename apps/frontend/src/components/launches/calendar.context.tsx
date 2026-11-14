@@ -181,7 +181,7 @@ export const CalendarWeekProvider: FC<{
     typeof window !== 'undefined' &&
       window.matchMedia('(max-width: 1025px)').matches
       ? 'day'
-      : 'week'
+      : 'month'
   );
   const display = searchParams.get('display') || displaySaved;
 

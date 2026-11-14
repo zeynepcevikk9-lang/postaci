@@ -15,7 +15,7 @@ export default function GlobalError({
     Sentry.captureException(error);
   }, [error]);
   return (
-    <html>
+    <html lang="tr">
       <body>
         <NextError statusCode={0} />
       </body>

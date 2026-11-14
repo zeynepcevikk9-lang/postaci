@@ -1113,7 +1113,7 @@ export const Impersonate = () => {
   }, [data]);
   return (
     <div>
-      <div className="bg-forth h-[52px] mobile:h-auto mobile:py-[8px] mobile:px-[8px] flex justify-center items-center border-input border rounded-[8px] text-white">
+      <div className="postaci-admin-bar bg-forth h-[52px] mobile:h-auto mobile:py-[8px] mobile:px-[8px] flex justify-center items-center border-input border rounded-[8px] text-white">
         <div
           className={`relative flex flex-col ${
             user?.impersonate ? 'w-full px-[20px] mobile:px-0' : 'w-[600px] mobile:w-full'

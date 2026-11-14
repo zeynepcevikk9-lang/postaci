@@ -54,11 +54,11 @@ const startOfMonth = () => {
 };
 
 const PRESETS: { label: string; range: () => { from: string; to: string } }[] = [
-  { label: 'Today', range: () => ({ from: today(), to: today() }) },
-  { label: 'This week', range: () => ({ from: startOfWeek(), to: today() }) },
-  { label: 'This month', range: () => ({ from: startOfMonth(), to: today() }) },
-  { label: 'Last 7 days', range: () => ({ from: isoDaysAgo(7), to: today() }) },
-  { label: 'Last 30 days', range: () => ({ from: isoDaysAgo(30), to: today() }) },
+  { label: 'Bugün', range: () => ({ from: today(), to: today() }) },
+  { label: 'Bu hafta', range: () => ({ from: startOfWeek(), to: today() }) },
+  { label: 'Bu ay', range: () => ({ from: startOfMonth(), to: today() }) },
+  { label: 'Son 7 gün', range: () => ({ from: isoDaysAgo(7), to: today() }) },
+  { label: 'Son 30 gün', range: () => ({ from: isoDaysAgo(30), to: today() }) },
 ];
 
 const useStats = (params: {
@@ -106,11 +106,11 @@ const PerSocialTable: FC<{ title: string; block: StatsBlock }> = ({
   <div className="border border-newTableBorder rounded-[8px] overflow-hidden">
     <div className="grid grid-cols-[1fr_120px] gap-[12px] px-[12px] py-[10px] bg-newBgColorInner text-[12px] uppercase opacity-70 border-b border-newTableBorder">
       <div>{title}</div>
-      <div className="text-right">Count</div>
+      <div className="text-right">Sayı</div>
     </div>
     {block.perSocial.length === 0 ? (
       <div className="px-[12px] py-[10px] text-[13px] opacity-70">
-        No data for this timeframe.
+        Bu dönem için veri yok.
       </div>
     ) : (
       block.perSocial.map((row) => (
@@ -145,7 +145,7 @@ export const AdminStatsComponent: FC = () => {
   if (!user?.isSuperAdmin) {
     return (
       <div className="text-textColor p-[20px]">
-        You do not have access to this page.
+        Bu sayfaya erişiminiz yok.
       </div>
     );
   }
@@ -153,7 +153,7 @@ export const AdminStatsComponent: FC = () => {
   return (
     <div className="flex flex-col gap-[16px] text-textColor">
       <div className="flex items-center justify-between">
-        <div className="text-[20px] font-[600]">Admin Stats</div>
+        <div className="text-[20px] font-[600]">Yönetim: İstatistikler</div>
         {data && (
           <div className="text-[13px] opacity-70">
             {new Date(data.from).toLocaleDateString()} —{' '}
@@ -185,7 +185,7 @@ export const AdminStatsComponent: FC = () => {
 
       <div className="flex flex-wrap gap-[12px] items-end bg-newBgColorInner border border-newTableBorder rounded-[8px] p-[12px]">
         <div className="flex flex-col gap-[6px]">
-          <div className="text-[12px] opacity-70">From</div>
+          <div className="text-[12px] opacity-70">Başlangıç</div>
           <input
             type="date"
             value={fromInput}
@@ -195,7 +195,7 @@ export const AdminStatsComponent: FC = () => {
           />
         </div>
         <div className="flex flex-col gap-[6px]">
-          <div className="text-[12px] opacity-70">To</div>
+          <div className="text-[12px] opacity-70">Bitiş</div>
           <input
             type="date"
             value={toInput}
@@ -209,7 +209,7 @@ export const AdminStatsComponent: FC = () => {
           onClick={() => setRange({ from: fromInput, to: toInput })}
           disabled={!fromInput || !toInput || fromInput > toInput}
         >
-          Apply
+          Uygula
         </Button>
 
         <label
@@ -221,39 +221,39 @@ export const AdminStatsComponent: FC = () => {
             checked={unknownOnly}
             onChange={(e) => setUnknownOnly(e.target.checked)}
           />
-          Unknown errors only
+          Yalnızca bilinmeyen hatalar
         </label>
       </div>
 
       {isLoading ? (
         <LoadingComponent />
       ) : error || !data ? (
-        <div className="text-red-400">Failed to load stats.</div>
+        <div className="text-red-400">İstatistikler yüklenemedi.</div>
       ) : (
         <div className="overflow-x-auto pb-[8px] scrollbar scrollbar-thumb-fifth scrollbar-track-newBgColor flex flex-col gap-[16px]">
           <div className="flex gap-[12px]">
             <div className="flex-1 min-w-[220px] shrink-0">
               <SummaryCard
-                label="Total posts published"
+                label="Yayımlanan toplam gönderi"
                 value={data.posts.total}
               />
             </div>
             <div className="flex-1 min-w-[220px] shrink-0">
               <SummaryCard
-                label="Total connected accounts"
+                label="Bağlı toplam hesap"
                 value={data.connected.total}
               />
             </div>
             <div className="flex-1 min-w-[220px] shrink-0">
               <SummaryCard
-                label={unknownOnly ? 'Total unknown errors' : 'Total errors'}
+                label={unknownOnly ? 'Toplam bilinmeyen hata' : 'Toplam hata'}
                 value={data.errors.total}
               />
             </div>
             {data.publishingChannels && (
               <div className="flex-1 min-w-[220px] shrink-0">
                 <SummaryCard
-                  label="Unique channels - published (all platforms combined)"
+                  label="Yayın yapan tekil kanal (bütün platformlar)"
                   value={data.publishingChannels.total}
                 />
               </div>
@@ -261,7 +261,7 @@ export const AdminStatsComponent: FC = () => {
             {data.scheduledChannels && (
               <div className="flex-1 min-w-[220px] shrink-0">
                 <SummaryCard
-                  label="Unique channels - scheduled (all platforms combined)"
+                  label="Zamanlaması olan tekil kanal (bütün platformlar)"
                   value={data.scheduledChannels.total}
                 />
               </div>
@@ -269,7 +269,7 @@ export const AdminStatsComponent: FC = () => {
             {data.publishingAccounts && (
               <div className="flex-1 min-w-[220px] shrink-0">
                 <SummaryCard
-                  label="Unique users - published (all platforms combined)"
+                  label="Yayın yapan tekil kullanıcı (bütün platformlar)"
                   value={data.publishingAccounts.total}
                 />
               </div>
@@ -277,7 +277,7 @@ export const AdminStatsComponent: FC = () => {
             {data.scheduledAccounts && (
               <div className="flex-1 min-w-[220px] shrink-0">
                 <SummaryCard
-                  label="Unique users - scheduled (all platforms combined)"
+                  label="Zamanlaması olan tekil kullanıcı (bütün platformlar)"
                   value={data.scheduledAccounts.total}
                 />
               </div>
@@ -285,7 +285,7 @@ export const AdminStatsComponent: FC = () => {
             {data.activeOrgsBySource && (
               <div className="flex-1 min-w-[220px] shrink-0">
                 <SummaryCard
-                  label="Unique users - active (all sources combined)"
+                  label="Etkin tekil kullanıcı (bütün kaynaklar)"
                   value={data.activeOrgsBySource.total}
                 />
               </div>
@@ -293,7 +293,7 @@ export const AdminStatsComponent: FC = () => {
             {data.connectedClients && (
               <div className="flex-1 min-w-[220px] shrink-0">
                 <SummaryCard
-                  label="Connected clients (all clients combined)"
+                  label="Bağlı istemci (bütün istemciler)"
                   value={data.connectedClients.total}
                 />
               </div>
@@ -303,13 +303,13 @@ export const AdminStatsComponent: FC = () => {
           <div className="flex gap-[12px] items-start">
             <div className="flex-1 min-w-[220px] shrink-0">
               <PerSocialTable
-                title="Posts published per social"
+                title="Platforma göre yayımlanan gönderi"
                 block={data.posts}
               />
             </div>
             <div className="flex-1 min-w-[220px] shrink-0">
               <PerSocialTable
-                title="Connected accounts per social"
+                title="Platforma göre bağlı hesap"
                 block={data.connected}
               />
             </div>
@@ -317,8 +317,8 @@ export const AdminStatsComponent: FC = () => {
               <PerSocialTable
                 title={
                   unknownOnly
-                    ? 'Unknown errors per social'
-                    : 'Errors per social'
+                    ? 'Platforma göre bilinmeyen hata'
+                    : 'Platforma göre hata'
                 }
                 block={data.errors}
               />
@@ -326,7 +326,7 @@ export const AdminStatsComponent: FC = () => {
             {data.publishingChannels && (
               <div className="flex-1 min-w-[220px] shrink-0">
                 <PerSocialTable
-                  title="Unique channels - published"
+                  title="Yayın yapan tekil kanallar"
                   block={data.publishingChannels}
                 />
               </div>
@@ -334,7 +334,7 @@ export const AdminStatsComponent: FC = () => {
             {data.scheduledChannels && (
               <div className="flex-1 min-w-[220px] shrink-0">
                 <PerSocialTable
-                  title="Unique channels - scheduled"
+                  title="Zamanlaması olan tekil kanallar"
                   block={data.scheduledChannels}
                 />
               </div>
@@ -342,7 +342,7 @@ export const AdminStatsComponent: FC = () => {
             {data.publishingAccounts && (
               <div className="flex-1 min-w-[220px] shrink-0">
                 <PerSocialTable
-                  title="Unique users - published"
+                  title="Yayın yapan tekil kullanıcılar"
                   block={data.publishingAccounts}
                 />
               </div>
@@ -350,7 +350,7 @@ export const AdminStatsComponent: FC = () => {
             {data.scheduledAccounts && (
               <div className="flex-1 min-w-[220px] shrink-0">
                 <PerSocialTable
-                  title="Unique users - scheduled"
+                  title="Zamanlaması olan tekil kullanıcılar"
                   block={data.scheduledAccounts}
                 />
               </div>
@@ -358,7 +358,7 @@ export const AdminStatsComponent: FC = () => {
             {data.activeOrgsBySource && (
               <div className="flex-1 min-w-[220px] shrink-0">
                 <PerSocialTable
-                  title="Active users per source"
+                  title="Kaynağa göre etkin kullanıcı"
                   block={data.activeOrgsBySource}
                 />
               </div>
@@ -366,7 +366,7 @@ export const AdminStatsComponent: FC = () => {
             {data.connectedClients && (
               <div className="flex-1 min-w-[220px] shrink-0">
                 <PerSocialTable
-                  title="Connected clients per name"
+                  title="Ada göre bağlı istemci"
                   block={data.connectedClients}
                 />
               </div>
