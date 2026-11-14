@@ -14,24 +14,28 @@ export const BillingComponent = () => {
   const load = useCallback(async (path: string) => {
     return await (await fetch(path)).json();
   }, []);
-  const { isLoading: isLoadingTier, data: tiers } = useSWR(
-    '/user/subscription/tiers',
-    load
-  );
+  // Postacı: iyzico ya da havale kuruluysa TL abonelik ekranı gösterilir. O
+  // durumda Stripe plan listesi hiç istenmez (Stripe anahtarı yer tutucu olduğu
+  // için istek 401 döner ve panel bunu oturum kapanması sayar).
+  const { isLoading: isLoadingIyzico, data: iyzico } = useIyzicoPlans();
   const { isLoading: isLoadingSubscription, data: subscription } = useSWR(
     '/user/subscription',
     load
   );
-  // Postacı: iyzico kuruluysa TL abonelik ekranı gösterilir.
-  const { isLoading: isLoadingIyzico, data: iyzico } = useIyzicoPlans();
+  const useTlScreen =
+    !!iyzico?.enabled &&
+    (!subscription?.subscription ||
+      subscription.subscription.provider === 'iyzico');
+  const { isLoading: isLoadingTier, data: tiers } = useSWR(
+    isLoadingIyzico || isLoadingSubscription || useTlScreen
+      ? null
+      : '/user/subscription/tiers',
+    load
+  );
   if (isLoadingSubscription || isLoadingTier || isLoadingIyzico) {
     return <LoadingComponent />;
   }
-  if (
-    iyzico?.enabled &&
-    (!subscription?.subscription ||
-      subscription.subscription.provider === 'iyzico')
-  ) {
+  if (useTlScreen) {
     return <IyzicoBillingComponent sub={subscription?.subscription} />;
   }
   return <MainBillingComponent sub={subscription?.subscription} />;
