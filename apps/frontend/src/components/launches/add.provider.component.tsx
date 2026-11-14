@@ -19,6 +19,7 @@ import { useT } from '@gitroom/react/translation/get.transation.service.client';
 import clsx from 'clsx';
 import { PlatformIcon } from '@gitroom/frontend/components/ui/platform.icon.component';
 import copy from 'copy-to-clipboard';
+import { createInviteLink } from '@gitroom/frontend/components/launches/invite.link';
 import { capitalize } from 'lodash';
 const resolver = classValidatorResolver(ApiKeyDto);
 
@@ -28,7 +29,7 @@ export const useAddProvider = (update?: () => void, invite?: boolean) => {
   return useCallback(async () => {
     const data = await (await fetch('/integrations')).json();
     modal.openModal({
-      title: 'Add Channel',
+      title: invite ? 'Davet bağlantısı: kanal türünü seçin' : 'Kanal Ekle',
       withCloseButton: true,
       children: (
         <AddProviderComponent invite={!!invite} update={update} {...data} />
@@ -586,6 +587,18 @@ export const AddProviderComponent: FC<{
           ]
             .filter(Boolean)
             .join('&');
+          if (invite) {
+            const link = await createInviteLink(fetch, identifier);
+            if (link) {
+              toaster.show(
+                'Davet bağlantısı panoya kopyalandı; bağlantı 1 saat geçerlidir',
+                'success'
+              );
+              modal.closeAll();
+              copy(link);
+              return;
+            }
+          }
           const response = await fetch(
             `/integrations/social/${identifier}${params ? `?${params}` : ''}`
           );
