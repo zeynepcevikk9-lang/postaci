@@ -922,5 +922,20 @@
   "billing_subscription_not_cancelled": "Il tuo abbonamento non è stato cancellato.",
   "billing_cancel_failed": "Non siamo riusciti a cancellare il tuo abbonamento. Riprova o contatta l'assistenza.",
   "no_analytics_to_show_for_this_channel": "Nessun dato analitico da mostrare per questo canale. Se ti aspettavi di vedere dei dati, prova a riconnettere il canale.",
-  "no_ai_credits_ask_admin": "Non hai più crediti AI. Per favore, contatta un amministratore della tua organizzazione."
+  "no_ai_credits_ask_admin": "Non hai più crediti AI. Per favore, contatta un amministratore della tua organizzazione.",
+  "connect_link_title": "Postiz vuole connettersi al tuo {{platform}}",
+  "connect_link_trust": "Continua solo se ti fidi di chi ti ha inviato questo link",
+  "connect_link_automate": "Postiz automatizzerà il tuo account {{platform}}: può programmare e pubblicare post per tuo conto",
+  "connect_link_system": "Tutto passa attraverso il sistema Postiz: il tuo account viene aggiunto a uno spazio di lavoro Postiz e gestito da lì",
+  "connect_link_redirect": "Al termine verrai indirizzato a {{site}}, un sito web esterno a Postiz",
+  "connect_link_next": "Verrai portato su {{platform}} per accedere e approvare l'accesso",
+  "connect_link_continue": "Continua su {{platform}}",
+  "connect_link_connecting": "Connessione in corso...",
+  "connect_link_close": "Non è quello che ti aspettavi? Chiudi questa pagina e non verrà collegato nulla.",
+  "connect_link_secured_by": "Protetto da",
+  "connect_link_expired": "Questo link non è più valido",
+  "connect_link_expired_description": "I link di connessione sono validi per un'ora. Chiedine uno nuovo a chi te l'ha inviato.",
+  "label_made_with_ai": "Realizzato con l'IA",
+  "facebook_made_with_ai": "Realizzato con l'IA (solo per post di testo e foto)",
+  "youtube_made_with_ai": "Realizzato con l'IA (contenuti alterati o sintetici realistici)"
 }

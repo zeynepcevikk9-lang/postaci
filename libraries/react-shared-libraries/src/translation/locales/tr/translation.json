@@ -1449,5 +1449,19 @@
   "home_feedback_empty": "Müşterilerinizin onayları ve yazdığı notlar burada görünür.",
   "home_feedback_approved": "bir gönderiyi onayladı",
   "home_feedback_changes": "değişiklik istedi",
-  "customer_group_none": "Müşterisiz"
+  "customer_group_none": "Müşterisiz",
+  "connect_link_title": "Postacı, {{platform}} hesabınıza bağlanmak istiyor",
+  "connect_link_trust": "Yalnızca bu bağlantıyı gönderen kişiye güveniyorsanız devam edin",
+  "connect_link_automate": "Postacı, {{platform}} hesabınız için sizin adınıza gönderi planlayabilir ve yayımlayabilir",
+  "connect_link_system": "Hesabınız, bağlantıyı gönderen kişinin Postacı çalışma alanına eklenir ve oradan yönetilir",
+  "connect_link_redirect": "İşlem bittiğinde Postacı dışındaki bir web sitesine, {{site}} adresine yönlendirileceksiniz",
+  "connect_link_next": "Oturum açıp erişimi onaylamanız için {{platform}} sayfasına yönlendirileceksiniz",
+  "connect_link_continue": "{{platform}} ile devam et",
+  "connect_link_connecting": "Bağlanıyor...",
+  "connect_link_close": "Beklediğiniz bu değil mi? Bu sayfayı kapatın, hiçbir şey bağlanmaz.",
+  "connect_link_secured_by": "Güvenliği sağlayan:",
+  "connect_link_expired": "Bu bağlantı artık geçerli değil",
+  "connect_link_expired_description": "Bağlantılar bir saat geçerlidir. Size gönderen kişiden yenisini isteyin.",
+  "facebook_made_with_ai": "Yapay zekâ ile üretildi (yalnızca metin ve fotoğraf gönderileri için)",
+  "youtube_made_with_ai": "Yapay zekâ ile üretildi (gerçekçi, değiştirilmiş ya da sentetik içerik)"
 }
