@@ -94,6 +94,8 @@ node araclar/postaci-marka.mjs
       bitiş tarihi yazılırsa o gün kendiliğinden kapanır) ve aboneliği kaldırma (kartlı abonelik
       iyzico'da da hemen iptal edilir, iade yapılmaz). Kartla süren abonelik varken elle plan
       verilmez. Elle verilen planı kullanıcı kendisi iptal edemez.
+- [x] Havale / EFT ile satış: plan ekranında banka bilgileri ve ödeme bildirimi, yönetim panelinde
+      onay/ret, onayda planın elle tanımlanması, havale ile yenileme
 - [ ] Yönetim paneli, 3. adım: iade (şimdilik iyzico panelinden), hesap ayrıntı sayfası
       (ödeme geçmişi, notlar), bitişi yaklaşan elle planlar için hatırlatma
 - [ ] Tanıtım sitesi (ürün ana sayfası `site/` içinde; eksik: deneme kaydı formunun bağlanması, yayına alma; fiyatlar ve plan içerikleri kesinleşti)
@@ -208,6 +210,25 @@ node araclar/iyzico-sahte.mjs   # http://localhost:4400
 `IYZICO_SECRET_KEY="sahte-secret-key"` ve dosyanın başında yazan plan kodları yazılır. Yenileme
 ve başarısız ödeme şöyle denenir:
 `curl -X POST "http://localhost:4400/sahte/olay?ref=<abonelik kodu>&tur=failure"`
+
+## Havale / EFT ile satış
+
+iyzico hesabı olmadan da satış yapılabilir; iyzico kuruluysa havale ikinci ödeme yolu olarak
+görünür. Kod: `database/prisma/bank-transfer/`, `api/routes/bank.transfer.controller.ts`,
+ön yüzde `components/billing/bank.transfer.tsx`.
+
+- `.env` içine `BANK_TRANSFER_IBAN` ve `BANK_TRANSFER_ACCOUNT_NAME` yazılınca plan ekranında
+  "Havale / EFT ile öde" çıkar. iyzico kurulu değilse plan adı ve fiyatı `PLAN_NAME_<KADEME>` ve
+  `PLAN_PRICE_<KADEME>_<DÖNEM>` değişkenlerinden okunur. Ücretli kip yine Postiz bayrağıyla
+  açılır (`STRIPE_PUBLISHABLE_KEY` ve `STRIPE_SECRET_KEY` boş olmayan bir değer).
+- Kullanıcı planı seçer; IBAN, alıcı, tutar ve hesaba özel açıklama kodunu (`PST-XXXXXX`) görür,
+  ödemeyi yapınca "Havaleyi yaptım, bildir" der. Tutar plandan alınır, kullanıcıdan değil.
+- Bildirim yönetim panelinde (`/admin/customers`) "Havale bildirimleri" altında görünür;
+  `BANK_TRANSFER_NOTIFY_EMAIL` yazılıysa e-postayla da gelir. Ödeme banka hesabında görülünce
+  "Onayla" denir: plan bir ay ya da bir yıl için elle tanımlanır (hesabın süren elle planı varsa
+  süre onun bitişinden uzar) ve kullanıcıya bildirim gider. Ödeme otomatik doğrulanmaz.
+- Süresi dolan plan kendiliğinden kapanır; kullanıcı faturalandırma ekranındaki "Havale / EFT ile
+  yenile" ile aynı yoldan yeniler.
 
 ## Kod yapısı (kısa)
 
