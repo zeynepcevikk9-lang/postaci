@@ -1,7 +1,12 @@
 import { PrismaRepository } from '@gitroom/nestjs-libraries/database/prisma/prisma.service';
 import { Injectable } from '@nestjs/common';
 
-const brandSelect = { name: true, logo: true, color: true } as const;
+const brandSelect = {
+  name: true,
+  logo: true,
+  color: true,
+  accountType: true,
+} as const;
 
 @Injectable()
 export class BrandRepository {
@@ -16,7 +21,12 @@ export class BrandRepository {
 
   saveBrand(
     organizationId: string,
-    values: { name: string | null; logo: string | null; color: string | null }
+    values: {
+      name: string | null;
+      logo: string | null;
+      color: string | null;
+      accountType?: string;
+    }
   ) {
     return this._brand.model.agencyBrand.upsert({
       where: { organizationId },
