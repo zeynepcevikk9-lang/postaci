@@ -20,6 +20,8 @@ export interface PricingInnerInterface {
 export interface PricingInterface {
   [key: string]: PricingInnerInterface;
 }
+// Postacı plan adları: STANDARD = İşletme (3 hesap), TEAM = Başlangıç (10),
+// PRO = Ajans (30), ULTIMATE = Büyük Ajans (100). Ekip üyeleri Ajans planından itibaren.
 export const pricing: PricingInterface = {
   FREE: {
     current: 'FREE',
@@ -44,7 +46,7 @@ export const pricing: PricingInterface = {
     current: 'STANDARD',
     month_price: 29,
     year_price: 278,
-    channel: 10,
+    channel: 3,
     posts_per_month: 1000000,
     image_generation_count: 20,
     team_members: false,
@@ -63,11 +65,11 @@ export const pricing: PricingInterface = {
     current: 'TEAM',
     month_price: 39,
     year_price: 374,
-    channel: 30,
+    channel: 10,
     posts_per_month: 1000000,
     image_generation_count: 100,
     community_features: true,
-    team_members: true,
+    team_members: false,
     featured_by_gitroom: true,
     ai: true,
     import_from_channels: true,
@@ -82,7 +84,7 @@ export const pricing: PricingInterface = {
     current: 'PRO',
     month_price: 49,
     year_price: 470,
-    channel: 100,
+    channel: 30,
     posts_per_month: 1000000,
     image_generation_count: 300,
     community_features: true,
