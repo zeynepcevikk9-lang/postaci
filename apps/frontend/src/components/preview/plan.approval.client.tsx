@@ -58,7 +58,7 @@ const usePlan = (planId: string, initial: ApprovalPlanResponse) => {
 };
 
 const inputClass =
-  'w-full bg-newBgColor border border-newTableBorder rounded-[8px] px-[12px] text-[14px] text-newTextColor outline-none focus:border-[#3D4FE0]';
+  'w-full bg-newBgColor border border-newTableBorder rounded-[8px] px-[12px] text-[14px] text-newTextColor outline-none focus:border-[#14172B]';
 
 const isVideo = (path: string) => /\.(mp4|mov|webm|m4v)(\?|$)/i.test(path);
 

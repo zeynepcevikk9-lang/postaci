@@ -1047,7 +1047,7 @@ export const CalendarColumn: FC<{
         className={clsx(
           'relative flex flex-col flex-1 text-white rounded-[8px] min-h-[70px]',
           display === 'month' && 'mobile:min-h-[44px]',
-          canDrop && 'border border-[#3D4FE0]'
+          canDrop && 'border border-[#14172B]'
         )}
       >
         <div

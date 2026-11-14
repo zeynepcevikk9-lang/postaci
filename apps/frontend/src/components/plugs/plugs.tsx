@@ -1,5 +1,6 @@
 'use client';
 
+import { CustomerGroup } from '@gitroom/frontend/components/launches/customer.group';
 import useSWR from 'swr';
 import { useCallback, useMemo, useState } from 'react';
 import { capitalize, orderBy } from 'lodash';
@@ -60,8 +61,8 @@ export const Plugs = () => {
         )
       ),
       // data.filter((integration) => !integration.disabled),
-      ['type', 'disabled', 'identifier'],
-      ['desc', 'asc', 'asc']
+      [(o: any) => o?.customer?.name || '', 'type', 'disabled', 'identifier'],
+      ['asc', 'desc', 'asc', 'asc']
     );
   }, [data, plugList]);
   const currentIntegration = useMemo(() => {
@@ -117,6 +118,11 @@ export const Plugs = () => {
         <>
           <div className="flex flex-wrap gap-[8px]">
             {sortedIntegrations.map((integration, index) => (
+              <CustomerGroup
+                key={integration.id}
+                integrations={sortedIntegrations}
+                index={index}
+              >
               <div
                 key={integration.id}
                 onClick={() => {
@@ -180,6 +186,7 @@ export const Plugs = () => {
                   {integration.name}
                 </div>
               </div>
+              </CustomerGroup>
             ))}
           </div>
           <PlugsContext.Provider value={currentIntegrationPlug}>

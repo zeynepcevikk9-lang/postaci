@@ -241,7 +241,7 @@ export const CreateThumbnail: FC<{
               onChange={handleSeek}
               className="w-full h-2 bg-fifth rounded-lg appearance-none cursor-pointer slider"
               style={{
-                background: `linear-gradient(to right, #4f46e5 0%, #4f46e5 ${
+                background: `linear-gradient(to right, #14172b 0%, #14172b ${
                   (currentTime / duration) * 100
                 }%, #374151 ${(currentTime / duration) * 100}%, #374151 100%)`,
               }}
@@ -270,7 +270,7 @@ export const CreateThumbnail: FC<{
           width: 20px;
           height: 20px;
           border-radius: 50%;
-          background: #4f46e5;
+          background: #14172b;
           cursor: pointer;
           border: 2px solid #ffffff;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -280,7 +280,7 @@ export const CreateThumbnail: FC<{
           width: 20px;
           height: 20px;
           border-radius: 50%;
-          background: #4f46e5;
+          background: #14172b;
           cursor: pointer;
           border: 2px solid #ffffff;
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);

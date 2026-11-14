@@ -26,7 +26,7 @@ const MAX_CHIPS = 8;
 const kindDot: Record<SpecialDayKind, string> = {
   resmi: 'bg-[#FF6B4A]',
   dini: 'bg-[#12B76A]',
-  ozel: 'bg-[#3D4FE0]',
+  ozel: 'bg-[#14172B]',
   ticari: 'bg-[#F5A524]',
 };
 

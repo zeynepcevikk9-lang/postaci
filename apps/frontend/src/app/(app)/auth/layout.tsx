@@ -40,7 +40,7 @@ export default async function AuthLayout({
           <div className="text-center px-[32px]">
             {t('auth_side_line_1', 'Run your agency’s social media')}
             <br />
-            <span className="text-[42px] text-[#3D4FE0]">
+            <span className="text-[42px] text-[#14172B]">
               {t('auth_side_line_2', 'from a single panel')}
             </span>
           </div>

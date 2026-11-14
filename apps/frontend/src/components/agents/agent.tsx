@@ -1,5 +1,6 @@
 'use client';
 
+import { CustomerGroup } from '@gitroom/frontend/components/launches/customer.group';
 import React, {
   createContext,
   FC,
@@ -102,8 +103,8 @@ export const AgentList: FC<{ onChange: (arr: any[]) => void }> = ({
   const sortedIntegrations = useMemo(() => {
     return orderBy(
       data || [],
-      ['type', 'disabled', 'identifier'],
-      ['desc', 'asc', 'asc']
+      [(o: any) => o?.customer?.name || '', 'type', 'disabled', 'identifier'],
+      ['asc', 'desc', 'asc', 'asc']
     );
   }, [data]);
 
@@ -146,6 +147,11 @@ export const AgentList: FC<{ onChange: (arr: any[]) => void }> = ({
           )}
         >
           {sortedIntegrations.map((integration, index) => (
+            <CustomerGroup
+              key={integration.id}
+              integrations={sortedIntegrations}
+              index={index}
+            >
             <div
               onClick={setIntegration(integration)}
               key={integration.id}
@@ -153,7 +159,7 @@ export const AgentList: FC<{ onChange: (arr: any[]) => void }> = ({
                 'flex gap-[12px] items-center group/profile justify-center hover:bg-boxHover rounded-e-[8px] hover:opacity-100 cursor-pointer mobile:shrink-0',
                 !selected.some((p) => p.id === integration.id) &&
                   !isBrandMark(integration.identifier) &&
-                  'opacity-20'
+                  'opacity-50'
               )}
             >
               {/* a brand mark can't be dimmed with its row: the avatar and the
@@ -184,7 +190,7 @@ export const AgentList: FC<{ onChange: (arr: any[]) => void }> = ({
                     'rounded-[8px]',
                     isBrandMark(integration.identifier) &&
                       (!selected.some((p) => p.id === integration.id)
-                        ? 'opacity-20 group-hover/profile:opacity-100'
+                        ? 'opacity-50 group-hover/profile:opacity-100'
                         : integration.disabled && 'opacity-50')
                   )}
                   alt={integration.identifier}
@@ -212,13 +218,14 @@ export const AgentList: FC<{ onChange: (arr: any[]) => void }> = ({
                   'flex-1 whitespace-nowrap text-ellipsis overflow-hidden group-[.sidebar]:hidden mobile:hidden',
                   !selected.some((p) => p.id === integration.id) &&
                     isBrandMark(integration.identifier)
-                    ? 'opacity-20 group-hover/profile:opacity-100'
+                    ? 'opacity-50 group-hover/profile:opacity-100'
                     : integration.disabled && 'opacity-50'
                 )}
               >
                 {integration.name}
               </div>
             </div>
+            </CustomerGroup>
           ))}
         </div>
       </div>

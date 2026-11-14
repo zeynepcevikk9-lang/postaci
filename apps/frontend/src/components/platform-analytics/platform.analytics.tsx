@@ -1,5 +1,6 @@
 'use client';
 
+import { CustomerGroup } from '@gitroom/frontend/components/launches/customer.group';
 import useSWR from 'swr';
 import { useCallback, useMemo, useState } from 'react';
 import { capitalize, orderBy } from 'lodash';
@@ -67,8 +68,8 @@ export const PlatformAnalytics = () => {
   const sortedIntegrations = useMemo(() => {
     return orderBy(
       data,
-      ['type', 'disabled', 'identifier'],
-      ['desc', 'asc', 'asc']
+      [(o: any) => o?.customer?.name || '', 'type', 'disabled', 'identifier'],
+      ['asc', 'desc', 'asc', 'asc']
     );
   }, [data]);
   const currentIntegration = useMemo(() => {
@@ -212,6 +213,11 @@ export const PlatformAnalytics = () => {
           </div>
           <div className="flex gap-[15px] mobile:gap-[12px] flex-col mobile:flex-row mobile:overflow-x-auto mobile:ps-[12px] mobile:pt-[6px] mobile:pb-[6px] scrollbar scrollbar-thumb-fifth scrollbar-track-newBgColor">
             {sortedIntegrations.map((integration, index) => (
+              <CustomerGroup
+                key={integration.id}
+                integrations={sortedIntegrations}
+                index={index}
+              >
               <div
                 key={integration.id}
                 onClick={() => {
@@ -233,7 +239,7 @@ export const PlatformAnalytics = () => {
                   currentIntegration.id !== integration.id && 'cursor-pointer',
                   currentIntegration.id !== integration.id &&
                     !isBrandMark(integration.identifier) &&
-                    'opacity-20 hover:opacity-100'
+                    'opacity-50 hover:opacity-100'
                 )}
               >
                 {/* a brand mark can't be dimmed with its row: the avatar and
@@ -265,7 +271,7 @@ export const PlatformAnalytics = () => {
                       'rounded-[8px]',
                       isBrandMark(integration.identifier) &&
                         (currentIntegration.id !== integration.id
-                          ? 'opacity-20 group-hover/profile:opacity-100'
+                          ? 'opacity-50 group-hover/profile:opacity-100'
                           : integration.disabled && 'opacity-50')
                     )}
                     alt={integration.identifier}
@@ -294,13 +300,14 @@ export const PlatformAnalytics = () => {
                     'flex-1 whitespace-nowrap text-ellipsis overflow-hidden group-[.sidebar]:hidden mobile:hidden',
                     currentIntegration.id !== integration.id &&
                       isBrandMark(integration.identifier)
-                      ? 'opacity-20 group-hover/profile:opacity-100'
+                      ? 'opacity-50 group-hover/profile:opacity-100'
                       : integration.disabled && 'opacity-50'
                   )}
                 >
                   {integration.name}
                 </div>
               </div>
+              </CustomerGroup>
             ))}
           </div>
         </div>

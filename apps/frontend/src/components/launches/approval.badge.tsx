@@ -43,7 +43,7 @@ export const ApprovalBadge: FC<{ postId: string }> = ({ postId }) => {
     <div
       className={
         'absolute -top-[6px] -end-[6px] z-20 w-[18px] h-[18px] rounded-full flex items-center justify-center text-white text-[11px] font-bold ' +
-        (approved ? 'bg-[#3D4FE0]' : 'bg-[#D98A00]')
+        (approved ? 'bg-[#14172B]' : 'bg-[#D98A00]')
       }
       data-tooltip-id="tooltip"
       data-tooltip-content={

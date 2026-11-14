@@ -44,7 +44,7 @@ const useApproval = (previewId: string) => {
 };
 
 const inputClass =
-  'w-full bg-newBgColor border border-newTableBorder rounded-[8px] px-[12px] text-[14px] text-newTextColor outline-none focus:border-[#3D4FE0]';
+  'w-full bg-newBgColor border border-newTableBorder rounded-[8px] px-[12px] text-[14px] text-newTextColor outline-none focus:border-[#14172B]';
 
 export const ApprovalClient: FC<{ previewId: string }> = ({ previewId }) => {
   const t = useT();

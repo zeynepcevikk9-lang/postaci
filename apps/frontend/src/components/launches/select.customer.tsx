@@ -114,7 +114,7 @@ const SelectCustomerInner: FC<{
         onClick={openClose}
         className={clsx(
           'relative z-[20] cursor-pointer h-[42px] rounded-[8px] pl-[16px] pr-[12px] gap-[8px] border flex items-center',
-          open ? 'border-[#3D4FE0]' : 'border-newColColor'
+          open ? 'border-[#14172B]' : 'border-newColColor'
         )}
       >
         <div>

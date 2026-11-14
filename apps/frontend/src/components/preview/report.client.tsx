@@ -212,7 +212,7 @@ export const ReportClient: FC<{ report: ReportResponse }> = ({ report }) => {
                     channel.url ? (
                       <a
                         key={i}
-                        className="text-[12px] capitalize underline text-[#3D4FE0]"
+                        className="text-[12px] capitalize underline text-[#14172B]"
                         href={channel.url}
                         target="_blank"
                         rel="noreferrer"

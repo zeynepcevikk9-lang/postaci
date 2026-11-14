@@ -16,7 +16,7 @@ import {
   BrandHeader,
 } from '@gitroom/frontend/components/preview/brand.header';
 
-const DEFAULT_COLOR = '#3D4FE0';
+const DEFAULT_COLOR = '#14172B';
 
 const fieldClass =
   'w-full h-[42px] bg-newBgColor border border-newTableBorder rounded-[8px] px-[12px] text-[14px] text-newTextColor outline-none';

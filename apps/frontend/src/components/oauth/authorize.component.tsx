@@ -113,7 +113,7 @@ export const OAuthAuthorize: FC<{ logged: boolean }> = ({ logged }) => {
     return (
       <div className="flex flex-1 items-center justify-center text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-[20%] left-[10%] w-[300px] h-[300px] bg-[#3D4FE0] rounded-full blur-[120px]" />
+          <div className="absolute top-[20%] left-[10%] w-[300px] h-[300px] bg-[#14172B] rounded-full blur-[120px]" />
           <div className="absolute bottom-[20%] right-[10%] w-[250px] h-[250px] bg-[#FF6B4A] rounded-full blur-[120px]" />
         </div>
         <div className="relative z-10 text-center">
@@ -124,7 +124,7 @@ export const OAuthAuthorize: FC<{ logged: boolean }> = ({ logged }) => {
             Lütfen bekleyin...
           </div>
           <div className="mt-[32px] flex justify-center">
-            <div className="w-[48px] h-[48px] border-[3px] border-[#3D4FE0] border-t-transparent rounded-full animate-spin" />
+            <div className="w-[48px] h-[48px] border-[3px] border-[#14172B] border-t-transparent rounded-full animate-spin" />
           </div>
         </div>
       </div>
@@ -135,7 +135,7 @@ export const OAuthAuthorize: FC<{ logged: boolean }> = ({ logged }) => {
     return (
       <div className="flex flex-1 items-center justify-center text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-[20%] left-[10%] w-[300px] h-[300px] bg-[#3D4FE0] rounded-full blur-[120px]" />
+          <div className="absolute top-[20%] left-[10%] w-[300px] h-[300px] bg-[#14172B] rounded-full blur-[120px]" />
           <div className="absolute bottom-[20%] right-[10%] w-[250px] h-[250px] bg-[#FF6B4A] rounded-full blur-[120px]" />
         </div>
         <div className="relative z-10 text-center">
@@ -173,7 +173,7 @@ export const OAuthAuthorize: FC<{ logged: boolean }> = ({ logged }) => {
   return (
     <div className="flex flex-1 items-center justify-center text-white relative overflow-hidden">
       <div className="absolute inset-0 opacity-30">
-        <div className="absolute top-[20%] left-[10%] w-[300px] h-[300px] bg-[#3D4FE0] rounded-full blur-[120px]" />
+        <div className="absolute top-[20%] left-[10%] w-[300px] h-[300px] bg-[#14172B] rounded-full blur-[120px]" />
         <div className="absolute bottom-[20%] right-[10%] w-[250px] h-[250px] bg-[#FF6B4A] rounded-full blur-[120px]" />
       </div>
 
@@ -238,7 +238,7 @@ export const OAuthAuthorize: FC<{ logged: boolean }> = ({ logged }) => {
                   <button
                     onClick={() => handleAction('approve')}
                     disabled={submitting}
-                    className="flex-1 bg-[#3D4FE0] hover:bg-[#7B3FF2] disabled:opacity-50 text-white rounded-[8px] py-[10px] px-[16px] text-[14px] font-semibold transition-colors"
+                    className="flex-1 bg-[#14172B] hover:bg-[#14172B] disabled:opacity-50 text-white rounded-[8px] py-[10px] px-[16px] text-[14px] font-semibold transition-colors"
                   >
                     Authorize
                   </button>
@@ -253,7 +253,7 @@ export const OAuthAuthorize: FC<{ logged: boolean }> = ({ logged }) => {
               ) : (
                 <button
                   onClick={signIn}
-                  className="bg-[#3D4FE0] hover:bg-[#7B3FF2] text-white rounded-[8px] py-[10px] px-[16px] text-[14px] font-semibold transition-colors"
+                  className="bg-[#14172B] hover:bg-[#14172B] text-white rounded-[8px] py-[10px] px-[16px] text-[14px] font-semibold transition-colors"
                 >
                   Postacı ile giriş yapın
                 </button>
