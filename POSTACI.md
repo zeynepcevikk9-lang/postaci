@@ -72,11 +72,16 @@ node araclar/postaci-marka.mjs
       (kaç gönderi onaylandı, kaçı bekliyor, kaçında değişiklik istendi), bekleyene WhatsApp'tan
       hatırlatma, planı kaldırma; düğmede yanıt bekleyen plan sayısı
 - [x] Panel teması: renkler `apps/frontend/src/app/postaci.theme.scss` içinde (Postiz'in
-      `colors.scss` dosyasına dokunulmaz); lacivert yazı, serin açık zemin, mavi ve mercan; koyu tema
-      lacivert tabanlı; yönetici çubuğu tek renk; takvim varsayılan olarak ay görünümünde açılır
-- [x] Ana sayfa (`/home`): giriş yapan kullanıcı buraya düşer; içerik oluşturma kartları (gönderi,
-      asistan, medya), önümüzdeki 7 gün, onay bekleyen planlar, yaklaşan özel günler, mağazadaki
-      yeni ürünler. Menünün ilk öğesi. `/launches?new=1` gönderi düzenleyicisini açar.
+      `colors.scss` dosyasına dokunulmaz); sıcak açık zemin, beyaz kartlar, mürekkep rengi
+      (`#14172b`) yazı ve düğmeler, mercan (`#ff6b4a`) vurgu; mavi-mor tonlar kullanılmaz; koyu tema
+      sıcak koyu zemin ve mercan düğmeler; logo mercan zarf; takvim varsayılan olarak ay görünümünde
+      açılır
+- [x] Ana sayfa (`/home`): giriş yapan kullanıcı buraya düşer; üstte "Gönderi oluştur" ve
+      "Asistana hazırlat", özet sayılar (bağlı kanal, 7 günde paylaşılacak, yanıt bekleyen plan, yeni
+      ürün), hızlı işlemler, önümüzdeki 7 gün, son paylaşılanlar ve her birinin etkileşimi
+      (beğeni, yorum, erişim penceresi), müşterilerden gelen onay ve notlar
+      (`GET /approvals/activity`), onay bekleyen planlar, yaklaşan özel günler. Menünün ilk öğesi.
+      `/launches?new=1` gönderi düzenleyicisini açar.
 - [x] Hesap türü: Ayarlar > Marka içinde "Ajans" ya da "İşletme". İşletme kipinde müşteri seçimi ve
       müşteriye onaya gönderme gizlenir, "Ajans Markası" yerine "Marka" yazar
       (`components/layout/account.type.tsx`; tür `AgencyBrand.accountType` alanında durur).
