@@ -15,7 +15,10 @@ import {
 } from '@gitroom/helpers/utils/posts.list.minify';
 import { useT } from '@gitroom/react/translation/get.transation.service.client';
 import i18next from '@gitroom/react/translation/i18next';
-import { newDayjs } from '@gitroom/frontend/components/layout/set.timezone';
+import {
+  getTimezone,
+  newDayjs,
+} from '@gitroom/frontend/components/layout/set.timezone';
 import { useModals } from '@gitroom/frontend/components/layout/new-modal';
 import { useIntegrationList } from '@gitroom/frontend/components/launches/helpers/use.integration.list';
 import { useSentPlans } from '@gitroom/frontend/components/launches/sent.plans';
@@ -85,19 +88,22 @@ const usePublishedPosts = () => {
     }).toString();
     const response = await fetch(`/posts/list?${params}`);
     if (!response.ok) {
-      return [];
+      return { total: 0, posts: [] };
     }
     const data = expandPostsList(await response.json());
-    return ((data?.posts || []) as HomePost[]).filter(
-      (post, index, all) =>
-        all.findIndex(
-          (other) =>
-            other.publishDate === post.publishDate &&
-            other.content === post.content
-        ) === index
-    );
+    return {
+      total: (data?.total || 0) as number,
+      posts: ((data?.posts || []) as HomePost[]).filter(
+        (post, index, all) =>
+          all.findIndex(
+            (other) =>
+              other.publishDate === post.publishDate &&
+              other.content === post.content
+          ) === index
+      ),
+    };
   }, []);
-  return useSWR<HomePost[]>('/home/published-posts', load, {
+  return useSWR<{ total: number; posts: HomePost[] }>('/home/published-posts', load, {
     revalidateOnFocus: false,
   });
 };
@@ -106,20 +112,7 @@ const useActivity = () => {
   const fetch = useFetch();
   const load = useCallback(async () => {
     const response = await fetch('/approvals/activity');
-    if (!response.ok) {
-      return [];
-    }
-    // aynı içerik birden çok kanala gidiyorsa müşterinin kararı tek satır görünür
-    return ((await response.json()) as Activity[]).filter(
-      (item, index, all) =>
-        all.findIndex(
-          (other) =>
-            other.createdAt === item.createdAt &&
-            other.reviewerName === item.reviewerName &&
-            other.status === item.status &&
-            other.text === item.text
-        ) === index
-    );
+    return response.ok ? response.json() : [];
   }, []);
   return useSWR<Activity[]>('/approvals/activity', load, {
     revalidateOnFocus: false,
@@ -277,7 +270,7 @@ const Stat: FC<{
     </span>
     <span className="flex flex-col min-w-0">
       <span className="text-[26px] font-[700] leading-none">{value}</span>
-      <span className="text-[13px] text-textItemBlur mt-[4px] truncate">
+      <span className="text-[13px] text-textItemBlur mt-[4px] truncate mobile:whitespace-normal mobile:leading-[1.25]">
         {label}
       </span>
     </span>
@@ -317,12 +310,15 @@ const QuickAction: FC<{
 
 // Gün ve ay, takvim yaprağı gibi küçük bir kutuda
 const DateTile: FC<{ date: string; language: string }> = ({ date, language }) => {
-  const value = newDayjs(date).toDate();
+  const value = newDayjs(date);
   return (
     <span className="postaci-ink w-[46px] h-[50px] rounded-[12px] bg-[#EEEAE1] text-[#14172B] flex flex-col items-center justify-center shrink-0 leading-none">
-      <span className="text-[17px] font-[700]">{value.getDate()}</span>
+      <span className="text-[17px] font-[700]">{value.date()}</span>
       <span className="text-[10px] font-[600] uppercase text-[#77726A] mt-[3px]">
-        {value.toLocaleDateString(language, { month: 'short' })}
+        {value.toDate().toLocaleDateString(language, {
+          month: 'short',
+          timeZone: getTimezone(),
+        })}
       </span>
     </span>
   );
@@ -335,7 +331,8 @@ export const HomeComponent: FC = () => {
   const business = useAccountType() === 'business';
   const { data: integrations } = useIntegrationList();
   const { data: posts } = useUpcomingPosts();
-  const { data: published } = usePublishedPosts();
+  const { data: publishedData } = usePublishedPosts();
+  const published = publishedData?.posts;
   const { data: plans } = useSentPlans();
   const { data: activity } = useActivity();
   const { data: products } = useNewProducts();
@@ -356,11 +353,13 @@ export const HomeComponent: FC = () => {
       weekday: 'long',
       hour: '2-digit',
       minute: '2-digit',
+      timeZone: getTimezone(),
     });
   const shortDate = (value: string) =>
     newDayjs(value).toDate().toLocaleDateString(language, {
       day: 'numeric',
       month: 'short',
+      timeZone: getTimezone(),
     });
 
   const openStatistics = useCallback(
@@ -392,6 +391,7 @@ export const HomeComponent: FC = () => {
               weekday: 'long',
               day: 'numeric',
               month: 'long',
+              timeZone: getTimezone(),
             })}
           </p>
           <h1 className="text-[30px] mobile:text-[24px] font-[700] mt-[8px] leading-tight">
@@ -440,8 +440,8 @@ export const HomeComponent: FC = () => {
         />
         {business ? (
           <Stat
-            value={(published || []).length}
-            label={t('home_stat_published', 'Recently published')}
+            value={publishedData?.total || 0}
+            label={t('home_stat_published', 'Published posts')}
             tone="green"
             icon={icons.check}
             href="/launches"
