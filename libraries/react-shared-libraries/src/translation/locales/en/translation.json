@@ -1381,5 +1381,17 @@
   "import_selected": "Import Selected",
   "import_from": "Import From",
   "import": "Import",
-  "total": "Total"
+  "total": "Total",
+  "sent_plans_title": "Plans you sent",
+  "sent_plans_progress": "{{approved}} of {{total}} approved",
+  "sent_plans_empty": "No posts in this period",
+  "sent_plans_changes": "{{count}} change requests",
+  "sent_plans_pending": "{{count}} waiting",
+  "sent_plans_remind": "Remind on WhatsApp",
+  "sent_plans_open": "Open",
+  "sent_plans_reminder_message": "A reminder: {{count}} posts in your content plan are waiting for your approval. You can review them here:",
+  "sent_plans_remove_confirm": "The link your client has will stop working. The posts and the decisions already given stay as they are.",
+  "sent_plans_remove_yes": "Yes, remove",
+  "sent_plans_remove_title": "Remove the approval plan?",
+  "sent_plans_waiting_tooltip": "Plans waiting for a client response"
 }
