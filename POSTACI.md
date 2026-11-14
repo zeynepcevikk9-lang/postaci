@@ -74,6 +74,12 @@ node araclar/postaci-marka.mjs
 - [x] Panel teması: renkler `apps/frontend/src/app/postaci.theme.scss` içinde (Postiz'in
       `colors.scss` dosyasına dokunulmaz); lacivert yazı, serin açık zemin, mavi ve mercan; koyu tema
       lacivert tabanlı; yönetici çubuğu tek renk; takvim varsayılan olarak ay görünümünde açılır
+- [x] Ana sayfa (`/home`): giriş yapan kullanıcı buraya düşer; içerik oluşturma kartları (gönderi,
+      asistan, medya), önümüzdeki 7 gün, onay bekleyen planlar, yaklaşan özel günler, mağazadaki
+      yeni ürünler. Menünün ilk öğesi. `/launches?new=1` gönderi düzenleyicisini açar.
+- [x] Hesap türü: Ayarlar > Marka içinde "Ajans" ya da "İşletme". İşletme kipinde müşteri seçimi ve
+      müşteriye onaya gönderme gizlenir, "Ajans Markası" yerine "Marka" yazar
+      (`components/layout/account.type.tsx`; tür `AgencyBrand.accountType` alanında durur).
 - [ ] Müşteri onayı, 4. adım: WhatsApp Business API ile otomatik gönderim (başvuru gerekir)
 - [x] Ajans markası, 1. adım: Ayarlar > Ajans Markası (ad, logo, renk); müşterinin gördüğü
       sayfalarda (önizleme, onay planı, rapor) Postacı yerine ajans görünür
@@ -170,9 +176,10 @@ Kayıt formu yoktur; "Ücretsiz deneyin" ve "Giriş yap" düğmeleri panele gide
 alırken panelin gerçek adresiyle değiştirilir. Sayfa ürünü yayındaki haliyle anlatır; üründe
 karşılığı olmayan bir özellik ya da kanıtı olmayan bir iddia (müşteri sayısı, yorum) yazılmaz.
 
-Planlar (13 Kas 2026 kararı): Başlangıç, Ajans, Büyük Ajans; sınır bağlı sosyal medya hesabı
-sayısıdır (10 / 30 / 100, `pricing.ts` içindeki STANDARD / TEAM / PRO kademeleri), müşteri sayısı
-sınırsızdır. Kalıcı ücretsiz plan yoktur; 7 gün kartla ücretsiz deneme vardır. Fiyatlar sitede ve
+Planlar (15 Kas 2026): İşletme, Başlangıç, Ajans, Büyük Ajans; sınır bağlı sosyal medya hesabı
+sayısıdır (3 / 10 / 30 / 100). Kademe karşılıkları `pricing.ts` içinde: STANDARD = İşletme,
+TEAM = Başlangıç, PRO = Ajans, ULTIMATE = Büyük Ajans; ekip üyeleri Ajans planından itibaren.
+Müşteri sayısı sınırsızdır. Kalıcı ücretsiz plan yoktur; 7 gün kartla ücretsiz deneme vardır. Fiyatlar sitede ve
 iyzico panelindeki planlarda durur; sitedeki fiyat değişirse iyzico'daki plan da değiştirilmelidir.
 
 ## iyzico ile TL abonelik
