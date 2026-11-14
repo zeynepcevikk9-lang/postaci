@@ -31,6 +31,7 @@ import { CopilotController } from '@gitroom/backend/api/routes/copilot.controlle
 import { PublicController } from '@gitroom/backend/api/routes/public.controller';
 import { ApprovalsPublicController } from '@gitroom/backend/api/routes/approvals.public.controller';
 import { ApprovalsController } from '@gitroom/backend/api/routes/approvals.controller';
+import { InviteLinkController } from '@gitroom/backend/api/routes/invite.link.controller';
 import {
   BrandController,
   BrandPublicController,
@@ -101,6 +102,7 @@ const authenticatedController = [
   AdminCustomersController,
   BankTransferController,
   AdminTransfersController,
+  InviteLinkController,
 ];
 @Module({
   imports: [UploadModule],
