@@ -203,15 +203,15 @@ section { padding: 96px 0; }
 .toggle button { border: 0; background: transparent; height: 40px; padding: 0 20px; border-radius: 999px; font: inherit; font-weight: 600; cursor: pointer; color: var(--muted); }
 .toggle button.is-on { background: var(--ink); color: #fff; }
 .toggle em { font-style: normal; font-size: .74rem; background: #e3f6ec; color: #0b7a47; border-radius: 999px; padding: 2px 8px; margin-inline-start: 6px; }
-.plans { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 40px; align-items: stretch; }
-.plan { position: relative; background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 30px 26px; display: flex; flex-direction: column; }
+.plans { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 40px; align-items: stretch; }
+.plan { position: relative; background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 28px 22px; display: flex; flex-direction: column; }
 .plan-main { background: var(--ink); color: #fff; border-color: var(--ink); }
 .plan-badge { position: absolute; top: -13px; left: 26px; background: var(--coral); color: #fff; font-size: .72rem; font-weight: 700; letter-spacing: .06em; padding: 4px 12px; border-radius: 999px; }
 .plan h3 { font-size: 1.4rem; }
 .plan-for { color: var(--muted); font-size: .94rem; margin-top: 6px; min-height: 44px; }
 .plan-main .plan-for { color: rgba(255, 255, 255, .68); }
 .price { margin: 18px 0 20px; }
-.price strong { font-family: var(--display); font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; }
+.price strong { font-family: var(--display); font-size: 2.1rem; font-weight: 800; letter-spacing: -0.03em; }
 .price span { color: var(--muted); margin-inline-start: 6px; }
 .plan-main .price span { color: rgba(255, 255, 255, .68); }
 .plan .btn { width: 100%; }
@@ -258,7 +258,7 @@ details p { color: var(--muted); margin-top: 12px; }
   .bento { grid-template-columns: repeat(2, 1fr); }
   .tile.s2, .tile.s3, .tile.s4 { grid-column: span 2; }
   .tile.s2 { grid-column: span 1; }
-  .plans { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
+  .plans { grid-template-columns: repeat(2, 1fr); }
   .plan-for { min-height: 0; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
   .footer-brand { grid-column: 1 / -1; }
@@ -278,7 +278,7 @@ details p { color: var(--muted); margin-top: 12px; }
   .cal-grid { grid-template-columns: repeat(3, 1fr); }
   .cal-day:nth-child(n + 4) { display: none; }
   .postmark { display: none; }
-  .stops, .versus-grid, .faq-grid, .split { grid-template-columns: 1fr; }
+  .stops, .versus-grid, .faq-grid, .split, .plans { grid-template-columns: 1fr; }
   .bento { grid-template-columns: 1fr; }
   .tile.s2, .tile.s3, .tile.s4 { grid-column: span 1; }
   .envelope-in { padding: 44px 22px; }
