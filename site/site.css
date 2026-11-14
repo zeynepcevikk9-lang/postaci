@@ -284,17 +284,24 @@ details p { color: var(--muted); margin-top: 12px; }
 }
 
 /* Üst menü: geniş ekranda tek satır, 1020px altında açılır menü */
+/* menü kutusu ızgarada görünmez olur: bağlantılar ve düğmeler doğrudan ızgaraya yerleşir */
+.nav-menu { display: contents; }
+
 @media (max-width: 1020px) {
-  .nav-in { grid-template-columns: 1fr auto; }
-  .nav-toggle { display: block; grid-column: 2; }
-  .nav-menu { display: none; position: absolute; top: 76px; left: 0; right: 0; background: var(--ink); padding: 18px 24px 24px; border-top: 1px solid rgba(255, 255, 255, .12); }
-  .nav-menu.is-open { display: block; }
-  .nav-links { flex-direction: column; gap: 14px; margin: 0 0 18px; }
-  .nav-actions { justify-content: space-between; justify-self: stretch; }
-  .nav-in > .nav-menu { margin: 0; }
+  /* marka solda, "Giriş yap" ve "Ücretsiz deneyin" çubukta, en sağda menü düğmesi */
+  .nav-in { grid-template-columns: 1fr auto auto; gap: 14px; }
+  .nav-actions { grid-column: 2; grid-row: 1; gap: 16px; }
+  .nav-toggle { display: block; grid-column: 3; grid-row: 1; }
+  /* açılır menüde yalnızca sayfa bağlantıları */
+  .nav-links { display: none; position: absolute; top: 76px; left: 0; right: 0; background: var(--ink); padding: 18px 24px 22px; border-top: 1px solid rgba(255, 255, 255, .12); flex-direction: column; gap: 16px; font-size: 1.05rem; }
+  .nav-menu.is-open .nav-links { display: flex; }
 }
 
-@media (min-width: 1021px) {
-  /* menü kutusu ızgarada görünmez olur: bağlantılar orta sütuna, düğmeler sağ sütuna yerleşir */
-  .nav-menu { display: contents; }
+@media (max-width: 520px) {
+  /* telefonda yer açmak için marka yazısı gizlenir, simge kalır */
+  .nav-in { width: calc(100% - 28px); gap: 10px; }
+  .nav .brand span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .nav-actions { gap: 12px; }
+  .nav-login { font-size: .9rem; }
+  .nav-actions .btn-sm { height: 40px; padding: 0 14px; font-size: .88rem; }
 }
