@@ -23,6 +23,12 @@ export class ApprovalsController {
     return this._approvalService.createPlan(org, body);
   }
 
+  // Müşterilerden gelen son onaylar ve notlar (ana sayfa).
+  @Get('/activity')
+  async getRecentActivity(@GetOrgFromRequest() org: Organization) {
+    return this._approvalService.getRecentActivity(org.id);
+  }
+
   // Gönderilen onay planları ve durumları.
   @Get('/plans')
   async listPlans(@GetOrgFromRequest() org: Organization) {
