@@ -49,12 +49,12 @@ p { margin: 0; }
 
 /* Üst menü */
 .nav { position: sticky; top: 0; z-index: 50; background: rgba(14, 19, 48, .92); backdrop-filter: blur(10px); color: #fff; }
-.nav-in { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 24px; height: 76px; width: min(1320px, 100% - 48px); }
-.brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 800; font-size: 1.4rem; letter-spacing: -0.03em; }
-.brand svg { width: 36px; height: 36px; }
-.nav-links { display: flex; gap: 44px; font-weight: 500; font-size: 1rem; color: rgba(255, 255, 255, .8); }
+.nav-in { display: grid; grid-template-columns: minmax(max-content, 1fr) auto minmax(max-content, 1fr); align-items: center; gap: 24px; height: 76px; width: min(1320px, 100% - 48px); }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--display); font-weight: 800; font-size: 1.4rem; letter-spacing: -0.03em; white-space: nowrap; }
+.brand svg { width: 36px; height: 36px; flex: none; }
+.nav-links { display: flex; gap: clamp(22px, 3.2vw, 44px); font-weight: 500; font-size: 1rem; color: rgba(255, 255, 255, .8); white-space: nowrap; }
 .nav-links a:hover { color: #fff; }
-.nav-actions { display: flex; align-items: center; gap: 22px; justify-self: end; }
+.nav-actions { display: flex; align-items: center; gap: 22px; justify-self: end; white-space: nowrap; }
 .nav-login { font-weight: 600; font-size: .96rem; color: rgba(255, 255, 255, .85); }
 .nav-login:hover { color: #fff; }
 .nav-toggle { display: none; justify-self: end; grid-column: 3; width: 44px; height: 44px; border: 0; background: transparent; cursor: pointer; padding: 10px; }
@@ -249,6 +249,12 @@ details p { color: var(--muted); margin-top: 12px; }
 .footer a:hover { color: #fff; }
 .footer-bottom { border-top: 1px solid rgba(255, 255, 255, .12); margin-top: 40px; padding-top: 22px; font-size: .86rem; }
 
+/* Dar masaüstü: dört fiyat kartı yan yana sığmaz, ikişer dizilir */
+@media (max-width: 1180px) {
+  .plans { grid-template-columns: repeat(2, 1fr); }
+  .plan-for { min-height: 0; }
+}
+
 /* Tablet */
 @media (max-width: 1020px) {
   .hero-in { grid-template-columns: 1fr; padding: 64px 0 72px; }
@@ -267,12 +273,6 @@ details p { color: var(--muted); margin-top: 12px; }
 /* Telefon */
 @media (max-width: 720px) {
   section { padding: 68px 0; }
-  .nav-toggle { display: block; }
-  .nav-menu { display: none; position: absolute; top: 76px; left: 0; right: 0; background: var(--ink); padding: 18px 20px 24px; border-top: 1px solid rgba(255, 255, 255, .12); }
-  .nav-menu.is-open { display: block; }
-  .nav-links { flex-direction: column; gap: 14px; margin: 0 0 18px; }
-  .nav-actions { justify-content: space-between; justify-self: stretch; }
-  .nav-in > .nav-menu { margin: 0; }
   .scene { gap: 14px; }
   .cal, .wa, .scene-row { width: 100%; }
   .cal-grid { grid-template-columns: repeat(3, 1fr); }
@@ -285,7 +285,18 @@ details p { color: var(--muted); margin-top: 12px; }
   .footer-grid { grid-template-columns: 1fr; }
 }
 
-@media (min-width: 721px) {
+/* Üst menü: geniş ekranda tek satır, 1020px altında açılır menü */
+@media (max-width: 1020px) {
+  .nav-in { grid-template-columns: 1fr auto; }
+  .nav-toggle { display: block; grid-column: 2; }
+  .nav-menu { display: none; position: absolute; top: 76px; left: 0; right: 0; background: var(--ink); padding: 18px 24px 24px; border-top: 1px solid rgba(255, 255, 255, .12); }
+  .nav-menu.is-open { display: block; }
+  .nav-links { flex-direction: column; gap: 14px; margin: 0 0 18px; }
+  .nav-actions { justify-content: space-between; justify-self: stretch; }
+  .nav-in > .nav-menu { margin: 0; }
+}
+
+@media (min-width: 1021px) {
   /* menü kutusu ızgarada görünmez olur: bağlantılar orta sütuna, düğmeler sağ sütuna yerleşir */
   .nav-menu { display: contents; }
 }
