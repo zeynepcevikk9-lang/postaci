@@ -41,6 +41,10 @@ import {
   IyzicoPublicController,
 } from '@gitroom/backend/api/routes/iyzico.controller';
 import { AdminCustomersController } from '@gitroom/backend/api/routes/admin.customers.controller';
+import {
+  AdminTransfersController,
+  BankTransferController,
+} from '@gitroom/backend/api/routes/bank.transfer.controller';
 import { RootController } from '@gitroom/backend/api/routes/root.controller';
 import { TrackService } from '@gitroom/nestjs-libraries/track/track.service';
 import { ShortLinkService } from '@gitroom/nestjs-libraries/short-linking/short.link.service';
@@ -95,6 +99,8 @@ const authenticatedController = [
   ProductFeedsController,
   IyzicoController,
   AdminCustomersController,
+  BankTransferController,
+  AdminTransfersController,
 ];
 @Module({
   imports: [UploadModule],
