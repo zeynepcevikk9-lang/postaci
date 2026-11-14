@@ -78,8 +78,8 @@ p { margin: 0; }
 .hero-notes li::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--mint); }
 
 /* Giriş görseli: takvim kartı, WhatsApp balonu, posta damgası */
-.scene { position: relative; min-height: 440px; }
-.cal { position: absolute; right: 0; top: 0; width: min(100%, 470px); background: #fff; color: var(--text); border-radius: 20px; padding: 18px; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .6); }
+.scene { display: grid; gap: 18px; justify-items: end; }
+.cal { width: min(100%, 480px); background: #fff; color: var(--text); border-radius: 20px; padding: 18px; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .6); }
 .cal-head { display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: .95rem; }
 .cal-head span { font-weight: 500; color: var(--muted); font-size: .84rem; }
 .cal-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 14px; }
@@ -89,13 +89,14 @@ p { margin: 0; }
 .post.ok { background: #e3f6ec; color: #0b7a47; border-color: var(--mint); }
 .post.wait { background: #fff3da; color: #8a5a00; border-color: var(--amber); }
 .post.day { background: #ffe9e3; color: #b23a1f; border-color: var(--coral); }
-.wa { position: absolute; left: 0; bottom: 6px; width: 290px; background: #e7fbe0; color: #10261a; border-radius: 18px 18px 18px 4px; padding: 14px; box-shadow: 0 30px 60px -24px rgba(0, 0, 0, .7); font-size: .86rem; }
+.scene-row { display: flex; align-items: center; justify-content: space-between; gap: 20px; width: min(100%, 480px); }
+.wa { width: 300px; max-width: 100%; background: #e7fbe0; color: #10261a; border-radius: 18px 18px 18px 4px; padding: 14px; box-shadow: 0 24px 48px -28px rgba(0, 0, 0, .7); font-size: .86rem; }
 .wa-from { font-weight: 700; color: #0b7a47; font-size: .78rem; margin-bottom: 4px; }
 .wa-card { background: #fff; border-radius: 10px; padding: 10px; margin-top: 10px; border-inline-start: 4px solid var(--blue); }
 .wa-card b { display: block; font-size: .82rem; }
 .wa-card span { color: var(--muted); font-size: .76rem; }
 .wa-btn { margin-top: 10px; background: #1faa59; color: #fff; text-align: center; border-radius: 9px; padding: 9px; font-weight: 700; font-size: .82rem; }
-.postmark { position: absolute; right: 18px; bottom: -6px; width: 128px; height: 128px; border-radius: 50%; border: 3px double var(--coral); color: var(--coral); display: grid; place-items: center; text-align: center; font-family: var(--display); font-weight: 800; font-size: .86rem; letter-spacing: .08em; line-height: 1.3; transform: rotate(-14deg); background: rgba(14, 19, 48, .82); }
+.postmark { flex: none; width: 128px; height: 128px; border-radius: 50%; border: 3px double var(--coral); color: var(--coral); display: grid; place-items: center; text-align: center; font-family: var(--display); font-weight: 800; font-size: .86rem; letter-spacing: .08em; line-height: 1.3; transform: rotate(-14deg); }
 .postmark small { display: block; font-size: .62rem; letter-spacing: .14em; font-weight: 600; opacity: .85; }
 
 /* Kanallar */
@@ -252,7 +253,7 @@ details p { color: var(--muted); margin-top: 12px; }
 /* Tablet */
 @media (max-width: 1020px) {
   .hero-in { grid-template-columns: 1fr; padding: 64px 0 72px; }
-  .scene { min-height: 420px; max-width: 520px; }
+  .scene { max-width: 520px; justify-items: start; }
   .stops { grid-template-columns: repeat(2, 1fr); row-gap: 40px; }
   .stops::before { display: none; }
   .bento { grid-template-columns: repeat(2, 1fr); }
@@ -273,8 +274,8 @@ details p { color: var(--muted); margin-top: 12px; }
   .nav-links { flex-direction: column; gap: 14px; margin: 0 0 18px; }
   .nav-actions { justify-content: space-between; }
   .nav-in > .nav-menu { margin: 0; }
-  .scene { min-height: 0; display: grid; gap: 14px; }
-  .cal, .wa { position: static; width: 100%; }
+  .scene { gap: 14px; }
+  .cal, .wa, .scene-row { width: 100%; }
   .cal-grid { grid-template-columns: repeat(3, 1fr); }
   .cal-day:nth-child(n + 4) { display: none; }
   .postmark { display: none; }
