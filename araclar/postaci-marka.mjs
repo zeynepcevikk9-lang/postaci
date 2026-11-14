@@ -56,6 +56,10 @@ const texts = [
   // Mor gölgeler: yeni palette nötr gölge
   ['shadow-purple-500/25', 'shadow-black/10'],
   ['shadow-purple-500/40', 'shadow-black/20'],
+  // Bağlantı ile kanal bağlama sayfasındaki logo
+  ['src="/postiz.svg"', 'src="/favicon.svg"'],
+  ['alt="Postiz"', 'alt="Postacı"'],
+  ["title: 'Connect Channel',", "title: 'Kanal bağlama',"],
   // Gönderi önizlemesinde kanal seçilmemişken görünen ad
   ["current === 'global' ? 'Global Edit'", "current === 'global' ? 'Genel düzenleme'"],
   ["isGeneralServerSide() ? 'Postiz Calendar' : 'Gitroom Launches'", "isGeneralServerSide() ? 'Postacı Takvim' : 'Gitroom Launches'"],
