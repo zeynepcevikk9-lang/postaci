@@ -1464,5 +1464,18 @@
   "connect_link_expired_description": "Bağlantılar bir saat geçerlidir. Size gönderen kişiden yenisini isteyin.",
   "facebook_made_with_ai": "Yapay zekâ ile üretildi (yalnızca metin ve fotoğraf gönderileri için)",
   "youtube_made_with_ai": "Yapay zekâ ile üretildi (gerçekçi, değiştirilmiş ya da sentetik içerik)",
-  "admin_ending_soon": "7 günde bitecek elle plan"
+  "admin_ending_soon": "7 günde bitecek elle plan",
+  "admin_detail": "Ayrıntı",
+  "admin_detail_title": "Hesap ayrıntıları",
+  "admin_detail_failed": "Hesap ayrıntıları yüklenemedi.",
+  "admin_transfer_history": "Havale geçmişi",
+  "admin_transfer_empty": "Henüz havale bildirimi yok.",
+  "admin_transfer_pending": "Onay bekliyor",
+  "admin_notes": "Yönetici notları",
+  "admin_notes_hint": "Bu notları yalnızca yönetici görür.",
+  "admin_note_placeholder": "Not ekleyin (örneğin: arandı, fatura gönderildi)",
+  "admin_note_add": "Not ekle",
+  "admin_note_delete": "Sil",
+  "admin_note_delete_question": "Bu not silinsin mi?",
+  "admin_note_failed": "Not kaydedilemedi"
 }
