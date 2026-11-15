@@ -1456,5 +1456,6 @@
   "connect_link_expired": "This link is no longer valid",
   "connect_link_expired_description": "Connection links work for one hour. Ask whoever sent it to you for a new one.",
   "facebook_made_with_ai": "Made with AI (only for text and photo posts)",
-  "youtube_made_with_ai": "Made with AI (realistic altered or synthetic content)"
+  "youtube_made_with_ai": "Made with AI (realistic altered or synthetic content)",
+  "admin_ending_soon": "Manual plans ending in 7 days"
 }
