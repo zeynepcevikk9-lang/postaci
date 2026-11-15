@@ -1973,3 +1973,14 @@ model BankTransferRequest {
   @@index([organizationId, status])
   @@index([status])
 }
+
+// Postacı: yönetici notları (yönetimde hesap ayrıntı penceresi). Hesap sahibi görmez.
+model AdminNote {
+  id             String   @id @default(uuid())
+  organizationId String
+  authorEmail    String
+  text           String
+  createdAt      DateTime @default(now())
+
+  @@index([organizationId, createdAt])
+}
