@@ -77,7 +77,11 @@ node araclar/postaci-marka.mjs
 - [x] Türkçe çeviriyi elden geçir, çevirideki marka adını Postacı yap
 - [x] Sekme başlıkları ve "Agent" menüsü Türkçe ve Postacı adıyla
 - [x] Logo, site simgesi ve ana renkler Postacı'ya çevrildi (`araclar/postaci-marka.mjs`)
-- [ ] Kalan Postiz izleri: faturalandırma ekranındaki tanıtım metinleri (iyzico açıkken görünmez), abonelik iptal e-postası (İngilizce), tarayıcı eklentisi uyarısı
+- [x] Ödeme kipinde görünen Postiz izleri: kayıt sayfasındaki Kullanım Koşulları ve Gizlilik
+      bağlantıları tanıtım sitemizin sayfalarına gider (`NEXT_PUBLIC_SITE_URL`), menüdeki Postiz
+      ortaklık programı bağlantısı ve tarayıcı eklentisi simgesi gizli, abonelik iptal e-postası Türkçe
+- [ ] Kalan Postiz izleri: Stripe faturalandırma ekranındaki tanıtım metinleri (iyzico açıkken
+      görünmez), Ayarlar > Yapay zekâ / Geliştirici sekmesindeki Postiz belge bağlantıları
 - [x] Türkiye özel gün takvimi ve hazır taslak (takvimin üstünde "Özel günler" şeridi; veri
       `special-days/tr.special.days.ts`; dini günler yıl yıl elle girilir, 2026 ve 2027 girildi)
 - [x] Aylık rapor: takvimde "Aylık rapor" ile oluşturulur, müşteri sayfası `/p/report/<anahtar>`,
@@ -136,7 +140,11 @@ node araclar/postaci-marka.mjs
 - [ ] Yönetim paneli, 3. adım: iade (şimdilik iyzico panelinden), hesap ayrıntı sayfası
       (ödeme geçmişi, notlar), bitişi yaklaşan elle planlar için hatırlatma
 - [ ] Tanıtım sitesi (ürün ana sayfası `site/` içinde; yeni tasarım yapıldı, düğmeler panele bağlandı,
-      fiyatlar kesinleşti; eksik: yayına alma, yasal sayfalar, iletişim adresi)
+      fiyatlar kesinleşti; eksik: yayına alma, iletişim adresi). Yasal sayfalar TASLAK olarak yazıldı:
+      `site/kullanim-kosullari.html` ve `site/gizlilik.html` (KVKK aydınlatma metni dahil). Köşeli
+      parantezli yerler (şirket unvanı, adres, iade koşulları, sağlayıcılar, saklama süreleri) şirket
+      kurulunca doldurulur; yayından önce bir hukukçu okumalı, sayfaların başındaki "Taslak metin"
+      uyarısı o zaman kaldırılır.
 - [x] Türkçe taraması: kodda kullanılıp Türkçesi olmayan 261 metin çevrildi; doğrudan İngilizce
       yazılmış metinler ve uyarılar `araclar/postaci-marka.mjs` ile Türkçeleştiriliyor; arka ucun
       bildirim ve e-posta metinleri `services/turkish.messages.ts` üzerinden Türkçeye çevriliyor;
