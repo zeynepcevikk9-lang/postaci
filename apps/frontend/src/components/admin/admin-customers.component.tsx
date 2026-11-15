@@ -14,6 +14,7 @@ import { useModals } from '@gitroom/frontend/components/layout/new-modal';
 import { useToaster } from '@gitroom/react/toaster/toaster';
 import { Button } from '@gitroom/react/form/button';
 import { deleteDialog } from '@gitroom/react/helpers/delete.dialog';
+import { AccountDetailModal } from '@gitroom/frontend/components/admin/account.detail';
 
 interface Customer {
   id: string;
@@ -123,7 +124,7 @@ const fieldClass =
   'h-[38px] bg-newBgColor border border-newTableBorder rounded-[8px] px-[12px] text-[14px] text-newTextColor outline-none';
 
 const COLUMNS =
-  'grid-cols-[minmax(160px,1.4fr)_minmax(180px,1.4fr)_110px_minmax(150px,1fr)_60px_70px_70px_110px_110px_190px]';
+  'grid-cols-[minmax(160px,1.4fr)_minmax(180px,1.4fr)_110px_minmax(150px,1fr)_60px_70px_70px_110px_110px_250px]';
 
 interface TransferRequest {
   id: string;
@@ -425,6 +426,28 @@ export const AdminCustomersComponent: FC = () => {
   });
   const { data: summary, mutate: mutateSummary } = useSummary();
 
+  const openDetail = useCallback(
+    (customer: Customer) => () => {
+      modal.openModal({
+        classNames: {
+          modal: 'md',
+        },
+        title: t('admin_detail_title', 'Account details'),
+        withCloseButton: true,
+        closeOnEscape: true,
+        closeOnClickOutside: true,
+        children: (
+          <AccountDetailModal
+            organizationId={customer.id}
+            name={customer.name}
+            planName={planName}
+          />
+        ),
+      });
+    },
+    []
+  );
+
   const editPlan = useCallback(
     (customer: Customer) => () => {
       modal.openModal({
@@ -678,6 +701,13 @@ export const AdminCustomersComponent: FC = () => {
                 {customer.owner ? formatDate(customer.owner.lastOnline) : '—'}
               </div>
               <div className="flex gap-[12px] justify-end">
+                <button
+                  type="button"
+                  onClick={openDetail(customer)}
+                  className="underline cursor-pointer whitespace-nowrap"
+                >
+                  {t('admin_detail', 'Details')}
+                </button>
                 <button
                   type="button"
                   onClick={editPlan(customer)}
