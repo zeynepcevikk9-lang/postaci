@@ -137,8 +137,11 @@ node araclar/postaci-marka.mjs
       verilmez. Elle verilen planı kullanıcı kendisi iptal edemez.
 - [x] Havale / EFT ile satış: plan ekranında banka bilgileri ve ödeme bildirimi, yönetim panelinde
       onay/ret, onayda planın elle tanımlanması, havale ile yenileme
-- [ ] Yönetim paneli, 3. adım: iade (şimdilik iyzico panelinden), hesap ayrıntı sayfası
-      (ödeme geçmişi, notlar), bitişi yaklaşan elle planlar için hatırlatma
+- [x] Yönetim paneli, 3. adım (kısmen): bitişi yaklaşan elle planlar için hatırlatma. Bitişe 3 gün kala
+      hesaba panel bildirimi ve e-posta,  tanımlıysa yöneticiye e-posta (her adım
+      plan başına bir kez); yönetim ekranında "7 günde bitecek elle plan" kutusu ve satır işareti.
+- [ ] Yönetim paneli, 3. adımın kalanı: iade (şimdilik iyzico panelinden), hesap ayrıntı sayfası (ödeme
+      geçmişi, notlar)
 - [ ] Tanıtım sitesi (ürün ana sayfası `site/` içinde; yeni tasarım yapıldı, düğmeler panele bağlandı,
       fiyatlar kesinleşti; eksik: yayına alma, iletişim adresi). Yasal sayfalar TASLAK olarak yazıldı:
       `site/kullanim-kosullari.html` ve `site/gizlilik.html` (KVKK aydınlatma metni dahil). Köşeli
