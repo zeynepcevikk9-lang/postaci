@@ -1,0 +1,106 @@
+<!doctype html>
+<!-- data-app-url: panelin adresi. Yayına alırken panelin gerçek adresiyle değiştirin. -->
+<!-- TASLAK: köşeli parantez içindeki yerler şirket kurulunca doldurulur; yayından önce bir hukukçu okumalıdır. -->
+<html lang="tr" data-app-url="http://localhost:4200">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gizlilik ve Kişisel Veriler | Postacı</title>
+<meta name="description" content="Postacı'nın kişisel verileri nasıl işlediğini anlatan gizlilik ve KVKK aydınlatma metni.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap nav-in nav-simple">
+    <a class="brand" href="index.html" aria-label="Postacı ana sayfa">
+      <svg viewBox="0 0 40 40" aria-hidden="true">
+        <rect x="3" y="8" width="34" height="24" rx="6" fill="#ff6b4a"/>
+        <path d="M6.5 12.5l13.5 10.5 13.5-10.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="31.5" cy="10.5" r="6" fill="#fff" stroke="#14172b" stroke-width="2"/>
+      </svg>
+      <span>Postacı</span>
+    </a>
+    <div class="nav-actions">
+      <a class="nav-login" data-app="login" href="#">Giriş yap</a>
+      <a class="btn btn-coral btn-sm" data-app="register" href="#">Ücretsiz deneyin</a>
+    </div>
+  </div>
+</header>
+
+<main class="legal">
+  <div class="wrap legal-in">
+    <p class="legal-draft">Taslak metin. Şirket bilgileri eklendiğinde ve hukuki inceleme tamamlandığında yürürlüğe girer.</p>
+    <h1>Gizlilik ve Kişisel Veriler</h1>
+    <p class="legal-date">Son güncelleme: [TARİH]</p>
+    <p>Bu metin, 6698 sayılı Kişisel Verilerin Korunması Kanunu ("KVKK") kapsamında aydınlatma yükümlülüğünü yerine getirmek ve Postacı'yı kullanırken hangi verilerinizin neden işlendiğini açıklamak için hazırlanmıştır.</p>
+
+    <h2>1. Veri sorumlusu</h2>
+    <p>[ŞİRKET UNVANI], [ADRES]. İletişim: [E-POSTA ADRESİ].</p>
+
+    <h2>2. Hangi verileri işliyoruz</h2>
+    <ul>
+      <li><strong>Hesap bilgileri:</strong> ad, e-posta adresi, şifrenizin geri döndürülemez özeti, işletme ya da ajans adı, dil ve saat dilimi tercihi.</li>
+      <li><strong>Bağlanan sosyal medya hesapları:</strong> hesabın adı, profil görseli ve platformun verdiği erişim anahtarları. Sosyal medya şifreniz bize ulaşmaz.</li>
+      <li><strong>İçerikler:</strong> hazırladığınız gönderi metinleri, yüklediğiniz görsel ve videolar, takvim ve etiket bilgileri, bağlı hesaplarınızın etkileşim istatistikleri.</li>
+      <li><strong>Ödeme ve fatura bilgileri:</strong> seçilen plan, ödeme tarihi ve tutarı, fatura için verdiğiniz ad, adres ve vergi ya da kimlik numarası. Kart numaranız Postacı'ya ulaşmaz; ödeme kuruluşu tarafından işlenir.</li>
+      <li><strong>Kullanım kayıtları:</strong> giriş zamanı, IP adresi, tarayıcı bilgisi ve hata kayıtları.</li>
+      <li><strong>Destek yazışmaları:</strong> bize gönderdiğiniz iletiler.</li>
+    </ul>
+
+    <h2>3. Müşterilerinizin verileri</h2>
+    <p>Ajans olarak müşterilerinize onay ya da rapor bağlantısı gönderdiğinizde, müşterinizin o sayfaya yazdığı ad ve notlar hesabınıza kaydedilir. Bu veriler bakımından veri sorumlusu sizsiniz; Postacı bunları yalnızca sizin talimatınızla, hizmeti sunmak için işleyen taraf konumundadır. Müşterilerinizi bilgilendirmek sizin sorumluluğunuzdadır.</p>
+
+    <h2>4. Verileri hangi amaçlarla ve hangi hukuki sebeple işliyoruz</h2>
+    <ul>
+      <li>Hesabınızı açmak, hizmeti sunmak, gönderilerinizi seçtiğiniz hesaplarda yayımlamak: sözleşmenin kurulması ve ifası (KVKK m. 5/2-c).</li>
+      <li>Ödeme almak, fatura düzenlemek, yasal kayıtları tutmak: hukuki yükümlülük (m. 5/2-ç).</li>
+      <li>Hizmetin güvenliğini sağlamak, hataları gidermek, kötüye kullanımı önlemek: meşru menfaat (m. 5/2-f).</li>
+      <li>Hizmetle ilgili zorunlu bildirimler (ödeme, yayın hatası, güvenlik): sözleşmenin ifası.</li>
+      <li>Tanıtım amaçlı e-postalar: yalnızca açık rızanız varsa (m. 5/1); dilediğiniz an vazgeçebilirsiniz.</li>
+    </ul>
+
+    <h2>5. Verileri kimlerle paylaşıyoruz</h2>
+    <ul>
+      <li><strong>Bağladığınız sosyal medya platformları:</strong> gönderilerinizi yayımlamak için içerik ilgili platforma iletilir.</li>
+      <li><strong>Ödeme kuruluşu (iyzico):</strong> kartla ödemelerde ödeme işlemini gerçekleştirmek için.</li>
+      <li><strong>Altyapı sağlayıcıları:</strong> sunucu barındırma, dosya saklama ve e-posta gönderimi: [SAĞLAYICILAR VE BULUNDUKLARI ÜLKELER].</li>
+      <li><strong>Yetkili kurumlar:</strong> kanunen zorunlu olduğunda.</li>
+    </ul>
+    <p>Verileriniz reklam amacıyla üçüncü kişilere satılmaz. [YURT DIŞINA AKTARIM: sunucuların ve sağlayıcıların bulunduğu ülkelere göre KVKK m. 9 kapsamındaki açıklama buraya yazılacak.]</p>
+
+    <h2>6. Saklama süreleri</h2>
+    <ul>
+      <li>Hesap ve içerik verileri: hesabınız açık olduğu sürece; hesap kapatıldıktan sonra [SÜRE] içinde silinir.</li>
+      <li>Fatura ve ödeme kayıtları: vergi ve ticaret mevzuatının öngördüğü süre boyunca (10 yıl).</li>
+      <li>Kullanım ve hata kayıtları: [SÜRE].</li>
+    </ul>
+
+    <h2>7. Çerezler</h2>
+    <p>Panel, oturumunuzu açık tutmak ve dil ile tema tercihinizi hatırlamak için zorunlu çerezler kullanır. [KULLANILAN ANALİTİK VE ÖLÇÜM ARAÇLARI varsa burada tek tek sayılacak; yoksa bu cümle kaldırılacak.]</p>
+
+    <h2>8. Güvenlik</h2>
+    <p>Verilerinize erişim yetkilendirmeyle sınırlandırılır, bağlantılar şifreli (HTTPS) kurulur, şifreler geri döndürülemez biçimde saklanır. Hiçbir sistem için mutlak güvenlik taahhüt edilemez; bir veri ihlali halinde mevzuatın öngördüğü bildirimler yapılır.</p>
+
+    <h2>9. Haklarınız</h2>
+    <p>KVKK'nın 11. maddesi uyarınca; verilerinizin işlenip işlenmediğini öğrenme, işlenmişse bilgi isteme, amacına uygun kullanılıp kullanılmadığını öğrenme, aktarıldığı üçüncü kişileri bilme, eksik ya da yanlış işlenmişse düzeltilmesini isteme, silinmesini ya da yok edilmesini isteme, bu işlemlerin aktarılan kişilere bildirilmesini isteme, otomatik sistemlerle analiz sonucu aleyhinize bir sonuca itiraz etme ve kanuna aykırı işleme nedeniyle zararınızın giderilmesini isteme haklarına sahipsiniz.</p>
+    <p>Başvurularınızı [E-POSTA ADRESİ] adresine ya da yukarıdaki posta adresine iletebilirsiniz. Başvurular en geç 30 gün içinde yanıtlanır.</p>
+
+    <h2>10. Değişiklikler</h2>
+    <p>Bu metni güncelleyebiliriz. Önemli değişiklikleri yürürlüğe girmeden önce e-postayla ya da panel üzerinden duyururuz.</p>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer-bottom footer-bottom-plain">© <span id="year">2026</span> Postacı · <a href="index.html">Ana sayfa</a> · <a href="kullanim-kosullari.html">Kullanım Koşulları</a> · <a href="gizlilik.html">Gizlilik ve Kişisel Veriler</a></div>
+  </div>
+</footer>
+
+<script src="site.js"></script>
+</body>
+</html>
