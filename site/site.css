@@ -245,7 +245,23 @@ details p { color: var(--muted); margin-top: 12px; }
 .footer h4 { color: #fff; font-family: var(--display); margin: 0 0 12px; font-size: 1rem; }
 .footer li { margin: 8px 0; }
 .footer a:hover { color: #fff; }
-.footer-bottom { border-top: 1px solid rgba(255, 255, 255, .12); margin-top: 40px; padding-top: 22px; font-size: .86rem; }
+.footer-bottom { border-top: 1px solid rgba(255, 255, 255, .12); margin-top: 40px; padding-top: 22px; font-size: .86rem; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.footer-bottom a { text-decoration: underline; text-underline-offset: 3px; }
+.footer-bottom-plain { border-top: 0; margin-top: 0; padding-top: 0; display: block; line-height: 2; }
+
+/* Yasal sayfalar */
+.nav-simple { grid-template-columns: 1fr auto; }
+.legal { padding: 56px 0 88px; }
+.legal-in { max-width: 780px; }
+.legal h1 { font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 800; }
+.legal h2 { font-size: 1.25rem; font-weight: 700; margin: 34px 0 10px; }
+.legal p, .legal li { color: #3a3d52; font-size: 1.02rem; line-height: 1.7; }
+.legal p { margin: 10px 0; }
+.legal ul { list-style: disc; padding-inline-start: 22px; margin: 10px 0; }
+.legal li { margin: 6px 0; }
+.legal a { color: var(--coral-dark); text-decoration: underline; text-underline-offset: 3px; }
+.legal-date { color: var(--muted); font-size: .92rem; }
+.legal-draft { background: #fff3da; color: #6b4300; border: 1px solid #f2d79a; border-radius: 12px; padding: 12px 16px; font-size: .95rem; margin-bottom: 26px; }
 
 /* Dar masaüstü: dört fiyat kartı yan yana sığmaz, ikişer dizilir */
 @media (max-width: 1180px) {
