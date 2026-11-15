@@ -140,8 +140,10 @@ node araclar/postaci-marka.mjs
 - [x] Yönetim paneli, 3. adım (kısmen): bitişi yaklaşan elle planlar için hatırlatma. Bitişe 3 gün kala
       hesaba panel bildirimi ve e-posta, `BANK_TRANSFER_NOTIFY_EMAIL` tanımlıysa yöneticiye e-posta (her adım
       plan başına bir kez); yönetim ekranında "7 günde bitecek elle plan" kutusu ve satır işareti.
-- [ ] Yönetim paneli, 3. adımın kalanı: iade (şimdilik iyzico panelinden), hesap ayrıntı sayfası (ödeme
-      geçmişi, notlar)
+- [x] Yönetim paneli, hesap ayrıntısı: müşteri satırındaki "Ayrıntı" havale geçmişini ve yalnızca
+      yöneticinin gördüğü notları (ekle/sil) açar (`account.detail.tsx`, tablo `AdminNote`; şema için
+      `pnpm run prisma-db-push`). Kartla ödeme geçmişi iyzico panelinde.
+- [ ] Yönetim paneli, iade (şimdilik iyzico panelinden yapılır)
 - [ ] Tanıtım sitesi (ürün ana sayfası `site/` içinde; yeni tasarım yapıldı, düğmeler panele bağlandı,
       fiyatlar kesinleşti; eksik: yayına alma, iletişim adresi). Yasal sayfalar TASLAK olarak yazıldı:
       `site/kullanim-kosullari.html` ve `site/gizlilik.html` (KVKK aydınlatma metni dahil). Köşeli
