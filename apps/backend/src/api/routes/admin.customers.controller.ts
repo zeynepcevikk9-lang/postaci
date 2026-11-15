@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpException,
   Param,
@@ -12,6 +13,7 @@ import { User } from '@prisma/client';
 import { GetUserFromRequest } from '@gitroom/nestjs-libraries/user/user.from.request';
 import { AdminCustomersService } from '@gitroom/nestjs-libraries/database/prisma/admin-customers/admin-customers.service';
 import { AdminSetPlanDto } from '@gitroom/nestjs-libraries/dtos/admin/admin.set.plan.dto';
+import { AdminNoteDto } from '@gitroom/nestjs-libraries/dtos/admin/admin.note.dto';
 
 // Postacı: yönetim paneli, müşteri (hesap) listesi. Yalnızca süper yönetici.
 @ApiTags('Admin')
@@ -56,6 +58,32 @@ export class AdminCustomersController {
       until: body.until || null,
     });
     return this._adminCustomersService.setPlan(id, body);
+  }
+
+  @Get('/:id/detail')
+  async detail(@GetUserFromRequest() user: User, @Param('id') id: string) {
+    this.assertSuperAdmin(user);
+    return this._adminCustomersService.detail(id);
+  }
+
+  @Post('/:id/notes')
+  async addNote(
+    @GetUserFromRequest() user: User,
+    @Param('id') id: string,
+    @Body() body: AdminNoteDto
+  ) {
+    this.assertSuperAdmin(user);
+    return this._adminCustomersService.addNote(id, user.email, body.text);
+  }
+
+  @Delete('/:id/notes/:noteId')
+  async deleteNote(
+    @GetUserFromRequest() user: User,
+    @Param('id') id: string,
+    @Param('noteId') noteId: string
+  ) {
+    this.assertSuperAdmin(user);
+    return this._adminCustomersService.deleteNote(id, noteId);
   }
 
   @Get('/summary')
