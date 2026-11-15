@@ -1457,5 +1457,18 @@
   "connect_link_expired_description": "Connection links work for one hour. Ask whoever sent it to you for a new one.",
   "facebook_made_with_ai": "Made with AI (only for text and photo posts)",
   "youtube_made_with_ai": "Made with AI (realistic altered or synthetic content)",
-  "admin_ending_soon": "Manual plans ending in 7 days"
+  "admin_ending_soon": "Manual plans ending in 7 days",
+  "admin_detail": "Details",
+  "admin_detail_title": "Account details",
+  "admin_detail_failed": "The account details could not be loaded.",
+  "admin_transfer_history": "Bank transfer history",
+  "admin_transfer_empty": "No bank transfer notices yet.",
+  "admin_transfer_pending": "Waiting",
+  "admin_notes": "Admin notes",
+  "admin_notes_hint": "Only admins can see these notes.",
+  "admin_note_placeholder": "Add a note (for example: called, invoice sent)",
+  "admin_note_add": "Add note",
+  "admin_note_delete": "Delete",
+  "admin_note_delete_question": "Delete this note?",
+  "admin_note_failed": "The note could not be saved"
 }
