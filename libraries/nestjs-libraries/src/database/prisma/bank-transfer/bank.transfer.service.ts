@@ -27,6 +27,11 @@ export class BankTransferService {
     private _notificationService: NotificationService
   ) {}
 
+  // Yönetim hesap ayrıntısı için hesabın havale geçmişi.
+  history(organizationId: string) {
+    return this._bankTransferRepository.listByOrganization(organizationId);
+  }
+
   isEnabled() {
     return (
       !!process.env.BANK_TRANSFER_IBAN && !!process.env.BANK_TRANSFER_ACCOUNT_NAME
