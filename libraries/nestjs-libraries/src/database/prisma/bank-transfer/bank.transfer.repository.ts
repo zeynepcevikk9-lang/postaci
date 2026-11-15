@@ -49,6 +49,16 @@ export class BankTransferRepository {
     });
   }
 
+  // Yönetim hesap ayrıntısı: hesabın bütün havale bildirimleri, en yenisi önce.
+  listByOrganization(organizationId: string) {
+    return this._requests.model.bankTransferRequest.findMany({
+      where: { organizationId },
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+      select: { ...requestSelect, decidedAt: true },
+    });
+  }
+
   getRequest(id: string) {
     return this._requests.model.bankTransferRequest.findUnique({
       where: { id },
