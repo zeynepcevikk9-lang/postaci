@@ -134,8 +134,11 @@ export class AdminCustomersService {
   // Özet kutuları. Tahmini aylık gelir, satıştaki plan fiyatlarıyla hesaplanır
   // (yıllık planlar on ikiye bölünür); fiyat okunamazsa boş döner.
   async summary() {
-    const { accounts, byPlan, trialing, cancelling } =
-      await this._adminCustomersRepository.summary();
+    const { accounts, byPlan, trialing, cancelling, endingSoon } =
+      await this._adminCustomersRepository.summary(
+        MANUAL_PLAN_PREFIX,
+        new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+      );
     const subscribed = byPlan.reduce((all, row) => all + row._count._all, 0);
 
     let monthlyRevenue: number | null = null;
@@ -170,6 +173,7 @@ export class AdminCustomersService {
       free: accounts - subscribed,
       trialing,
       cancelling,
+      endingSoon,
       byPlan: byPlan.map((row) => ({
         plan: row.subscriptionTier,
         count: row._count._all,
