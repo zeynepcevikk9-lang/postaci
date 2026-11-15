@@ -341,6 +341,27 @@ const patches = [
     "$1import { createInviteLink } from '@gitroom/frontend/components/launches/invite.link';\n",
     ['components/launches/add.provider.component.tsx'],
   ],
+  // Davet sayfası: bağlantıyı gönderen ajansın marka adı ve logosu görünür
+  [
+    /(import \{ LogoTextComponent \} from '@gitroom\/frontend\/components\/ui\/logo-text\.component';\r?\n)(?!import \{ useConnectLinkBrand)/,
+    "$1import { useConnectLinkBrand } from '@gitroom/frontend/components/launches/connect.link.brand';\n",
+    ['components/launches/connect.link.tsx'],
+  ],
+  [
+    /(const \{ data, error, isLoading, mutate \} = useConnectLink\(token\);\r?\n)(?!\s*const brand = )/,
+    '$1  const brand = useConnectLinkBrand(token);\n',
+    ['components/launches/connect.link.tsx'],
+  ],
+  [
+    /(const values = \{\r?\n)(\s*)(platform: data\.name,)(?!\r?\n\s*brand:)/,
+    '$1$2$3\n$2brand: brand.name,',
+    ['components/launches/connect.link.tsx'],
+  ],
+  [
+    /<img(\r?\n\s*)src="\/(?:postiz|favicon)\.svg"\r?\n\s*alt="(?:Postiz|Postacı)"\r?\n\s*className="w-\[40px\] h-\[44px\]"/,
+    "<img$1src={brand.logo || '/favicon.svg'}$1alt={brand.name}$1className=\"w-[40px] h-[44px] object-contain\"",
+    ['components/launches/connect.link.tsx'],
+  ],
   // Kanal listeleri: seçili olmayan kanal adı okunabilsin (%20 yerine %50 soluk)
   [/opacity-20/g, 'opacity-50', channelLists],
   // Kanal listeleri: her satır CustomerGroup içine alınır (müşteri başlığı)
