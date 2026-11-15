@@ -56,6 +56,10 @@ const texts = [
   // Mor gölgeler: yeni palette nötr gölge
   ['shadow-purple-500/25', 'shadow-black/10'],
   ['shadow-purple-500/40', 'shadow-black/20'],
+  // Kayıt sayfası: yasal metinler Postiz'in değil, tanıtım sitemizin sayfalarıdır
+  // (NEXT_PUBLIC_SITE_URL tanıtım sitesinin adresi; derleme sırasında okunur)
+  ['href={`https://postiz.com/terms`}', "href={`${process.env.NEXT_PUBLIC_SITE_URL || ''}/kullanim-kosullari.html`}"],
+  ['href={`https://postiz.com/privacy`}', "href={`${process.env.NEXT_PUBLIC_SITE_URL || ''}/gizlilik.html`}"],
   // Bağlantı ile kanal bağlama sayfasındaki logo
   ['src="/postiz.svg"', 'src="/favicon.svg"'],
   ['alt="Postiz"', 'alt="Postacı"'],
@@ -361,6 +365,12 @@ const patches = [
     /<img(\r?\n\s*)src="\/(?:postiz|favicon)\.svg"\r?\n\s*alt="(?:Postiz|Postacı)"\r?\n\s*className="w-\[40px\] h-\[44px\]"/,
     "<img$1src={brand.logo || '/favicon.svg'}$1alt={brand.name}$1className=\"w-[40px] h-[44px] object-contain\"",
     ['components/launches/connect.link.tsx'],
+  ],
+  // Postiz'in ortaklık programı menüde görünmez (rol listesi boş: kimseye çıkmaz)
+  [
+    /(path: 'https:\/\/affiliate\.postiz\.com',\r?\n\s*)role: \['ADMIN', 'SUPERADMIN', 'USER'\],/,
+    '$1role: [],',
+    ['components/layout/top.menu.tsx'],
   ],
   // Kanal listeleri: seçili olmayan kanal adı okunabilsin (%20 yerine %50 soluk)
   [/opacity-20/g, 'opacity-50', channelLists],
