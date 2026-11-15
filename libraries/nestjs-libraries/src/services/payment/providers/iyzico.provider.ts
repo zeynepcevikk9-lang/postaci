@@ -13,10 +13,13 @@ import { IyzicoRepository } from '@gitroom/nestjs-libraries/database/prisma/iyzi
 import { IyzicoCheckoutDto } from '@gitroom/nestjs-libraries/dtos/billing/iyzico.checkout.dto';
 import { pricing } from '@gitroom/nestjs-libraries/database/prisma/subscriptions/pricing';
 import { makeId } from '@gitroom/nestjs-libraries/services/make.is';
+import { ioRedis } from '@gitroom/nestjs-libraries/redis/redis.service';
 
 export const IYZICO_PROVIDER = 'iyzico';
 // Yöneticinin elle verdiği planın (havale ile ödeme) abonelik kimliği bununla başlar.
 export const MANUAL_PLAN_PREFIX = 'manual-';
+// Elle verilen planın bitişinden kaç gün önce hesaba hatırlatma gider.
+const MANUAL_PLAN_REMIND_DAYS = 3;
 
 type Tier = 'STANDARD' | 'TEAM' | 'PRO' | 'ULTIMATE';
 type Period = 'MONTHLY' | 'YEARLY';
@@ -114,6 +117,7 @@ export class IyzicoProvider
   }
 
   private async sweep() {
+    await this.remindEndingManualPlans();
     await this.expireSubscriptions();
     if (this.isConfigured()) {
       await this.reconcilePendingCheckouts(24 * HOUR, 5 * 60 * 1000);
@@ -617,6 +621,81 @@ export class IyzicoProvider
   // Bitiş tarihi geçen abonelikleri kapatır. Önce iyzico'da iptal edilir; iptal
   // edilemeyen abonelik bu turda kapatılmaz (kart çekilmeye devam ederken
   // hesabın düşmesi yerine bir sonraki turda yeniden denenir).
+  // Havale ile ödeyen hesabın planı kendiliğinden yenilenmez; bitişe birkaç gün
+  // kala hesaba (panel bildirimi ve e-posta) ve varsa yöneticiye haber verilir.
+  // Her plan için bir kez gönderilir. Hata fırlatmaz.
+  async remindEndingManualPlans() {
+    try {
+      const ending = await this._iyzicoRepository.getEndingManualSubscriptions(
+        IYZICO_PROVIDER,
+        MANUAL_PLAN_PREFIX,
+        new Date(Date.now() + MANUAL_PLAN_REMIND_DAYS * 24 * HOUR)
+      );
+      for (const subscription of ending) {
+        const { organizationId, identifier } = subscription;
+        const date = subscription.cancelAt!.toLocaleDateString('tr-TR', {
+          day: 'numeric',
+          month: 'long',
+          year: 'numeric',
+          timeZone: 'Europe/Istanbul',
+        });
+        const subject = 'Planınızın süresi dolmak üzere';
+        const message = `Planınız ${date} tarihinde sona eriyor. Kesinti olmaması için Faturalandırma sayfasından yeni dönem ödemenizi havale ile bildirebilir ya da kartla abonelik başlatabilirsiniz.`;
+
+        await this.oncePerPlan(`manualPlanReminder:panel:${identifier}`, () =>
+          this._notificationService.inAppNotification(
+            organizationId,
+            subject,
+            message
+          )
+        );
+        await this.oncePerPlan(`manualPlanReminder:email:${identifier}`, () =>
+          this._notificationService.sendEmailsToOrg(
+            organizationId,
+            subject,
+            message,
+            'info'
+          )
+        );
+        const notify = process.env.BANK_TRANSFER_NOTIFY_EMAIL;
+        if (notify) {
+          await this.oncePerPlan(
+            `manualPlanReminder:admin:${identifier}`,
+            () =>
+              this._notificationService.sendEmail(
+                notify,
+                `Planı bitmek üzere: ${subscription.organization.name}`,
+                `${subscription.organization.name} hesabının elle verilen planı ${date} tarihinde sona eriyor. Hesaba hatırlatma gönderildi; yeni ödeme gelirse yönetim panelinden planı uzatın.`
+              )
+          );
+        }
+      }
+    } catch (err) {
+      console.error('ending manual plans could not be listed', err);
+    }
+  }
+
+  // Hatırlatmanın bir adımını plan başına bir kez çalıştırır (birden çok sunucu
+  // çalışsa da). Adım başarısız olursa işaret kaldırılır ve bir sonraki
+  // süpürmede yalnız o adım yeniden denenir. Hata fırlatmaz.
+  private async oncePerPlan(key: string, work: () => Promise<unknown>) {
+    try {
+      const first = await ioRedis.set(key, '1', 'EX', 30 * 24 * 3600, 'NX');
+      if (!first) {
+        return;
+      }
+    } catch (err) {
+      console.error('manual plan reminder mark could not be set', key, err);
+      return;
+    }
+    try {
+      await work();
+    } catch (err) {
+      await ioRedis.del(key).catch((): null => null);
+      console.error('manual plan reminder step failed', key, err);
+    }
+  }
+
   async expireSubscriptions() {
     try {
       const expired = await this._iyzicoRepository.getExpiredSubscriptions(
