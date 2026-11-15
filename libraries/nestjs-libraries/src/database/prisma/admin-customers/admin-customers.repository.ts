@@ -108,8 +108,8 @@ export class AdminCustomersRepository {
     });
   }
 
-  async summary() {
-    const [accounts, byPlan, trialing, cancelling] = await Promise.all([
+  async summary(manualPrefix: string, endingBefore: Date) {
+    const [accounts, byPlan, trialing, cancelling, endingSoon] = await Promise.all([
       this._organization.model.organization.count({
         where: { deletedAt: null },
       }),
@@ -131,9 +131,18 @@ export class AdminCustomersRepository {
           organization: { deletedAt: null },
         },
       }),
+      // Elle verilen (havale) planlardan bitişi yaklaşanlar
+      this._subscription.model.subscription.count({
+        where: {
+          deletedAt: null,
+          identifier: { startsWith: manualPrefix },
+          cancelAt: { gte: new Date(), lt: endingBefore },
+          organization: { deletedAt: null },
+        },
+      }),
     ]);
 
-    return { accounts, byPlan, trialing, cancelling };
+    return { accounts, byPlan, trialing, cancelling, endingSoon };
   }
 
   // Ödeme alınan abonelikler (deneme ve iptal edilmiş olanlar hariç), kademe ve döneme göre.
