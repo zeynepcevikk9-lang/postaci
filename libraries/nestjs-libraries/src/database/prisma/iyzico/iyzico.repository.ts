@@ -79,6 +79,30 @@ export class IyzicoRepository {
   }
 
   // Bitiş tarihi geçmiş abonelikler (iptal edilmiş ya da ödemesi alınamamış).
+  // Bitişi yaklaşan elle planlar (havale ile ödeyenler); hatırlatma için.
+  getEndingManualSubscriptions(
+    provider: string,
+    manualPrefix: string,
+    until: Date
+  ) {
+    return this._subscription.model.subscription.findMany({
+      where: {
+        provider,
+        deletedAt: null,
+        isLifetime: false,
+        identifier: { startsWith: manualPrefix },
+        cancelAt: { gte: new Date(), lt: until },
+        organization: { deletedAt: null },
+      },
+      select: {
+        organizationId: true,
+        identifier: true,
+        cancelAt: true,
+        organization: { select: { name: true } },
+      },
+    });
+  }
+
   getExpiredSubscriptions(provider: string) {
     return this._subscription.model.subscription.findMany({
       where: {
