@@ -41,6 +41,7 @@ en/tr çeviri dosyalarında çıktı. Bu güncellemeyle gelenler:
   davet düğmesi bu bağlantıyı üretip panoya kopyalar (`POST /invite-links`,
   `apps/backend/src/api/routes/invite.link.controller.ts`); bağlantı bir saat geçerlidir.
   Ek bilgi isteyen kanal türlerinde düğme eski yola (doğrudan izin ekranı) düşer.
+  Sayfada, Ayarlar > Marka içinde girilen ad ve logo görünür (ayarlanmamışsa Postacı).
 - Veritabanı indeksleri (güncellemeden sonra `pnpm run prisma-db-push`).
 
 Güncelleme aldıktan sonra sıra: `pnpm install`, `pnpm run prisma-db-push`,
