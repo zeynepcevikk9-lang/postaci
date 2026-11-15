@@ -138,7 +138,7 @@ node araclar/postaci-marka.mjs
 - [x] Havale / EFT ile satış: plan ekranında banka bilgileri ve ödeme bildirimi, yönetim panelinde
       onay/ret, onayda planın elle tanımlanması, havale ile yenileme
 - [x] Yönetim paneli, 3. adım (kısmen): bitişi yaklaşan elle planlar için hatırlatma. Bitişe 3 gün kala
-      hesaba panel bildirimi ve e-posta,  tanımlıysa yöneticiye e-posta (her adım
+      hesaba panel bildirimi ve e-posta, `BANK_TRANSFER_NOTIFY_EMAIL` tanımlıysa yöneticiye e-posta (her adım
       plan başına bir kez); yönetim ekranında "7 günde bitecek elle plan" kutusu ve satır işareti.
 - [ ] Yönetim paneli, 3. adımın kalanı: iade (şimdilik iyzico panelinden), hesap ayrıntı sayfası (ödeme
       geçmişi, notlar)
