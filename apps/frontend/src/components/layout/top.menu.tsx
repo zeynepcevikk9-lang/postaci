@@ -181,7 +181,7 @@ export const useMenuItem = () => {
         </svg>
       ),
       path: 'https://affiliate.postiz.com',
-      role: ['ADMIN', 'SUPERADMIN', 'USER'],
+      role: [],
       requireBilling: true,
     },
     {

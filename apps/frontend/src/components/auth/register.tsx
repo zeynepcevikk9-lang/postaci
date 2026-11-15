@@ -231,7 +231,7 @@ export function RegisterAfter({
                 )}
                 &nbsp;
                 <a
-                  href={`https://postiz.com/terms`}
+                  href={`${process.env.NEXT_PUBLIC_SITE_URL || ''}/kullanim-kosullari.html`}
                   className="underline hover:font-bold"
                   rel="nofollow"
                 >
@@ -240,7 +240,7 @@ export function RegisterAfter({
                 &nbsp;
                 {t('and', 'and')}&nbsp;
                 <a
-                  href={`https://postiz.com/privacy`}
+                  href={`${process.env.NEXT_PUBLIC_SITE_URL || ''}/gizlilik.html`}
                   rel="nofollow"
                   className="underline hover:font-bold"
                 >
