@@ -247,6 +247,12 @@
   }
 }
 
+// Postiz'in tarayıcı eklentisine giden bağlantılar (üst çubuktaki simge dahil):
+// eklenti Postiz'in kendi adresleri için yazılmıştır, Postacı'da çalışmaz.
+a[href*='chromewebstore.google.com/detail/postiz'] {
+  display: none !important;
+}
+
 // CopilotKit'in geliştirici denetim penceresi (sağ üstteki yuvarlak düğme):
 // müşterinin göreceği bir şey değil, gizlenir.
 cpk-web-inspector {
