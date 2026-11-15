@@ -93,18 +93,18 @@ const ErrorDetailsModal: FC<{ row: ErrorRow }> = ({ row }) => {
           <div>{row.platform}</div>
         </div>
         <div>
-          <div className="opacity-60">Created</div>
+          <div className="opacity-60">Tarih</div>
           <div>{new Date(row.createdAt).toLocaleString()}</div>
         </div>
         <div>
-          <div className="opacity-60">Organization</div>
+          <div className="opacity-60">Hesap</div>
           <div>
             {row.organization?.name}{' '}
             <span className="opacity-60">({row.organization?.id})</span>
           </div>
         </div>
         <div>
-          <div className="opacity-60">Users</div>
+          <div className="opacity-60">Kullanıcılar</div>
           <div className="break-all">
             {row.organization?.users
               ?.map((u) => u.user?.email)
@@ -243,9 +243,9 @@ export const AdminErrorsComponent: FC = () => {
   return (
     <div className="flex flex-col gap-[16px] text-textColor">
       <div className="flex items-center justify-between">
-        <div className="text-[20px] font-[600]">Errors</div>
+        <div className="flex flex-col gap-[4px]"><div className="text-[20px] font-[600]">Yayımlanamayan gönderilerin hataları</div><div className="text-[13px] opacity-70 max-w-[640px]">Bir gönderi sosyal ağda yayımlanamayınca, gönderiyi zamanlayan hesabın (ajans ya da işletme) adı, sahibinin e-postası ve sosyal ağın verdiği hata iletisi burada listelenir. Yalnızca yönetici görür; hesap sahipleri bu sayfayı görmez.</div></div>
         <div className="text-[13px] opacity-70">
-          {data ? `${data.total} total` : ''}
+          {data ? `${data.total} kayıt` : ''}
         </div>
       </div>
 
@@ -281,7 +281,7 @@ export const AdminErrorsComponent: FC = () => {
               placeholder="user@example.com"
               className="bg-newBgColorInner h-[38px] border border-newTableBorder rounded-[8px] px-[10px] text-[14px] text-textColor min-w-[240px]"
             />
-            <Button onClick={onApplyEmail}>Apply</Button>
+            <Button onClick={onApplyEmail}>Uygula</Button>
           </div>
         </div>
 
@@ -329,11 +329,11 @@ export const AdminErrorsComponent: FC = () => {
       ) : (
         <div className="border border-newTableBorder rounded-[8px] overflow-hidden">
           <div className="grid grid-cols-[170px_120px_220px_1fr_220px] gap-[12px] px-[12px] py-[10px] bg-newBgColorInner text-[12px] uppercase opacity-70 border-b border-newTableBorder">
-            <div>Created</div>
+            <div>Tarih</div>
             <div>Platform</div>
-            <div>User / Org</div>
-            <div>Message</div>
-            <div className="text-right">Actions</div>
+            <div>Hesap ve sahibi</div>
+            <div>Hata iletisi</div>
+            <div className="text-right">İşlemler</div>
           </div>
           {data.items.map((row) => {
             const isUnknown = (row.message || '').includes('Unknown Error');
@@ -376,9 +376,9 @@ export const AdminErrorsComponent: FC = () => {
                 </div>
                 <div className="flex gap-[8px] justify-end">
                   <Button secondary onClick={() => openDetails(row)}>
-                    View
+                    Ayrıntı
                   </Button>
-                  <Button onClick={() => copyRow(row)}>Copy</Button>
+                  <Button onClick={() => copyRow(row)}>Kopyala</Button>
                 </div>
               </div>
             );
@@ -388,7 +388,7 @@ export const AdminErrorsComponent: FC = () => {
 
       <div className="flex items-center justify-between">
         <div className="text-[13px] opacity-70">
-          Page {page + 1} of {totalPages}
+          Sayfa {page + 1} / {totalPages}
         </div>
         <div className="flex gap-[8px]">
           <Button
@@ -396,13 +396,13 @@ export const AdminErrorsComponent: FC = () => {
             disabled={page === 0}
             onClick={() => setPage((p) => Math.max(0, p - 1))}
           >
-            Previous
+            Önceki
           </Button>
           <Button
             disabled={!data?.hasMore}
             onClick={() => setPage((p) => p + 1)}
           >
-            Next
+            Sonraki
           </Button>
         </div>
       </div>
