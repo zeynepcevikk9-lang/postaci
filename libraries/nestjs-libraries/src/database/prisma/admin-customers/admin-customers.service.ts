@@ -23,6 +23,36 @@ export class AdminCustomersService {
     private _bankTransferService: BankTransferService
   ) {}
 
+  // Hesap ayrıntı penceresi: havale geçmişi ve yönetici notları.
+  async detail(organizationId: string) {
+    if (!(await this._adminCustomersRepository.getOrganization(organizationId))) {
+      throw new BadRequestException('Account not found');
+    }
+    const [transfers, notes] = await Promise.all([
+      this._bankTransferService.history(organizationId),
+      this._adminCustomersRepository.listNotes(organizationId),
+    ]);
+    return { transfers, notes };
+  }
+
+  async addNote(organizationId: string, authorEmail: string, text: string) {
+    if (!(await this._adminCustomersRepository.getOrganization(organizationId))) {
+      throw new BadRequestException('Account not found');
+    }
+    return this._adminCustomersRepository.addNote(
+      organizationId,
+      authorEmail,
+      text.trim()
+    );
+  }
+
+  async deleteNote(organizationId: string, id: string) {
+    if (!(await this._adminCustomersRepository.deleteNote(organizationId, id))) {
+      throw new BadRequestException('Note not found');
+    }
+    return { success: true };
+  }
+
   // Hesaba elle plan verir ya da aboneliğini kaldırır. Kaldırmada kartla süren
   // abonelik varsa iyzico'da da hemen iptal edilir (iade yapılmaz).
   async setPlan(organizationId: string, body: AdminSetPlanDto) {
