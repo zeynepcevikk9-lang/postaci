@@ -7,6 +7,7 @@ import { useFetch } from '@gitroom/helpers/utils/custom.fetch';
 import { useT } from '@gitroom/react/translation/get.transation.service.client';
 import { PlatformIcon } from '@gitroom/frontend/components/ui/platform.icon.component';
 import { LogoTextComponent } from '@gitroom/frontend/components/ui/logo-text.component';
+import { useConnectLinkBrand } from '@gitroom/frontend/components/launches/connect.link.brand';
 
 interface ConnectLinkDetails {
   identifier: string;
@@ -66,6 +67,7 @@ export const ConnectLink: FC<{ token: string }> = ({ token }) => {
   const t = useT();
   const fetch = useFetch();
   const { data, error, isLoading, mutate } = useConnectLink(token);
+  const brand = useConnectLinkBrand(token);
   const [submitting, setSubmitting] = useState(false);
   const [failed, setFailed] = useState(false);
   const [failedMessage, setFailedMessage] = useState('');
@@ -139,6 +141,7 @@ export const ConnectLink: FC<{ token: string }> = ({ token }) => {
   // i18next escapes interpolated values for HTML, React already does
   const values = {
     platform: data.name,
+    brand: brand.name,
     site: data.redirectTo,
     interpolation: { escapeValue: false },
   };
@@ -153,9 +156,9 @@ export const ConnectLink: FC<{ token: string }> = ({ token }) => {
             <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.22)_1px,transparent_1px)] bg-[length:7px_7px]" />
             <div className="relative w-[72px] h-[72px] rounded-[18px] bg-[#0B0A0A] border-[2px] border-white/20 shadow-[0_8px_24px_rgba(0,0,0,0.45)] flex items-center justify-center">
               <img
-                src="/favicon.svg"
-                alt="Postacı"
-                className="w-[40px] h-[44px]"
+                src={brand.logo || '/favicon.svg'}
+                alt={brand.name}
+                className="w-[40px] h-[44px] object-contain"
               />
             </div>
             <div className="relative w-[36px] h-[36px] rounded-[10px] bg-[#1A1919] border border-[#2A2929] flex items-center justify-center">
