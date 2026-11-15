@@ -18,7 +18,8 @@ const PLANS = ['STANDARD', 'TEAM', 'PRO', 'ULTIMATE'];
 export class AdminCustomersRepository {
   constructor(
     private _organization: PrismaRepository<'organization'>,
-    private _subscription: PrismaRepository<'subscription'>
+    private _subscription: PrismaRepository<'subscription'>,
+    private _notes: PrismaRepository<'adminNote'>
   ) {}
 
   private where(params: CustomersParams): Prisma.OrganizationWhereInput {
@@ -143,6 +144,30 @@ export class AdminCustomersRepository {
     ]);
 
     return { accounts, byPlan, trialing, cancelling, endingSoon };
+  }
+
+  listNotes(organizationId: string) {
+    return this._notes.model.adminNote.findMany({
+      where: { organizationId },
+      orderBy: { createdAt: 'desc' },
+      take: 100,
+      select: { id: true, authorEmail: true, text: true, createdAt: true },
+    });
+  }
+
+  addNote(organizationId: string, authorEmail: string, text: string) {
+    return this._notes.model.adminNote.create({
+      data: { organizationId, authorEmail, text },
+      select: { id: true, authorEmail: true, text: true, createdAt: true },
+    });
+  }
+
+  // Not yalnızca kendi hesabına aitse silinir.
+  async deleteNote(organizationId: string, id: string) {
+    const { count } = await this._notes.model.adminNote.deleteMany({
+      where: { id, organizationId },
+    });
+    return count === 1;
   }
 
   // Ödeme alınan abonelikler (deneme ve iptal edilmiş olanlar hariç), kademe ve döneme göre.
