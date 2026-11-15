@@ -60,6 +60,11 @@ const rules: Array<[RegExp, string]> = [
   ],
   // --- özet ve seri hatırlatmaları ------------------------------------------
   [/^\[Postiz\] Your latest notifications$/, 'Postacı: son bildirimleriniz'],
+  [/^Your Postiz subscription is set to cancel$/, 'Postacı aboneliğiniz iptal edilecek'],
+  [
+    /^Your subscription is pending cancellation and will end on (.+?) \(UTC\), the end of your current billing cycle\. Until then you can keep using Postiz as usual\. Changed your mind\? You can reactivate at any time from the <a href="(.+?)">Billing page<\/a>\.$/s,
+    'Aboneliğiniz iptal edilmek üzere işaretlendi ve içinde bulunduğunuz dönemin sonunda, $1 (UTC) tarihinde sona erecek. O güne kadar Postacı\'yı kullanmaya devam edebilirsiniz. Fikrinizi değiştirirseniz <a href="$2">Faturalandırma sayfasından</a> aboneliğinizi yeniden etkinleştirebilirsiniz.',
+  ],
   [/^Streak Reminder$/, 'Paylaşım seriniz bitmek üzere'],
   [
     /^<p>You are about to lose your streak in two hours! schedule a post now to keep it!<\/p>$/,
