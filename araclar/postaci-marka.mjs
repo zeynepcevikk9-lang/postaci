@@ -326,6 +326,32 @@ const channelLists = [
 const customerGroupImport =
   "import { CustomerGroup } from '@gitroom/frontend/components/launches/customer.group';";
 
+// Yönetim > Hatalar sayfası: yalnızca bu dosyaya uygulanan birebir metin değişiklikleri
+const adminErrorsFile = ['components/admin/admin-errors.component.tsx'];
+const adminErrorsTexts = [
+  [
+    '<div className="text-[20px] font-[600]">Errors</div>',
+    '<div className="flex flex-col gap-[4px]"><div className="text-[20px] font-[600]">Yayımlanamayan gönderilerin hataları</div><div className="text-[13px] opacity-70 max-w-[640px]">Bir gönderi sosyal ağda yayımlanamayınca, gönderiyi zamanlayan hesabın (ajans ya da işletme) adı, sahibinin e-postası ve sosyal ağın verdiği hata iletisi burada listelenir. Yalnızca yönetici görür; hesap sahipleri bu sayfayı görmez.</div></div>',
+  ],
+  ['{data ? `${data.total} total` : \'\'}', "{data ? `${data.total} kayıt` : ''}"],
+  ['<div>Created</div>', '<div>Tarih</div>'],
+  ['<div>User / Org</div>', '<div>Hesap ve sahibi</div>'],
+  ['<div>Message</div>', '<div>Hata iletisi</div>'],
+  ['<div className="text-right">Actions</div>', '<div className="text-right">İşlemler</div>'],
+  ['<div className="opacity-60">Created</div>', '<div className="opacity-60">Tarih</div>'],
+  ['<div className="opacity-60">Organization</div>', '<div className="opacity-60">Hesap</div>'],
+  ['<div className="opacity-60">Users</div>', '<div className="opacity-60">Kullanıcılar</div>'],
+  ['<Button onClick={onApplyEmail}>Apply</Button>', '<Button onClick={onApplyEmail}>Uygula</Button>'],
+  ['<Button onClick={() => copyRow(row)}>Copy</Button>', '<Button onClick={() => copyRow(row)}>Kopyala</Button>'],
+  ['Page {page + 1} of {totalPages}', 'Sayfa {page + 1} / {totalPages}'],
+].map(([from, to]) => [new RegExp(escapeRe(from), 'g'), to, adminErrorsFile]);
+// Tek başına satırda duran düğme yazıları
+adminErrorsTexts.push(
+  [/(\r?\n\s*)View(\r?\n\s*<\/Button>)/g, '$1Ayrıntı$2', adminErrorsFile],
+  [/(\r?\n\s*)Previous(\r?\n\s*<\/Button>)/g, '$1Önceki$2', adminErrorsFile],
+  [/(\r?\n\s*)Next(\r?\n\s*<\/Button>)/g, '$1Sonraki$2', adminErrorsFile]
+);
+
 const patches = [
   // Kanal listeleri: önce müşteri adına göre sırala
   [
@@ -407,6 +433,7 @@ const patches = [
     /(  const firstMenu = \[\r?\n)(    \{\r?\n      name: isGeneral \? t\('calendar', 'Calendar'\))/,
     '$1    {\n      name: t(\'home_menu\', \'Home\'),\n      icon: (\n        <svg\n          xmlns="http://www.w3.org/2000/svg"\n          width="21"\n          height="21"\n          viewBox="0 0 24 24"\n          fill="none"\n        >\n          <path\n            d="M4 10.5 12 4l8 6.5V19a1.5 1.5 0 0 1-1.5 1.5H15V15H9v5.5H5.5A1.5 1.5 0 0 1 4 19v-8.5Z"\n            stroke="currentColor"\n            strokeWidth="1.8"\n            strokeLinecap="round"\n            strokeLinejoin="round"\n          />\n        </svg>\n      ),\n      path: \'/home\',\n    },\n$2',
   ],
+  ...adminErrorsTexts,
 ];
 
 const colorExt = new Set(['.tsx', '.ts', '.scss', '.css']);
