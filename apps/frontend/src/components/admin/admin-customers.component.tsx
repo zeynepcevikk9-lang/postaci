@@ -51,6 +51,7 @@ interface Summary {
   free: number;
   trialing: number;
   cancelling: number;
+  endingSoon: number;
   byPlan: { plan: string; count: number }[];
   monthlyRevenue: number | null;
   currency: string | null;
@@ -474,6 +475,12 @@ export const AdminCustomersComponent: FC = () => {
     );
   }
 
+  // Elle verilen (havale) plan 7 gün içinde bitiyorsa satır işaretlenir
+  const endingSoon = (customer: Customer) =>
+    customer.manual &&
+    !!customer.cancelAt &&
+    new Date(customer.cancelAt).getTime() - Date.now() < 7 * 24 * 60 * 60 * 1000;
+
   const status = (customer: Customer) => {
     if (customer.plan === 'FREE') {
       return t('admin_status_none', 'No subscription');
@@ -508,7 +515,7 @@ export const AdminCustomersComponent: FC = () => {
       </div>
 
       {summary && (
-        <div className="grid grid-cols-5 mobile:grid-cols-2 gap-[12px]">
+        <div className="grid grid-cols-6 mobile:grid-cols-2 gap-[12px]">
           <SummaryCard
             label={t('admin_accounts', 'Accounts')}
             value={summary.accounts.toLocaleString()}
@@ -524,6 +531,10 @@ export const AdminCustomersComponent: FC = () => {
           <SummaryCard
             label={t('admin_cancelling', 'Ending')}
             value={summary.cancelling.toLocaleString()}
+          />
+          <SummaryCard
+            label={t('admin_ending_soon', 'Manual plans ending in 7 days')}
+            value={(summary.endingSoon || 0).toLocaleString()}
           />
           <SummaryCard
             label={t('admin_monthly_revenue', 'Estimated monthly revenue')}
@@ -650,6 +661,7 @@ export const AdminCustomersComponent: FC = () => {
                 className={clsx(
                   'truncate',
                   customer.cancelAt && !customer.manual && 'text-[#F97066]',
+                  endingSoon(customer) && 'text-[#B26A00] font-[600]',
                   customer.plan !== 'FREE' &&
                     !customer.cancelAt &&
                     !customer.trialing &&
