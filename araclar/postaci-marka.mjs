@@ -398,6 +398,30 @@ const patches = [
     '$1role: [],',
     ['components/layout/top.menu.tsx'],
   ],
+  // GİZLİLİK: faturalama kipinde (STRIPE_* yer tutucusu dolu) Postiz'in Plausible (postiz.com) ve
+  // Dub (postiz.pro) izleme betikleri yüklenirdi; kullanıcılarımızın sayfa görüntülemeleri
+  // Postiz'in analiz hesabına giderdi. Üçüncü taraf izleme kapatılır.
+  [
+    /\r?\n\s*const Plausible = !!process\.env\.STRIPE_PUBLISHABLE_KEY\r?\n\s*\? PlausibleProvider\r?\n\s*: Fragment;/,
+    '',
+    ['app/(app)/layout.tsx'],
+  ],
+  [
+    /<Plausible\r?\n\s*domain=\{[^\n]*\}\r?\n\s*>/,
+    '<Fragment>',
+    ['app/(app)/layout.tsx'],
+  ],
+  [/<\/Plausible>/, '</Fragment>', ['app/(app)/layout.tsx']],
+  [
+    /import PlausibleProvider from 'next-plausible';\r?\n/,
+    '',
+    ['app/(app)/layout.tsx'],
+  ],
+  [
+    /dub=\{!!process\.env\.STRIPE_PUBLISHABLE_KEY\}/,
+    'dub={false}',
+    ['app/(app)/layout.tsx'],
+  ],
   // Kanal listeleri: seçili olmayan kanal adı okunabilsin (%20 yerine %50 soluk)
   [/opacity-20/g, 'opacity-50', channelLists],
   // Kanal listeleri: her satır CustomerGroup içine alınır (müşteri başlığı)
