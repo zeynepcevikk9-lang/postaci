@@ -30,19 +30,42 @@ export default async function AuthLayout({
           </div>
         </div>
         <div
-          className="text-[36px] font-[700] tracking-[-0.02em] leading-[1.2] flex-1 hidden lg:flex flex-col items-center justify-center rounded-[12px] text-[#12224A]"
+          className="flex-1 hidden lg:flex flex-col items-center justify-center gap-[40px] rounded-[12px] text-[#14172B] px-[32px] py-[40px]"
           style={{
             background:
-              'radial-gradient(60% 55% at 10% 12%, rgba(61,79,224,.22), transparent 68%), radial-gradient(50% 50% at 92% 28%, rgba(143,108,245,.26), transparent 70%), linear-gradient(180deg, #f1f3ff 0%, #f4f1ff 55%, #eef6ff 100%)',
+              'radial-gradient(55% 50% at 8% 10%, rgba(255,107,74,.16), transparent 70%), radial-gradient(50% 50% at 95% 90%, rgba(20,23,43,.08), transparent 70%), linear-gradient(180deg, #f7f2e8 0%, #f1ece1 100%)',
           }}
         >
           {/* Postacı: Postiz'e ait kullanıcı sayısı ve müşteri yorumları kaldırıldı. */}
-          <div className="text-center px-[32px]">
+          <div className="text-center text-[36px] font-[700] tracking-[-0.02em] leading-[1.2]">
             {t('auth_side_line_1', 'Run your agency’s social media')}
             <br />
-            <span className="text-[42px] text-[#14172B]">
+            <span className="text-[42px]">
               {t('auth_side_line_2', 'from a single panel')}
             </span>
+          </div>
+          {/* Özelliklerin kısa özeti (örnek gösterim, gerçek veri değil) */}
+          <div className="w-full max-w-[460px] flex flex-col gap-[12px]">
+            {[
+              ['Planlayın', 'Tüm müşterilerinizin gönderileri tek takvimde.'],
+              ['Onaya gönderin', 'Müşteri bağlantıdan gönderiyi görüp onaylar.'],
+              ['Raporlayın', 'Müşterinize yayın ve sonuç özetini gösterin.'],
+            ].map(([baslik, metin], i) => (
+              <div
+                key={baslik}
+                className="flex items-center gap-[14px] rounded-[12px] bg-white/70 border border-[#14172B]/10 px-[18px] py-[14px] backdrop-blur-sm"
+              >
+                <div className="flex-none w-[36px] h-[36px] rounded-full bg-[#FF6B4A] text-white flex items-center justify-center text-[16px] font-[700]">
+                  {i + 1}
+                </div>
+                <div className="flex flex-col">
+                  <div className="text-[16px] font-[700]">{baslik}</div>
+                  <div className="text-[14px] font-[400] text-[#14172B]/70">
+                    {metin}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
