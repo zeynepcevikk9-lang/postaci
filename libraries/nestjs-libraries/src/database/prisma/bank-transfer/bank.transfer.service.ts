@@ -9,7 +9,10 @@ import {
   MANUAL_PLAN_PREFIX,
 } from '@gitroom/nestjs-libraries/services/payment/providers/iyzico.provider';
 import { SubscriptionService } from '@gitroom/nestjs-libraries/database/prisma/subscriptions/subscription.service';
-import { NotificationService } from '@gitroom/nestjs-libraries/database/prisma/notifications/notification.service';
+import {
+  NotificationService,
+  plainValue,
+} from '@gitroom/nestjs-libraries/database/prisma/notifications/notification.service';
 
 const TIERS = ['STANDARD', 'TEAM', 'PRO', 'ULTIMATE'] as const;
 const PERIODS = ['MONTHLY', 'YEARLY'] as const;
@@ -130,8 +133,8 @@ export class BankTransferService {
       try {
         await this._notificationService.sendEmail(
           process.env.BANK_TRANSFER_NOTIFY_EMAIL,
-          `Havale bildirimi: ${org.name}`,
-          `${org.name} hesabı ${plan.name} (${
+          `Havale bildirimi: ${plainValue(org.name)}`,
+          `${plainValue(org.name)} hesabı ${plan.name} (${
             plan.period === 'YEARLY' ? 'yıllık' : 'aylık'
           }) planı için ${plan.price} TL havale yaptığını bildirdi. Açıklama kodu: ${
             screen.transfer.code
