@@ -1477,5 +1477,6 @@
   "admin_note_add": "Not ekle",
   "admin_note_delete": "Sil",
   "admin_note_delete_question": "Bu not silinsin mi?",
-  "admin_note_failed": "Not kaydedilemedi"
+  "admin_note_failed": "Not kaydedilemedi",
+  "admin_transfer_superseded": "Yenisiyle değiştirildi"
 }
