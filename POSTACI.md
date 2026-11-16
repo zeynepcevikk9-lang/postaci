@@ -293,6 +293,39 @@ görünür. Kod: `database/prisma/bank-transfer/`, `api/routes/bank.transfer.con
 - Süresi dolan plan kendiliğinden kapanır; kullanıcı faturalandırma ekranındaki "Havale / EFT ile
   yenile" ile aynı yoldan yeniler.
 
+## Güvenlik
+
+Ürün ajansların sosyal hesap anahtarlarını, müşteri verilerini ve ödeme durumunu tutar; güvenlik
+öncelikli. 16 Kas 2026'da eklenen kodun bağımsız (salt okunur) incelemesi yapıldı, bulgular
+giderildi. Çalışan sistem üzerinde DENENMEDİ (Docker kapalıydı); canlıya çıkmadan önce aşağıdaki
+liste çalışan sistemde de sınanmalı.
+
+Giderilenler:
+
+- Herkese açık onay sayfasından yazılan müşteri adı ve not, ajansa giden e-postaya HTML olarak
+  giriyordu. Artık `plainValue` ile etiketler ve satır sonları temizleniyor (hesap adı da).
+- Herkese açık uçlara (onay, plan, rapor, marka, ödeme webhook, iyzico dönüşü) IP başına istek sınırı.
+- Havale: aynı hesabın yeni bildirimi yeni kayıt olur, eskisi `SUPERSEDED` olur; yönetici gördüğünden
+  farklı plan açamaz.
+- iyzico webhook: bilinmeyen referans kodlarıyla tetiklenen tarama iki dakikada en fazla bir kez;
+  imza açılana kadar (`IYZICO_MERCHANT_ID` boş) olay yalnızca iyzico'dan yeniden okumayı tetikler.
+- Ürün besleme XML'i akış olarak okunur, 15 MB aşılınca kesilir.
+- Marka kaydı yalnızca hesap yöneticisi; herkese açık marka yanıtı yalnız ad, logo ve renk döner.
+- Üretimde `ENCRYPTION_PROVIDER` yoksa uygulama başlamaz (`ALLOW_PLAINTEXT_TOKENS=true` ile bilerek
+  kapatılır, önerilmez).
+- Bağımlılıklar: `follow-redirects`, `decode-uri-component`, `node-forge` güvenli sürüme çekildi
+  (yüksek açık 13 -> 3). Kalan: `zod` ve `graphql-scalars` (dolaylı, ana sürüm riski nedeniyle
+  dokunulmadı), `@sentry/nextjs` kritik açığı yalnızca `tunnelRoute` kullanılırsa geçerli (kullanılmıyor).
+
+Canlıya çıkmadan yapılacaklar:
+
+- [ ] `.env`: `ENCRYPTION_PROVIDER` ve `ENCRYPTION_KEY` (anahtarı yedekle; kaybolursa bütün kanallar yeniden bağlanır).
+- [ ] iyzico: webhook imzasını açtırıp `IYZICO_MERCHANT_ID` gir.
+- [ ] Ters vekil (nginx/Cloudflare) `X-Forwarded-For` başlığını doğru iletsin; istek sınırı buna dayanır.
+- [ ] Çalışan sistemde dene: onay sayfasından `<b>` içeren ad/not gönder, e-postada etiket olmamalı; istek sınırı 429 döndürmeli.
+- [ ] Kalan: genel ajans/müşteri rotalarında rol denetimi (`createPlan`/`deletePlan` tüm üyelere açık, bilerek).
+- [ ] Sızma testi / bağımsız inceleme (ödeme ve kimlik doğrulama için) yayın öncesi.
+
 ## Kod yapısı (kısa)
 
 - `apps/frontend`: arayüz (React)
