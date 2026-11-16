@@ -26,8 +26,21 @@ test için geçici bir alt alan adı kullanın. Uygulamayı çevirirken sonra ad
 `.env.canli` içindeki adresler ve ters vekil ayarı güncellenir.
 
 ### 2. İmajı derleyin (Plesk sunucusunda DEĞİL)
-Derleme yaklaşık 4-6 GB bellek ister ve uzun sürer; Plesk sunucusunu yormayın. Kendi bilgisayarınızda
-ya da bir CI'da derleyip bir imaj deposuna (GitHub Container Registry, Harbor vb.) itin:
+Derleme yaklaşık 4-6 GB bellek ister ve uzun sürer; Plesk sunucusunu yormayın.
+
+**Önerilen yol: GitHub Actions.** `.github/workflows/postaci-imaj.yml` imajı GitHub'ın sunucusunda
+derleyip `ghcr.io/<hesap>/postaci:test` olarak iter. Tetiklemek için:
+
+```bash
+git push -f origin main:imaj-derle
+```
+
+(Ya da GitHub'da Actions → "Postaci Imaj" → Run workflow.) İmaj varsayılan olarak ÖZELDİR: ya GitHub'da
+paketi herkese açık yapın (içinde yalnızca herkese açık kod var, sır yok) ya da sunucuda
+`docker login ghcr.io` yapın (`read:packages` yetkili kişisel erişim anahtarıyla; anahtarı kimseyle paylaşmayın).
+Upstream'in `build-containers.yml` dosyasını KULLANMAYIN, o upstream'in kendi deposuna yazar.
+
+**Elle yol:** kendi bilgisayarınızda ya da başka bir yerde derleyip bir imaj deposuna (GitHub Container Registry, Harbor vb.) itin:
 
 ```bash
 docker build -f Dockerfile.dev -t REGISTRY/postaci:test .
