@@ -118,6 +118,8 @@ export const AccountDetailModal: FC<{
       ? t('admin_transfer_approved', 'Approved')
       : status === 'REJECTED'
       ? t('admin_transfer_rejected', 'Rejected')
+      : status === 'SUPERSEDED'
+      ? t('admin_transfer_superseded', 'Replaced by a newer notice')
       : t('admin_transfer_pending', 'Waiting');
 
   return (
