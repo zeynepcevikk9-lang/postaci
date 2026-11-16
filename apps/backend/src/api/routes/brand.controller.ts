@@ -1,4 +1,11 @@
-import { Body, Controller, Get, Param, Put } from '@nestjs/common';
+import { Body, Controller, Get, Param, Put, UseGuards } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
+import { ThrottlerRealIpGuard } from '@gitroom/nestjs-libraries/throttler/throttler.provider';
+import { CheckPolicies } from '@gitroom/backend/services/auth/permissions/permissions.ability';
+import {
+  AuthorizationActions,
+  Sections,
+} from '@gitroom/backend/services/auth/permissions/permission.exception.class';
 import { ApiTags } from '@nestjs/swagger';
 import { Organization } from '@prisma/client';
 import { GetOrgFromRequest } from '@gitroom/nestjs-libraries/user/org.from.request';
@@ -17,7 +24,9 @@ export class BrandController {
     return this._brandService.getBrand(org.id);
   }
 
+  // Marka ve hesap türünü yalnızca hesap yöneticisi değiştirir.
   @Put('/')
+  @CheckPolicies([AuthorizationActions.Create, Sections.ADMIN])
   saveBrand(@GetOrgFromRequest() org: Organization, @Body() body: BrandDto) {
     return this._brandService.saveBrand(org.id, body);
   }
@@ -26,6 +35,8 @@ export class BrandController {
 // Müşterinin gördüğü sayfalar için: yalnızca ad, logo ve renk döner.
 @ApiTags('Public')
 @Controller('/public')
+@UseGuards(ThrottlerRealIpGuard)
+@Throttle({ default: { limit: 120, ttl: 60000 } })
 export class BrandPublicController {
   constructor(
     private _brandService: BrandService,
@@ -44,8 +55,12 @@ export class BrandPublicController {
     return { name, logo, color };
   }
 
+  // Müşterinin gördüğü sayfalar için: hesap türü gibi iç ayarlar dönmez.
   @Get('/brand/:organizationId')
-  getBrand(@Param('organizationId') organizationId: string) {
-    return this._brandService.getBrand(organizationId);
+  async getBrand(@Param('organizationId') organizationId: string) {
+    const { name, logo, color } = await this._brandService.getBrand(
+      organizationId
+    );
+    return { name, logo, color };
   }
 }
