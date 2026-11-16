@@ -1,0 +1,55 @@
+---
+# Postacı: kendi imajımızı derleyip GitHub Container Registry'ye iter.
+# Upstream'in build-containers.yml dosyası upstream'in imaj deposuna yazar; bunu KULLANMAYIN.
+#
+# Tetikleme: `imaj-derle` dalına push (git push origin main:imaj-derle -f) ya da elle (workflow_dispatch).
+# Sonuç: ghcr.io/<hesap>/postaci:<kısa-commit> ve :test
+name: "Postaci Imaj"
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - imaj-derle
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  imaj:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to ghcr
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Imaj adini hazirla
+        id: ad
+        run: |
+          OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          echo "image=ghcr.io/${OWNER}/postaci" >> "$GITHUB_OUTPUT"
+          echo "kisa=$(echo "${{ github.sha }}" | cut -c1-8)" >> "$GITHUB_OUTPUT"
+
+      - name: Derle ve it
+        env:
+          IMAGE: ${{ steps.ad.outputs.image }}
+          KISA: ${{ steps.ad.outputs.kisa }}
+        run: |
+          docker buildx build --platform linux/amd64 \
+            -f Dockerfile.dev \
+            -t "${IMAGE}:${KISA}" \
+            -t "${IMAGE}:test" \
+            --build-arg NEXT_PUBLIC_VERSION="${KISA}" \
+            --provenance=false --sbom=false \
+            --push .
