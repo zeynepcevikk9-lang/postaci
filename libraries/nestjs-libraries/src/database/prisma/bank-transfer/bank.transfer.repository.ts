@@ -29,20 +29,18 @@ export class BankTransferRepository {
     });
   }
 
-  // Hesabın tek bir bekleyen bildirimi olur; yenisi eskisinin yerine geçer.
+  // Hesabın tek bir bekleyen bildirimi olur. Yenisi yeni kayıt olarak açılır,
+  // eskisi SUPERSEDED olur: yönetici eski kaydı onaylamaya kalkarsa "zaten
+  // karara bağlandı" hatası alır, yani gördüğünden farklı plan açılamaz.
   async savePending(
     organizationId: string,
     userId: string,
     values: { billing: string; period: string; amount: number; code: string }
   ) {
-    const current = await this.getPending(organizationId);
-    if (current) {
-      return this._requests.model.bankTransferRequest.update({
-        where: { id: current.id },
-        data: { ...values, userId, createdAt: new Date() },
-        select: requestSelect,
-      });
-    }
+    await this._requests.model.bankTransferRequest.updateMany({
+      where: { organizationId, status: 'PENDING' },
+      data: { status: 'SUPERSEDED', decidedAt: new Date() },
+    });
     return this._requests.model.bankTransferRequest.create({
       data: { organizationId, userId, ...values },
       select: requestSelect,
