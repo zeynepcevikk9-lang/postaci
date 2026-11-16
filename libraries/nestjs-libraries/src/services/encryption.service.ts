@@ -29,6 +29,17 @@ export class EncryptionService implements OnModuleInit {
   private _key?: Promise<{ id: string; value: Buffer }>;
 
   constructor() {
+    // Postacı: üretimde kanal anahtarları düz yazı saklanmaz. Bilerek düz yazı
+    // istenirse ALLOW_PLAINTEXT_TOKENS=true verilir.
+    if (
+      process.env.NODE_ENV === 'production' &&
+      !process.env.ENCRYPTION_PROVIDER &&
+      process.env.ALLOW_PLAINTEXT_TOKENS !== 'true'
+    ) {
+      throw new Error(
+        'ENCRYPTION_PROVIDER ve ENCRYPTION_KEY tanımlanmadan üretimde başlatılamaz (kanal anahtarları şifrelenmelidir). Bilerek düz yazı için ALLOW_PLAINTEXT_TOKENS=true.'
+      );
+    }
     this.encryptionProvider = this.selectProvider(
       process.env.ENCRYPTION_PROVIDER!
     );
