@@ -302,6 +302,12 @@ liste çalışan sistemde de sınanmalı.
 
 Giderilenler:
 
+- Faturalama kipinde (`STRIPE_*` yer tutucusu dolu) Postiz'in Plausible (`postiz.com`) ve Dub
+  (`postiz.pro`) izleme betikleri yüklenirdi; kullanıcıların sayfa görüntülemeleri Postiz'in analiz
+  hesabına giderdi. Üçüncü taraf izleme `araclar/postaci-marka.mjs` yamasıyla kapatıldı (upstream
+  birleştirmesinden sonra betik yeniden çalıştırılınca korunur). `DATAFAST_WEBSITE_ID`,
+  `NEXT_PUBLIC_GTM_ID`, `NEXT_PUBLIC_FACEBOOK_PIXEL` yalnızca siz doldurursanız çalışır; boş bırakın.
+
 - Herkese açık onay sayfasından yazılan müşteri adı ve not, ajansa giden e-postaya HTML olarak
   giriyordu. Artık `plainValue` ile etiketler ve satır sonları temizleniyor (hesap adı da).
 - Herkese açık uçlara (onay, plan, rapor, marka, ödeme webhook, iyzico dönüşü) IP başına istek sınırı.
