@@ -243,7 +243,7 @@ export const AdminErrorsComponent: FC = () => {
   return (
     <div className="flex flex-col gap-[16px] text-textColor">
       <div className="flex items-center justify-between">
-        <div className="flex flex-col gap-[4px]"><div className="text-[20px] font-[600]">Yayımlanamayan gönderilerin hataları</div><div className="text-[13px] opacity-70 max-w-[640px]">Bir gönderi sosyal ağda yayımlanamayınca, gönderiyi zamanlayan hesabın (ajans ya da işletme) adı, sahibinin e-postası ve sosyal ağın verdiği hata iletisi burada listelenir. Yalnızca yönetici görür; hesap sahipleri bu sayfayı görmez.</div></div>
+        <div className="flex flex-col gap-[4px]"><div className="text-[20px] font-[600]">Yayımlanamayan gönderilerin hataları</div><div className="text-[13px] opacity-70 max-w-[640px]">Bir gönderi sosyal ağda yayımlanamayınca, gönderiyi zamanlayan hesabın adı, sahibinin e-postası ve sosyal ağın verdiği hata iletisi burada listelenir. Yalnızca yönetici görür; hesap sahipleri bu sayfayı görmez.</div></div>
         <div className="text-[13px] opacity-70">
           {data ? `${data.total} kayıt` : ''}
         </div>
