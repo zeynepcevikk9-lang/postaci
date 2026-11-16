@@ -1,4 +1,6 @@
-import { Body, Controller, Get, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post, Res, UseGuards } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
+import { ThrottlerRealIpGuard } from '@gitroom/nestjs-libraries/throttler/throttler.provider';
 import { ApiTags } from '@nestjs/swagger';
 import { Organization, User } from '@prisma/client';
 import { Response } from 'express';
@@ -56,6 +58,8 @@ export class IyzicoController {
 // yalnızca form anahtarı vardır). Sonuç iyzico'ya sorulur, kullanıcı panele döner.
 @ApiTags('Public')
 @Controller('/public/iyzico')
+@UseGuards(ThrottlerRealIpGuard)
+@Throttle({ default: { limit: 30, ttl: 60000 } })
 export class IyzicoPublicController {
   constructor(private _iyzicoProvider: IyzicoProvider) {}
 
