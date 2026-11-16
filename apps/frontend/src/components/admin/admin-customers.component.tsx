@@ -61,12 +61,12 @@ interface Summary {
 const PAGE_SIZE = 20;
 const PLANS = ['STANDARD', 'TEAM', 'PRO', 'ULTIMATE'];
 
-// Kademelerin Postacı plan adları
+// Kademelerin Postacı plan adları (kapasiteye göre; "ajans/işletme" ayrımı yok)
 const PLAN_NAMES: Record<string, string> = {
-  STANDARD: 'İşletme',
-  TEAM: 'Başlangıç',
-  PRO: 'Ajans',
-  ULTIMATE: 'Büyük Ajans',
+  STANDARD: 'Başlangıç',
+  TEAM: 'Standart',
+  PRO: 'Profesyonel',
+  ULTIMATE: 'Kurumsal',
 };
 const planName = (value: string) => PLAN_NAMES[value] || value;
 
