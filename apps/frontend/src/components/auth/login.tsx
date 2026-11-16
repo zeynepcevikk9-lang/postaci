@@ -10,6 +10,7 @@ import { classValidatorResolver } from '@hookform/resolvers/class-validator';
 import { LoginUserDto } from '@gitroom/nestjs-libraries/dtos/auth/login.user.dto';
 import { GithubProvider } from '@gitroom/frontend/components/auth/providers/github.provider';
 import { OauthProvider } from '@gitroom/frontend/components/auth/providers/oauth.provider';
+import { GoogleProvider } from '@gitroom/frontend/components/auth/providers/google.provider';
 import { AppleProvider } from '@gitroom/frontend/components/auth/providers/apple.provider';
 import { useVariables } from '@gitroom/react/helpers/variable.context';
 import { FarcasterProvider } from '@gitroom/frontend/components/auth/providers/farcaster.provider';
@@ -24,11 +25,15 @@ export function Login() {
   const t = useT();
   const [loading, setLoading] = useState(false);
   const [notActivated, setNotActivated] = useState(false);
-  const { isGeneral, neynarClientId, appleClientId, genericOauth } =
+  const { isGeneral, neynarClientId, appleClientId, genericOauth, googleLogin } =
     useVariables();
-  // Postacı: Google ve cüzdan girişi yok; yalnızca anahtarı tanımlı sağlayıcılar gösterilir.
+  // Postacı: cüzdan girişi yok; Google dahil sağlayıcılar yalnızca anahtarı tanımlıysa gösterilir.
   const hasProviders =
-    !isGeneral || genericOauth || !!appleClientId || !!neynarClientId;
+    !isGeneral ||
+    genericOauth ||
+    googleLogin ||
+    !!appleClientId ||
+    !!neynarClientId;
   const resolver = useMemo(() => {
     return classValidatorResolver(LoginUserDto);
   }, []);
@@ -84,6 +89,7 @@ export function Login() {
                 <GithubProvider />
               ) : (
                 <div className="gap-[8px] flex">
+                  {googleLogin && <GoogleProvider />}
                   {!!appleClientId && <AppleProvider />}
                   {!!neynarClientId && <FarcasterProvider />}
                 </div>
