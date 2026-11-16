@@ -5,7 +5,10 @@ import {
 } from '@nestjs/common';
 import { ApprovalRepository } from '@gitroom/nestjs-libraries/database/prisma/approvals/approval.repository';
 import { PostsService } from '@gitroom/nestjs-libraries/database/prisma/posts/posts.service';
-import { NotificationService } from '@gitroom/nestjs-libraries/database/prisma/notifications/notification.service';
+import {
+  NotificationService,
+  plainValue,
+} from '@gitroom/nestjs-libraries/database/prisma/notifications/notification.service';
 import {
   ApprovalDecision,
   CreateApprovalDto,
@@ -43,8 +46,8 @@ export class ApprovalService {
     try {
       await this._notificationService.inAppNotification(
         organizationId,
-        subject,
-        message,
+        plainValue(subject),
+        plainValue(message),
         true,
         false,
         approved ? 'success' : 'info'
