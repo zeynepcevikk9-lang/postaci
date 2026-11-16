@@ -5,12 +5,17 @@ import {
   Post,
   RawBodyRequest,
   Req,
+  UseGuards,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Throttle } from '@nestjs/throttler';
+import { ThrottlerRealIpGuard } from '@gitroom/nestjs-libraries/throttler/throttler.provider';
 import { PaymentService } from '@gitroom/nestjs-libraries/services/payment/payment.service';
 
 @ApiTags('Payment')
 @Controller('/payment')
+@UseGuards(ThrottlerRealIpGuard)
+@Throttle({ default: { limit: 300, ttl: 60000 } })
 export class PaymentController {
   constructor(private readonly _paymentService: PaymentService) {}
 
