@@ -12,7 +12,6 @@ import { GithubProvider } from '@gitroom/frontend/components/auth/providers/gith
 import { useRouter, useSearchParams } from 'next/navigation';
 import { LoadingComponent } from '@gitroom/frontend/components/layout/loading';
 import clsx from 'clsx';
-import { GoogleProvider } from '@gitroom/frontend/components/auth/providers/google.provider';
 import { AppleProvider } from '@gitroom/frontend/components/auth/providers/apple.provider';
 import { OauthProvider } from '@gitroom/frontend/components/auth/providers/oauth.provider';
 import { useFireEvents } from '@gitroom/helpers/utils/use.fire.events';
@@ -20,18 +19,9 @@ import { useVariables } from '@gitroom/react/helpers/variable.context';
 import { useTrack } from '@gitroom/react/helpers/use.track';
 import { TrackEnum } from '@gitroom/nestjs-libraries/user/track.enum';
 import { FarcasterProvider } from '@gitroom/frontend/components/auth/providers/farcaster.provider';
-import dynamic from 'next/dynamic';
-import { WalletUiProvider } from '@gitroom/frontend/components/auth/providers/placeholder/wallet.ui.provider';
 import { useT } from '@gitroom/react/translation/get.transation.service.client';
 import useCookie from 'react-use-cookie';
 import { useAttribution } from '@gitroom/frontend/components/auth/attribution.component';
-const WalletProvider = dynamic(
-  () => import('@gitroom/frontend/components/auth/providers/wallet.provider'),
-  {
-    ssr: false,
-    loading: () => <WalletUiProvider />,
-  }
-);
 type Inputs = {
   email: string;
   password: string;
@@ -93,13 +83,11 @@ export function RegisterAfter({
   provider: string;
 }) {
   const t = useT();
-  const {
-    isGeneral,
-    genericOauth,
-    neynarClientId,
-    appleClientId,
-    billingEnabled,
-  } = useVariables();
+  const { isGeneral, genericOauth, neynarClientId, appleClientId } =
+    useVariables();
+  // Postacı: Google ve cüzdan girişi yok; yalnızca anahtarı tanımlı sağlayıcılar gösterilir.
+  const hasProviders =
+    !isGeneral || genericOauth || !!appleClientId || !!neynarClientId;
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const fireEvents = useFireEvents();
@@ -165,26 +153,28 @@ export function RegisterAfter({
               {t('sign_up', 'Sign Up')}
             </h1>
           </div>
-          <div className="text-[14px] mt-[32px] mb-[12px]">
-            {t('continue_with', 'Continue With')}
-          </div>
-          <div className="flex flex-col text-[14px]">
+          {hasProviders && (
+            <div className="text-[14px] mt-[32px] mb-[12px]">
+              {t('continue_with', 'Continue With')}
+            </div>
+          )}
+          <div
+            className={`flex flex-col text-[14px] ${
+              hasProviders ? '' : 'mt-[32px]'
+            }`}
+          >
             {!isAfterProvider &&
+              hasProviders &&
               (!isGeneral ? (
                 <GithubProvider />
               ) : (
                 <div className="gap-[8px] flex">
-                  {genericOauth && isGeneral ? (
-                    <OauthProvider />
-                  ) : (
-                    <GoogleProvider />
-                  )}
+                  {genericOauth && <OauthProvider />}
                   {!!appleClientId && <AppleProvider />}
                   {!!neynarClientId && <FarcasterProvider />}
-                  {billingEnabled && <WalletProvider />}
                 </div>
               ))}
-            {!isAfterProvider && (
+            {!isAfterProvider && hasProviders && (
               <div className="h-[20px] mb-[24px] mt-[24px] relative">
                 <div className="absolute w-full h-[1px] bg-fifth top-[50%] -translate-y-[50%]" />
                 <div
