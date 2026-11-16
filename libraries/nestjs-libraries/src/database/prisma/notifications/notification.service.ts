@@ -9,6 +9,16 @@ import { organizationId } from '@gitroom/nestjs-libraries/temporal/temporal.sear
 
 export type NotificationType = 'success' | 'fail' | 'info';
 
+// Postacı: kullanıcının yazdığı metin (müşteri adı, not, hesap adı) bildirim ve
+// e-postaya girmeden önce temizlenir. E-posta gövdesi HTML olarak kurulur;
+// "<" ve ">" kaldırılmazsa herkese açık onay sayfasından e-postaya etiket
+// (sahte bağlantı, form) sokulabilir. Satır sonları da boşluğa çevrilir.
+export const plainValue = (value: string | null | undefined) =>
+  String(value ?? '')
+    .replace(/[<>]/g, '')
+    .replace(/[\r\n\t]+/g, ' ')
+    .trim();
+
 @Injectable()
 export class NotificationService {
   constructor(
