@@ -16,6 +16,11 @@ permissions:
   contents: read
   packages: write
 
+# Yeni derleme başlayınca eskisi iptal olur (":test" etiketi her zaman en yeni kodu gösterir).
+concurrency:
+  group: postaci-imaj
+  cancel-in-progress: true
+
 jobs:
   imaj:
     runs-on: ubuntu-latest
