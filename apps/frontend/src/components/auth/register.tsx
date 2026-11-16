@@ -12,6 +12,7 @@ import { GithubProvider } from '@gitroom/frontend/components/auth/providers/gith
 import { useRouter, useSearchParams } from 'next/navigation';
 import { LoadingComponent } from '@gitroom/frontend/components/layout/loading';
 import clsx from 'clsx';
+import { GoogleProvider } from '@gitroom/frontend/components/auth/providers/google.provider';
 import { AppleProvider } from '@gitroom/frontend/components/auth/providers/apple.provider';
 import { OauthProvider } from '@gitroom/frontend/components/auth/providers/oauth.provider';
 import { useFireEvents } from '@gitroom/helpers/utils/use.fire.events';
@@ -83,11 +84,15 @@ export function RegisterAfter({
   provider: string;
 }) {
   const t = useT();
-  const { isGeneral, genericOauth, neynarClientId, appleClientId } =
+  const { isGeneral, genericOauth, neynarClientId, appleClientId, googleLogin } =
     useVariables();
-  // Postacı: Google ve cüzdan girişi yok; yalnızca anahtarı tanımlı sağlayıcılar gösterilir.
+  // Postacı: cüzdan girişi yok; Google dahil sağlayıcılar yalnızca anahtarı tanımlıysa gösterilir.
   const hasProviders =
-    !isGeneral || genericOauth || !!appleClientId || !!neynarClientId;
+    !isGeneral ||
+    genericOauth ||
+    googleLogin ||
+    !!appleClientId ||
+    !!neynarClientId;
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const fireEvents = useFireEvents();
@@ -170,6 +175,7 @@ export function RegisterAfter({
               ) : (
                 <div className="gap-[8px] flex">
                   {genericOauth && <OauthProvider />}
+                  {googleLogin && <GoogleProvider />}
                   {!!appleClientId && <AppleProvider />}
                   {!!neynarClientId && <FarcasterProvider />}
                 </div>
