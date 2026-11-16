@@ -38,7 +38,7 @@ export default async function AuthLayout({
         >
           {/* Postacı: Postiz'e ait kullanıcı sayısı ve müşteri yorumları kaldırıldı. */}
           <div className="text-center text-[36px] font-[700] tracking-[-0.02em] leading-[1.2]">
-            {t('auth_side_line_1', 'Run your agency’s social media')}
+            {t('auth_side_line_1', 'Manage your social media')}
             <br />
             <span className="text-[42px]">
               {t('auth_side_line_2', 'from a single panel')}
@@ -47,9 +47,12 @@ export default async function AuthLayout({
           {/* Özelliklerin kısa özeti (örnek gösterim, gerçek veri değil) */}
           <div className="w-full max-w-[460px] flex flex-col gap-[12px]">
             {[
-              ['Planlayın', 'Tüm müşterilerinizin gönderileri tek takvimde.'],
-              ['Onaya gönderin', 'Müşteri bağlantıdan gönderiyi görüp onaylar.'],
-              ['Raporlayın', 'Müşterinize yayın ve sonuç özetini gösterin.'],
+              ['Planlayın', 'Tüm hesaplarınızın gönderileri tek takvimde.'],
+              [
+                'Onaya gönderin',
+                'Yönetici, müşteri ya da ekip arkadaşınız bağlantıdan görüp onaylar.',
+              ],
+              ['Raporlayın', 'Yayınları ve sonuçları paylaşabileceğiniz bir özetle gösterin.'],
             ].map(([baslik, metin], i) => (
               <div
                 key={baslik}
