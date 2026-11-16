@@ -8,10 +8,14 @@ import {
 const defaultRedirect = () =>
   `${process.env.FRONTEND_URL}/integrations/social/youtube`;
 
+// Postacı: giriş için ayrı bir Google istemcisi kullanılabilir (GOOGLE_LOGIN_CLIENT_ID/SECRET);
+// yoksa YouTube istemcisine düşer. Ayrı istemci yalnızca profil/e-posta izni ister,
+// YouTube'un hassas izinleri için gereken Google doğrulamasına bağlı kalmaz.
 const makeClient = (redirectUri: string) =>
   new google.auth.OAuth2({
-    clientId: process.env.YOUTUBE_CLIENT_ID,
-    clientSecret: process.env.YOUTUBE_CLIENT_SECRET,
+    clientId: process.env.GOOGLE_LOGIN_CLIENT_ID || process.env.YOUTUBE_CLIENT_ID,
+    clientSecret:
+      process.env.GOOGLE_LOGIN_CLIENT_SECRET || process.env.YOUTUBE_CLIENT_SECRET,
     redirectUri,
   });
 
