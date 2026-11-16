@@ -8,7 +8,10 @@ import {
   PaymentProviderAbstract,
 } from '@gitroom/nestjs-libraries/services/payment/payment.provider.interface';
 import { SubscriptionService } from '@gitroom/nestjs-libraries/database/prisma/subscriptions/subscription.service';
-import { NotificationService } from '@gitroom/nestjs-libraries/database/prisma/notifications/notification.service';
+import {
+  NotificationService,
+  plainValue,
+} from '@gitroom/nestjs-libraries/database/prisma/notifications/notification.service';
 import { IyzicoRepository } from '@gitroom/nestjs-libraries/database/prisma/iyzico/iyzico.repository';
 import { IyzicoCheckoutDto } from '@gitroom/nestjs-libraries/dtos/billing/iyzico.checkout.dto';
 import { pricing } from '@gitroom/nestjs-libraries/database/prisma/subscriptions/pricing';
@@ -106,6 +109,11 @@ export class IyzicoProvider
   // sonra saatte bir, bitiş tarihi geçen abonelikler kapatılır ve ödeme
   // dönüşü bize ulaşmamış formlar iyzico'ya sorulur.
   onModuleInit() {
+    if (this.isConfigured() && !process.env.IYZICO_MERCHANT_ID) {
+      console.warn(
+        'IYZICO_MERCHANT_ID boş: iyzico webhook imzası denetlenmiyor. İmza özelliğini iyzico\'dan açtırıp IYZICO_MERCHANT_ID değerini girin.'
+      );
+    }
     if (sweepTimer) {
       return;
     }
@@ -591,7 +599,14 @@ export class IyzicoProvider
       );
       if (!checkout) {
         // Ödeme dönüşü bize ulaşmamış olabilir: bekleyen formlar iyzico'ya sorulur.
-        await this.reconcilePendingCheckouts(72 * HOUR, 0);
+        // Bu işlem iyzico'ya çok istek atar; imzasız ya da sahte olaylarla
+        // tetiklenmesin diye en çok iki dakikada bir yapılır.
+        const mayReconcile = await ioRedis
+          .set('iyzicoWebhookReconcile', '1', 'EX', 120, 'NX')
+          .catch((): null => null);
+        if (mayReconcile) {
+          await this.reconcilePendingCheckouts(72 * HOUR, 0);
+        }
         checkout = await this._iyzicoRepository.getCheckoutBySubscription(
           referenceCode
         );
@@ -664,8 +679,8 @@ export class IyzicoProvider
             () =>
               this._notificationService.sendEmail(
                 notify,
-                `Planı bitmek üzere: ${subscription.organization.name}`,
-                `${subscription.organization.name} hesabının elle verilen planı ${date} tarihinde sona eriyor. Hesaba hatırlatma gönderildi; yeni ödeme gelirse yönetim panelinden planı uzatın.`
+                `Planı bitmek üzere: ${plainValue(subscription.organization.name)}`,
+                `${plainValue(subscription.organization.name)} hesabının elle verilen planı ${date} tarihinde sona eriyor. Hesaba hatırlatma gönderildi; yeni ödeme gelirse yönetim panelinden planı uzatın.`
               )
           );
         }
