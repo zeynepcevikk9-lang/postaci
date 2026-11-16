@@ -118,11 +118,35 @@ export class ProductFeedService implements OnModuleInit {
       throw new BadRequestException('Feed could not be downloaded');
     }
 
-    const buffer = await response.arrayBuffer();
-    if (buffer.byteLength > MAX_FEED_BYTES) {
+    // Gövde akış olarak okunur ve sınır aşıldığı anda bağlantı kesilir; tamamı
+    // belleğe alınıp sonra ölçülürse kötü niyetli bir sunucu belleği doldurabilir.
+    const declared = Number(response.headers.get('content-length') || 0);
+    if (declared > MAX_FEED_BYTES || !response.body) {
       throw new BadRequestException('Feed is too large');
     }
-    return new TextDecoder('utf-8').decode(buffer);
+    const reader = response.body.getReader();
+    const chunks: Uint8Array[] = [];
+    let total = 0;
+    try {
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) {
+          break;
+        }
+        total += value.byteLength;
+        if (total > MAX_FEED_BYTES) {
+          await reader.cancel().catch((): null => null);
+          throw new BadRequestException('Feed is too large');
+        }
+        chunks.push(value);
+      }
+    } catch (err) {
+      if (err instanceof BadRequestException) {
+        throw err;
+      }
+      throw new BadRequestException('Feed could not be downloaded');
+    }
+    return new TextDecoder('utf-8').decode(Buffer.concat(chunks));
   }
 
   private async readProducts(url: string) {
