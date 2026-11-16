@@ -1470,5 +1470,6 @@
   "admin_note_add": "Add note",
   "admin_note_delete": "Delete",
   "admin_note_delete_question": "Delete this note?",
-  "admin_note_failed": "The note could not be saved"
+  "admin_note_failed": "The note could not be saved",
+  "admin_transfer_superseded": "Replaced by a newer notice"
 }
