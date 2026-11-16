@@ -20,8 +20,9 @@ export interface PricingInnerInterface {
 export interface PricingInterface {
   [key: string]: PricingInnerInterface;
 }
-// Postacı plan adları: STANDARD = İşletme (3 hesap), TEAM = Başlangıç (10),
-// PRO = Ajans (30), ULTIMATE = Büyük Ajans (100). Ekip üyeleri Ajans planından itibaren.
+// Postacı plan adları, kapasiteye göre: STANDARD = Başlangıç (3 hesap), TEAM = Standart (10),
+// PRO = Profesyonel (30), ULTIMATE = Kurumsal (100). Ekip üyeleri Profesyonel planından itibaren.
+// Planın görünen adı ve TL fiyatı iyzico panelinden okunur; bu adlar yönetim panelindeki etiketlerdir.
 export const pricing: PricingInterface = {
   FREE: {
     current: 'FREE',
