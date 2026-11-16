@@ -1,4 +1,6 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
+import { ThrottlerRealIpGuard } from '@gitroom/nestjs-libraries/throttler/throttler.provider';
 import { ApiTags } from '@nestjs/swagger';
 import { ApprovalService } from '@gitroom/nestjs-libraries/database/prisma/approvals/approval.service';
 import {
@@ -10,8 +12,12 @@ import {
 // Postacı: müşteri onayı. Önizleme ya da plan bağlantısını bilen herkes (müşteri)
 // giriş yapmadan onay durumunu görebilir ve karar bildirebilir; önizleme
 // yorumlarıyla aynı erişim kuralı.
+// Giriş gerektirmeyen uç noktalar: IP başına sınır (yazma isteklerinde e-posta
+// gönderildiği için daha sıkı).
 @ApiTags('Public')
 @Controller('/public')
+@UseGuards(ThrottlerRealIpGuard)
+@Throttle({ default: { limit: 120, ttl: 60000 } })
 export class ApprovalsPublicController {
   constructor(private _approvalService: ApprovalService) {}
 
@@ -21,6 +27,7 @@ export class ApprovalsPublicController {
   }
 
   @Post('/posts/:id/approval')
+  @Throttle({ default: { limit: 20, ttl: 600000 } })
   async createApproval(
     @Param('id') previewId: string,
     @Body() body: CreateApprovalDto
@@ -40,6 +47,7 @@ export class ApprovalsPublicController {
   }
 
   @Post('/plans/:id/decision')
+  @Throttle({ default: { limit: 40, ttl: 600000 } })
   async decidePlanItem(
     @Param('id') planId: string,
     @Body() body: PlanDecisionDto
@@ -48,6 +56,7 @@ export class ApprovalsPublicController {
   }
 
   @Post('/plans/:id/approve-all')
+  @Throttle({ default: { limit: 10, ttl: 600000 } })
   async approveAll(
     @Param('id') planId: string,
     @Body() body: PlanApproveAllDto
