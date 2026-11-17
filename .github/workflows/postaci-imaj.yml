@@ -2,7 +2,9 @@
 # Postacı: kendi imajımızı derleyip GitHub Container Registry'ye iter.
 # Upstream'in build-containers.yml dosyası upstream'in imaj deposuna yazar; bunu KULLANMAYIN.
 #
-# Tetikleme: `imaj-derle` dalına push (git push origin main:imaj-derle -f) ya da elle (workflow_dispatch).
+# Tetikleme (TEST AŞAMASI): `main` ya da `imaj-derle` dalına her push; ayrıca elle (workflow_dispatch).
+# Sunucu `:test` imajını 10 dakikada bir kontrol edip kendiliğinden günceller (sağlık kontrolü ve geri dönüş var).
+# CANLIYA geçerken `main` push'unu otomatik canlıya bağlamayın: yalnızca `imaj-derle` bırakıp bu satırı değiştirin.
 # Sonuç: ghcr.io/<hesap>/postaci:<kısa-commit> ve :test
 name: "Postaci Imaj"
 
@@ -10,6 +12,7 @@ on:
   workflow_dispatch:
   push:
     branches:
+      - main
       - imaj-derle
 
 permissions:
