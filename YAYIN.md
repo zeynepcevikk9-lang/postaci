@@ -114,7 +114,19 @@ gelen isteklere izin verin. Plesk'ten Let's Encrypt sertifikası alın, "HTTP'de
 4. DNS'i yeni sunucuya çevirin, sertifika alın, eski sunucuyu kapatın.
 
 ## Güncelleme
-Yeni imajı derleyip itin, sunucuda `docker compose ... pull && docker compose ... up -d`. Kapsayıcı her
-başlarken `prisma db push` ile veritabanı şemasını kendiliğinden günceller; sütun silen ya da tür
+Kapsayıcı her başlarken `prisma db push` ile veritabanı şemasını kendiliğinden günceller; sütun silen ya da tür
 değiştiren bir şema değişikliği veri kaybettirebilir, bu yüzden **her güncellemeden önce
 `postgres-volume` yedeği alın**.
+
+### Otomatik güncelleme (test aşaması)
+1. `main` (ya da `imaj-derle`) dalına her push, GitHub Actions'ta `:test` imajını derler (`postaci-imaj.yml`).
+2. Sunucuda bir zamanlayıcı 10 dakikada bir `:test` imajının değişip değişmediğine bakar. Değiştiyse bir betik
+   önce veritabanı dökümü alır (14 gün saklar), imajı çeker, yeniden başlatır ve uygulamanın `/api/` adresinin
+   200 vermesini 3 dakika bekler. Cevap gelmezse **eski imaja otomatik döner** ve bozuk imajı tekrar denemez.
+3. Elle zorlamak için sunucuda `ZORLA=1 postaci-guncelle.sh`. Günlük: `/var/log/postaci-guncelle.log`.
+
+Betik (`postaci-guncelle.sh`) ve zamanlayıcı sunucuya elle kurulur, bu depoda bulunmaz. Kurulum sunucu
+sahibinin notlarındadır; yeni sunucuya taşırken aynı mantık yeniden kurulmalıdır.
+
+**Canlıya geçerken** `main` push'unun otomatik canlıya inmesi kapatılmalı: iş akışında yalnızca `imaj-derle`
+bırakın ve canlıya almayı bilinçli bir adım yapın (ör. ayrı bir `:canli` etiketi ve onay).
